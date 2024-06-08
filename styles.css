@@ -1,0 +1,419 @@
+/* styles.css */
+
+/* Add @font-face rule for custom font */
+@font-face {
+    font-family: 'Win95';
+    src: url('assets/fonts/win95-font.otf') format('opentype');
+}
+
+/* General Styles */
+body {
+    font-family: 'Win95', 'MS Sans Serif', 'Tahoma', Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #008080;
+    color: #000;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    overflow: hidden;
+}
+
+/* Desktop Icon Styles */
+#desktop {
+    position: relative;
+    flex-grow: 1;
+    display: flex;
+    flex-wrap: wrap;
+    align-content: flex-start;
+    padding: 10px;
+}
+
+.icon {
+    width: 64px;
+    margin: 10px;
+    text-align: center;
+    cursor: pointer;
+    position: absolute;
+}
+
+.icon img {
+    width: 64px;
+    height: 64px;
+    display: block;
+    margin: 0 auto;
+}
+
+.icon span {
+    display: block;
+    margin-top: 5px;
+    font-size: 12px;
+    width: 73px;
+    margin-left: -5px;
+}
+
+.icon.highlighted {
+    background-color: #000080;
+    color: #FFF;
+    border: 1px solid #FFF;
+    border-radius: 2px;
+}
+
+/* Loading Screen Styles */
+#loadingScreen {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background: #000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    z-index: 100;
+}
+
+.bootup-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.bootup-logo {
+    width: 200px;
+    margin-bottom: 20px;
+}
+
+.progress-bar {
+    width: 200px;
+    height: 20px;
+    background: #333;
+    border-radius: 10px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    position: relative;
+}
+
+.segment {
+    width: 20px;
+    height: 10px;
+    background: #0096e6;
+    margin: 0 2px;
+    position: absolute;
+    border-radius: 5px; /* Rounded corners */
+    animation: scroll 1s linear infinite;
+}
+
+.segment:nth-child(1) {
+    left: 0;
+    animation-delay: 0s;
+}
+
+.segment:nth-child(2) {
+    left: 22px;
+    animation-delay: 0.33s;
+}
+
+.segment:nth-child(3) {
+    left: 44px;
+    animation-delay: 0.66s;
+}
+
+@keyframes scroll {
+    0% {
+        left: -20px;
+    }
+    100% {
+        left: 200px;
+    }
+}
+
+/* Hide main content initially */
+.hidden {
+    display: none;
+}
+
+/* Window Styles */
+.window {
+    position: absolute;
+    width: 80%;
+    max-width: 5000px;
+    background: #C3C3C3;
+    border: 2px solid #000;
+    display: none;
+    z-index: 10;
+    box-shadow: 3px 3px 0 #808080;
+    resize: both;
+    overflow: hidden;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.window.maximized {
+    width: 100% !important;
+    height: 100% !important;
+    max-width: none !important; /* Ensure max width is removed when maximized */
+    max-height: none !important; /* Ensure max height is removed when maximized */
+    top: 0 !important;
+    left: 0 !important;
+    transform: none !important;
+}
+
+.window.show {
+    display: block;
+}
+
+.title-bar {
+    background: #000080;
+    color: #FFF;
+    display: flex;
+    justify-content: space-between;
+    padding: 2px 5px;
+    cursor: move;
+    box-shadow: 2px 2px 0 #000;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+
+.title-bar-text {
+    font-size: 0.9em;
+    font-weight: bold;
+}
+
+.title-bar-controls {
+    display: flex;
+    gap: 2px;
+}
+
+.title-bar-controls button {
+    width: 18px;
+    height: 18px;
+    background: #C0C0C0;
+    border: 1px solid #000;
+    font-family: 'win95-font', sans-serif;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0;
+}
+
+.title-bar-controls button:hover {
+    background: #808080;
+}
+
+.title-bar-controls button:focus {
+    outline: none;
+}
+
+.window-body {
+    display: flex;
+    flex-direction: row;
+    padding: 0;
+}
+
+/* Sidebar Styles */
+.sidebar {
+    width: 200px;
+    background: #C0C0C0;
+    border-right: 2px solid #000;
+    padding: 10px;
+}
+
+.sidebar ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.sidebar ul li {
+    margin-bottom: 10px;
+}
+
+.sidebar ul li a {
+    text-decoration: none;
+    color: #000;
+    display: block;
+    padding: 2px 5px;
+    border: 1px solid transparent;
+}
+
+.sidebar ul li a:hover {
+    background: #000080;
+    color: #FFF;
+    border: 1px solid #000;
+}
+
+main {
+    flex-grow: 1;
+    padding: 20px;
+    background: #FFF;
+    overflow: auto;
+    border-left: 2px solid #000;
+}
+
+.project-list {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.project-item {
+    margin: 10px;
+    text-align: center;
+    width: 80px; /* Adjust width to fit icon and text */
+}
+
+.project-item img {
+    width: 64px;
+    height: 64px;
+    display: block;
+    margin: 0 auto;
+}
+
+.project-item span {
+    display: block;
+    margin-top: 5px;
+}
+
+/* Taskbar Styles */
+.taskbar {
+    background: #C0C0C0;
+    border-top: 2px solid #000;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 5px 10px;
+    box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.2);
+    z-index: 20;
+}
+
+.start-menu .start-button {
+    background: #000080;
+    color: #FFF;
+    border: 1px solid #000;
+    padding: 2px 5px;
+    font-family: 'MS Sans Serif', sans-serif;
+    font-size: 0.9em;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+}
+
+.start-menu .start-button:hover {
+    background: #808080;
+}
+
+.start-menu .start-button:focus {
+    outline: none;
+}
+
+.start-menu-dropdown {
+    display: none;
+    position: absolute;
+    bottom: 40px;
+    left: 10px;
+    background: #C0C0C0;
+    border: 2px solid #000;
+    padding: 10px;
+    z-index: 30;
+    box-shadow: 2px 2px 0 #000;
+}
+
+.start-menu-dropdown.show {
+    display: block;
+}
+
+.start-menu-dropdown ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.start-menu-dropdown ul li {
+    margin-bottom: 5px;
+}
+
+.start-menu-dropdown ul li a {
+    text-decoration: none;
+    color: #000;
+    display: block;
+    padding: 2px 5px;
+    border: 1px solid transparent;
+}
+
+.start-menu-dropdown ul li a:hover {
+    background: #000080;
+    color: #FFF;
+    border: 1px solid #000;
+}
+
+.taskbar-icons {
+    display: flex;
+}
+
+.taskbar-icons img {
+    width: 20px;
+    height: 20px;
+    margin: 0 5px;
+    cursor: pointer;
+}
+
+.taskbar-icons img:hover {
+    background: #808080;
+}
+
+.taskbar-time {
+    font-family: 'MS Sans Serif', sans-serif;
+    font-size: 0.9em;
+}
+
+/* Snake Game and Paint App Screens */
+#startScreen, #gameOverScreen {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    background: rgba(0, 0, 0, 0.7);
+    color: white;
+    width: 100%;
+    height: 95%;
+    left: 0;
+    text-align: center;
+}
+
+#startScreen button, #gameOverScreen button {
+    padding: 10px 20px;
+    margin-top: 20px;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+    .window {
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        transform: none;
+    }
+    .window-body {
+        flex-direction: column;
+    }
+    .sidebar {
+        width: 93%;
+        border-right: none;
+        border-bottom: 2px solid #000;
+    }
+    main {
+        padding: 10px;
+    }
+    .start-menu-dropdown {
+        left: 0;
+        bottom: 50px;
+    }
+}

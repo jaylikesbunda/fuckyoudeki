@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>fuckyoudeki.net</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="responsive.css">
+    <link rel="icon" href="assets/images/folder-icon.png" type="image/png">
+</head>
+<body>
+    <div id="loadingScreen">
+        <div class="bootup-content">
+            <img src="assets/images/corp-logo.png" alt="Windows XP Logo" class="bootup-logo">
+            <div class="progress-bar">
+                <div class="segment"></div>
+                <div class="segment"></div>
+                <div class="segment"></div>
+            </div>
+        </div>
+    </div>
+    <div id="desktop">
+        <div class="icon" id="icon1" ondblclick="openWindow('mainWindow')">
+            <img src="assets/images/my-computer.png" alt="Folder">
+            <span>My Computer</span>
+        </div>
+        <div class="icon" id="icon2" ondblclick="redirectToURL('https://fuckyoufm.net')">
+            <img src="assets/images/folder-icon.png" alt="Folder">
+            <span>FuckYou FM</span>
+        </div>
+        <div class="icon" id="icon3" ondblclick="redirectToURL('https://vapefacts.com.au')">
+            <img src="assets/images/file-1.png" alt="Folder">
+            <span>Vape Facts Australia</span>
+        </div>
+        <div class="icon" id="icon4" ondblclick="openWindow('snakeWindow')">
+            <img src="assets/images/snake-icon.png" alt="Snake">
+            <span>Snake</span>
+        </div>
+        <div class="icon" id="icon5" ondblclick="openWindow('paintWindow')">
+            <img src="assets/images/paint-icon.png" alt="Paint">
+            <span>Paint</span>
+        </div>
+    </div>
+    
+    <div class="window" id="mainWindow">
+        <div class="title-bar">
+            <div class="title-bar-text">Windows Explorer</div>
+            <div class="title-bar-controls">
+                <button aria-label="Minimize" onclick="minimizeWindow('mainWindow')">_</button>
+                <button aria-label="Maximize" onclick="maximizeWindow('mainWindow')">🗖</button>
+                <button aria-label="Close" onclick="minimizeWindow('mainWindow')">×</button>
+            </div>
+        </div>
+        <div class="window-body">
+            <nav class="sidebar">
+                <ul>
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#projects">Projects</a></li>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </nav>
+            <main>
+                <section id="home">
+                    <h2>Welcome.</h2>
+                    <p>This is the homepage for all my projects.</p>
+                </section>
+                <section id="projects">
+                    <h2>Projects</h2>
+                    <div class="project-list">
+                        <div class="project-item">
+                            <a href="#">
+                                <img src="assets/images/file-1.png" alt="VapeFactsAustralia" onclick="redirectToURL('https://vapefacts.com.au')">
+                                <span>Vape Facts Australia</span>
+                            </a>
+                        </div>
+                        <div class="project-item">
+                            <a href="#">
+                                <img src="assets/images/folder-icon.png" alt="Project 2" onclick="redirectToURL('https://fuckyoufm.net')">
+                                <span>FuckYou FM</span>
+                            </a>
+                        </div>
+                    </div>
+                </section>
+                <section id="about">
+                    <h2>About</h2>
+                    <p>Information about me and my projects.</p>
+                </section>
+                <section id="contact">
+                    <h2>Contact</h2>
+                    <p>Email: no-reply@fuckyoudeki.net</p>
+                </section>
+            </main>
+        </div>
+    </div>
+    
+    <div id="snakeWindow" class="window">
+        <div class="title-bar">
+            <div class="title-bar-text">Snake Game</div>
+            <div class="title-bar-controls">
+                <button aria-label="Minimize" onclick="minimizeWindow('snakeWindow')">_</button>
+                <button aria-label="Close" onclick="minimizeWindow('snakeWindow')">×</button>
+            </div>
+        </div>
+        <div class="window-body">
+            <div id="startScreen">
+                <h1>Snake Game</h1>
+                <button id="startButton" onclick="startGame()">Start Game</button>
+            </div>
+            <div id="gameOverScreen" style="display:none;">
+                <h1>Game Over</h1>
+                <p>Your score: <span id="finalScore"></span></p>
+                <button id="restartButton" onclick="restartGame()">Restart</button>
+            </div>
+            <canvas id="snakeCanvas"></canvas>
+        </div>
+    </div>
+    
+    <div class="window" id="paintWindow">
+        <div class="title-bar">
+            <div class="title-bar-text">Paint App</div>
+            <div class="title-bar-controls">
+                <button aria-label="Minimize" onclick="minimizeWindow('paintWindow')">_</button>
+                <button aria-label="Close" onclick="minimizeWindow('paintWindow')">×</button>
+            </div>
+        </div>
+        <div class="window-body">
+            <div class="toolbar">
+                <button onclick="changeColor('black')">Black</button>
+                <button onclick="changeColor('red')">Red</button>
+                <button onclick="changeColor('green')">Green</button>
+                <button onclick="changeColor('blue')">Blue</button>
+                <button onclick="changeColor('white')">Eraser</button>
+            </div>
+            <canvas id="paintCanvas" width="400" height="400" style="border:1px solid #000; background: white;"></canvas>
+        </div>
+    </div>
+    
+    <div class="taskbar">
+        <div class="start-menu">
+            <button class="start-button" onclick="toggleStartMenu()">Start</button>
+        </div>
+        <div id="startMenu" class="start-menu-dropdown">
+            <ul>
+                <li><a href="#">Programs</a></li>
+                <li><a href="#">Documents</a></li>
+                <li><a href="#">Settings</a></li>
+                <li><a href="#">Search</a></li>
+                <li><a href="#">Help</a></li>
+                <li><a href="#">Run...</a></li>
+                <li><a href="#">Shutdown</a></li>
+            </ul>
+        </div>
+        <div class="taskbar-icons" id="taskbarIcons"></div>
+        <div class="taskbar-time" id="taskbarTime">
+            <span></span>
+        </div>
+    </div>
+    <script src="script.js"></script>
+    <script src="snakeGame.js"></script>
+    <script src="responsive.js"></script>
+    <script src="paint_App.js"></script>
+</body>
+</html>
