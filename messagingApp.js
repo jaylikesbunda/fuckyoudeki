@@ -23,20 +23,6 @@
             openWindow(windowId);
         }
 
-        window.submitMessage = function() {
-            console.log('submitMessage called'); // Log submitMessage calls
-            const username = document.getElementById('username').value;
-            const message = document.getElementById('message').value;
-            if (username && message) {
-                console.log('Submitting message:', { username, message }); // Log the message being submitted
-                // Placeholder for the database submission
-                document.getElementById('message').value = ''; // Clear the textarea
-            } else {
-                console.log('Validation failed: Both username and message are required');
-                alert("Please enter both name and message.");
-            }
-        }
-
         console.log('All functions defined and exposed to global scope'); // Confirm function definitions
     });
 })();

@@ -19,8 +19,15 @@ const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
 const messagesRef = ref(db, 'messages');
 
+// Function to display messages
+window.displayMessage = function(username, message) {
+    const messageContainer = document.createElement('div');
+    messageContainer.classList.add('message');
+    messageContainer.innerHTML = `<strong>${username}</strong>: ${message}`;
+    document.getElementById('messages').appendChild(messageContainer);
+};
+
 // Override the existing submitMessage function to include Firebase submission
-const originalSubmitMessage = window.submitMessage;
 window.submitMessage = function() {
     console.log('submitMessage called with Firebase'); // Log submitMessage calls with Firebase
     const username = document.getElementById('username').value;
@@ -41,19 +48,13 @@ window.submitMessage = function() {
         console.log('Validation failed: Both username and message are required');
         alert("Please enter both name and message.");
     }
-    // Call the original submitMessage function if needed
-    if (originalSubmitMessage) {
-        originalSubmitMessage();
-    }
 };
 
 // Listen for new messages added to the database and display them
 onChildAdded(messagesRef, (snapshot) => {
     const messageData = snapshot.val();
     console.log('New message added:', messageData); // Log new messages
-    if (window.displayMessage) {
-        window.displayMessage(messageData.username, messageData.message);
-    }
+    window.displayMessage(messageData.username, messageData.message);
 });
 
 console.log('Firebase submission integrated with submitMessage');
