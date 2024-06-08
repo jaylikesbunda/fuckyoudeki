@@ -127,12 +127,15 @@ function makeResizable(windowElement) {
     const resizeObserver = new ResizeObserver(() => {
         updateMainSection(windowElement);
         if (windowElement.id === 'snakeWindow') {
-            resizeCanvas();
+            SnakeGame.resizeSnakeCanvas();  // Call the updated resize function for Snake game
+        } else if (windowElement.id === 'paintWindow') {
+            PaintApp.resizePaintCanvas();  // Call the updated resize function for Paint app
         }
     });
 
     resizeObserver.observe(windowElement);
 }
+
 
 
 function initializeIcons() {

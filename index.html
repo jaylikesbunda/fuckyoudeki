@@ -7,6 +7,12 @@
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="responsive.css">
     <link rel="icon" href="assets/images/folder-icon.png" type="image/png">
+    <script src="script.js" defer></script>
+    <script src="snakeGame.js" defer></script>
+    <script src="responsive.js" defer></script>
+    <script src="paint_App.js" defer></script>
+    <script src="messagingApp.js" defer></script>
+    <script type="module" src="firebaseInit.js" defer></script>
 </head>
 <body>
     <div id="loadingScreen">
@@ -39,6 +45,10 @@
         <div class="icon" id="icon5" ondblclick="openWindow('paintWindow')" ontouchend="handleTouch(event, 'paintWindow')">
             <img src="assets/images/paint-icon.png" alt="Paint">
             <span>Paint</span>
+        </div>
+        <div class="icon" id="icon6" ondblclick="openWindow('messagingWindow')" ontouchend="handleTouch(event, 'messagingWindow')">
+            <img src="assets/images/messaging-icon.png" alt="Messaging">
+            <span>Global Messaging</span>
         </div>
     </div>
     
@@ -126,14 +136,29 @@
             </div>
         </div>
         <div class="window-body">
-            <div class="toolbar">
-                <button onclick="changeColor('black')">Black</button>
-                <button onclick="changeColor('red')">Red</button>
-                <button onclick="changeColor('green')">Green</button>
-                <button onclick="changeColor('blue')">Blue</button>
-                <button onclick="changeColor('white')">Eraser</button>
-            </div>
+            <div class="toolbar" id="toolbar"></div>
             <canvas id="paintCanvas" width="400" height="400" style="border:1px solid #000; background: white;"></canvas>
+        </div>
+    </div>
+    
+    
+
+    <div class="window" id="messagingWindow">
+        <div class="title-bar">
+            <div class="title-bar-text">Global Messaging</div>
+            <div class="title-bar-controls">
+                <button aria-label="Minimize" onclick="console.log('Minimize button clicked'); minimizeWindow('messagingWindow')">_</button>
+                <button aria-label="Maximize" onclick="console.log('Maximize button clicked'); maximizeWindow('messagingWindow')">🗖</button>
+                <button aria-label="Close" onclick="console.log('Close button clicked'); minimizeWindow('messagingWindow')">×</button>
+            </div>
+        </div>
+        <div class="window-body messaging-window-body">
+            <div class="messaging-toolbar">
+                <input type="text" id="username" placeholder="Enter your name">
+                <textarea id="message" placeholder="Enter your message"></textarea>
+                <button onclick="console.log('Post button clicked'); submitMessage()">Post</button>
+            </div>
+            <div id="messages" class="messages"></div>
         </div>
     </div>
     
@@ -157,9 +182,7 @@
             <span></span>
         </div>
     </div>
-    <script src="script.js"></script>
-    <script src="snakeGame.js"></script>
-    <script src="responsive.js"></script>
-    <script src="paint_App.js"></script>
+    <!-- Existing scripts -->  
+
 </body>
 </html>

@@ -1,21 +1,33 @@
-document.addEventListener('DOMContentLoaded', () => {
-    const paintCanvas = document.getElementById('paintCanvas');
-    const paintCtx = paintCanvas.getContext('2d');
-    let painting = false;
-    let brushColor = 'black';
+const PaintApp = (() => {
+    let paintCanvas, paintCtx, painting = false, brushColor = 'black';
 
-    function startPosition(e) {
-        e.preventDefault();
-        painting = true;
-        draw(e);
+    function initializeElements() {
+        paintCanvas = document.getElementById('paintCanvas');
+        paintCtx = paintCanvas.getContext('2d');
     }
 
-    function finishedPosition() {
+    function initializePaintCanvas() {
+        const toolbarHeight = document.getElementById('toolbar').offsetHeight;
+        const parentHeight = paintCanvas.parentElement.clientHeight;
+        paintCanvas.width = paintCanvas.parentElement.clientWidth;
+        paintCanvas.height = Math.max(parentHeight - toolbarHeight, 500);
+        paintCtx.fillStyle = 'white';
+        paintCtx.fillRect(0, 0, paintCanvas.width, paintCanvas.height);
+        console.log("Canvas initialized with width:", paintCanvas.width, "and height:", paintCanvas.height);
+    }
+
+    function startPaintPosition(e) {
+        e.preventDefault();
+        painting = true;
+        drawPaint(e);
+    }
+
+    function finishPaintPosition() {
         painting = false;
         paintCtx.beginPath();
     }
 
-    function draw(e) {
+    function drawPaint(e) {
         if (!painting) return;
         paintCtx.lineWidth = 5;
         paintCtx.lineCap = 'round';
@@ -31,35 +43,73 @@ document.addEventListener('DOMContentLoaded', () => {
         paintCtx.moveTo(x, y);
     }
 
-    function changeColor(color) {
+    function changePaintColor(color) {
         brushColor = color;
     }
 
-    function resizeCanvas() {
+    function resizePaintCanvas() {
+        if (paintCanvas.offsetParent === null) {
+            console.log("Canvas not visible, skipping resize");
+            return;
+        }
+
         const tempCanvas = document.createElement('canvas');
+        const tempCtx = tempCanvas.getContext('2d');
         tempCanvas.width = paintCanvas.width;
         tempCanvas.height = paintCanvas.height;
-        tempCanvas.getContext('2d').drawImage(paintCanvas, 0, 0);
+        if (paintCanvas.width > 0 && paintCanvas.height > 0) {
+            tempCtx.drawImage(paintCanvas, 0, 0);
+        }
 
-        paintCanvas.width = paintCanvas.clientWidth;
-        paintCanvas.height = paintCanvas.clientHeight;
+        const toolbarHeight = document.getElementById('toolbar').offsetHeight;
+        const parentHeight = paintCanvas.parentElement.clientHeight;
+        paintCanvas.width = paintCanvas.parentElement.clientWidth;
+        paintCanvas.height = Math.max(parentHeight - toolbarHeight, 500);
+
         paintCtx.fillStyle = 'white';
         paintCtx.fillRect(0, 0, paintCanvas.width, paintCanvas.height);
-        paintCtx.drawImage(tempCanvas, 0, 0);
+        if (tempCanvas.width > 0 && tempCanvas.height > 0) {
+            paintCtx.drawImage(tempCanvas, 0, 0);
+        }
+        console.log("Canvas resized to width:", paintCanvas.width, "and height:", paintCanvas.height);
     }
 
-    paintCanvas.addEventListener('mousedown', startPosition);
-    paintCanvas.addEventListener('mouseup', finishedPosition);
-    paintCanvas.addEventListener('mousemove', draw);
-    paintCanvas.addEventListener('touchstart', startPosition);
-    paintCanvas.addEventListener('touchend', finishedPosition);
-    paintCanvas.addEventListener('touchmove', draw);
-    window.addEventListener('resize', resizeCanvas);
+    function createPaintToolbarButtons() {
+        const toolbar = document.getElementById('toolbar');
+        const colors = ['black', 'red', 'green', 'blue', 'white'];
+        colors.forEach(color => {
+            const button = document.createElement('button');
+            button.style.backgroundColor = color;
+            button.style.width = '24px';
+            button.style.height = '24px';
+            button.style.border = '1px solid #000';
+            button.style.margin = '2px';
+            button.style.cursor = 'pointer';
+            button.addEventListener('click', () => changePaintColor(color));
+            toolbar.appendChild(button);
+        });
+    }
 
-    document.querySelectorAll('.toolbar button').forEach(button => {
-        button.addEventListener('click', () => changeColor(button.textContent.toLowerCase()));
-    });
+    function addEventListeners() {
+        paintCanvas.addEventListener('mousedown', startPaintPosition);
+        paintCanvas.addEventListener('mouseup', finishPaintPosition);
+        paintCanvas.addEventListener('mousemove', drawPaint);
+        paintCanvas.addEventListener('touchstart', startPaintPosition);
+        paintCanvas.addEventListener('touchend', finishPaintPosition);
+        paintCanvas.addEventListener('touchmove', drawPaint);
+        window.addEventListener('resize', resizePaintCanvas);
+    }
 
-    // Initial canvas setup
-    resizeCanvas();
-});
+    return {
+        initialize: function() {
+            initializeElements();
+            createPaintToolbarButtons();
+            initializePaintCanvas();
+            addEventListeners();
+            window.addEventListener('load', resizePaintCanvas);
+        },
+        resizePaintCanvas
+    };
+})();
+
+document.addEventListener('DOMContentLoaded', PaintApp.initialize);
