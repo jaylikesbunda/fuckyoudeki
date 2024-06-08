@@ -19,20 +19,21 @@ const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
 const messagesRef = ref(db, 'messages');
 
-// Function to display messages
-window.displayMessage = function(username, message) {
+// Function to display messages with timestamp
+window.displayMessage = function(username, message, timestamp) {
     const messageContainer = document.createElement('div');
     messageContainer.classList.add('message');
-    messageContainer.innerHTML = `<strong>${username}</strong>: ${message}`;
+    const formattedTime = new Date(timestamp).toLocaleTimeString();
+    messageContainer.innerHTML = `<strong>${username}</strong>: ${message} <span class="timestamp">${formattedTime}</span>`;
     document.getElementById('messages').appendChild(messageContainer);
 };
 
 // Override the existing submitMessage function to include Firebase submission
 window.submitMessage = function() {
     console.log('submitMessage called with Firebase'); // Log submitMessage calls with Firebase
-    const username = document.getElementById('username').value;
+    const username = document.getElementById('username').value || 'Anonymous';
     const message = document.getElementById('message').value;
-    if (username && message) {
+    if (message) {
         console.log('Submitting message to Firebase:', { username, message }); // Log the message being submitted
         push(messagesRef, {
             username: username,
@@ -45,8 +46,8 @@ window.submitMessage = function() {
         });
         document.getElementById('message').value = ''; // Clear the textarea
     } else {
-        console.log('Validation failed: Both username and message are required');
-        alert("Please enter both name and message.");
+        console.log('Validation failed: Message is required');
+        alert("Please enter a message.");
     }
 };
 
@@ -54,7 +55,7 @@ window.submitMessage = function() {
 onChildAdded(messagesRef, (snapshot) => {
     const messageData = snapshot.val();
     console.log('New message added:', messageData); // Log new messages
-    window.displayMessage(messageData.username, messageData.message);
+    window.displayMessage(messageData.username, messageData.message, messageData.timestamp);
 });
 
 console.log('Firebase submission integrated with submitMessage');

@@ -116,62 +116,67 @@
 
 /* Add these styles to styles.css or responsive.css */
 
-/* Messaging App Styles */
-.messaging-window-body {
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-}
+        /* Messaging App Styles */
+        .messaging-window-body {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
 
-.messaging-toolbar {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    padding: 10px;
-    background: #C0C0C0;
-    border-bottom: 2px solid #000;
-}
+        .messaging-toolbar {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            padding: 10px;
+            background: #C0C0C0;
+            border-bottom: 2px solid #000;
+        }
 
-.messaging-toolbar input,
-.messaging-toolbar textarea {
-    width: 100%;
-    padding: 5px;
-    font-family: 'MS Sans Serif', sans-serif;
-    border: 1px solid #000;
-    background: #FFF;
-    box-sizing: border-box; /* Ensure padding is included in the element's width and height */
-}
+        .messaging-toolbar input,
+        .messaging-toolbar textarea {
+            width: 100%;
+            padding: 5px;
+            font-family: 'MS Sans Serif', sans-serif;
+            border: 1px solid #000;
+            background: #FFF;
+            box-sizing: border-box; /* Ensure padding is included in the element's width and height */
+        }
 
-.messaging-toolbar button {
-    padding: 5px 10px;
-    border: 1px solid #000;
-    background: #FFF;
-    cursor: pointer;
-    font-family: 'MS Sans Serif', sans-serif;
-}
+        .messaging-toolbar button {
+            padding: 5px 10px;
+            border: 1px solid #000;
+            background: #FFF;
+            cursor: pointer;
+            font-family: 'MS Sans Serif', sans-serif;
+        }
 
-.messaging-toolbar button:hover {
-    background: #808080;
-    color: #FFF;
-}
+        .messaging-toolbar button:hover {
+            background: #808080;
+            color: #FFF;
+        }
 
-#messages {
-    padding: 10px;
-    flex-grow: 1; /* Allow messages to take up remaining space */
-    overflow-y: auto;
-    background: #FFF;
-    border-top: 2px solid #000;
-    box-sizing: border-box; /* Ensure padding is included in the element's width and height */
-}
+        #messages {
+            padding: 10px;
+            flex-grow: 1; /* Allow messages to take up remaining space */
+            overflow-y: auto;
+            background: #FFF;
+            border-top: 2px solid #000;
+            box-sizing: border-box; /* Ensure padding is included in the element's width and height */
+        }
 
-.message {
-    padding: 5px;
-    margin-bottom: 10px;
-    border: 1px solid #000;
-    background: #E0E0E0;
-    word-wrap: break-word; /* Ensure long words break correctly */
-}
+        .message {
+            padding: 5px;
+            margin-bottom: 10px;
+            border: 1px solid #000;
+            background: #E0E0E0;
+            word-wrap: break-word; /* Ensure long words break correctly */
+        }
 
+        .timestamp {
+            float: right;
+            font-size: 0.8em;
+            color: gray;
+        }
 
 /* Responsive Styles */
 @media (max-width: 768px) {

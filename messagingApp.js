@@ -4,7 +4,10 @@
 
         window.openWindow = function(windowId) {
             console.log(`openWindow called with windowId: ${windowId}`); // Log openWindow calls
-            document.getElementById(windowId).classList.add('show');
+            const windowElement = document.getElementById(windowId);
+            windowElement.classList.add('show');
+            windowElement.style.width = '600px'; // Set the window width to a more suitable size
+            windowElement.style.height = '400px'; // Set the window height to a more suitable size
         }
 
         window.minimizeWindow = function(windowId) {
