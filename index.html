@@ -20,27 +20,28 @@
         </div>
     </div>
     <div id="desktop">
-        <div class="icon" id="icon1" ondblclick="openWindow('mainWindow')">
+        <div class="icon" id="icon1" ondblclick="openWindow('mainWindow')" ontouchend="handleTouch(event, 'mainWindow')">
             <img src="assets/images/my-computer.png" alt="Folder">
             <span>My Computer</span>
         </div>
-        <div class="icon" id="icon2" ondblclick="redirectToURL('https://fuckyoufm.net')">
+        <div class="icon" id="icon2" ondblclick="redirectToURL('https://fuckyoufm.net')" ontouchend="handleTouch(event, 'https://fuckyoufm.net')">
             <img src="assets/images/folder-icon.png" alt="Folder">
             <span>FuckYou FM</span>
         </div>
-        <div class="icon" id="icon3" ondblclick="redirectToURL('https://vapefacts.com.au')">
+        <div class="icon" id="icon3" ondblclick="redirectToURL('https://vapefacts.com.au')" ontouchend="handleTouch(event, 'https://vapefacts.com.au')">
             <img src="assets/images/file-1.png" alt="Folder">
             <span>Vape Facts Australia</span>
         </div>
-        <div class="icon" id="icon4" ondblclick="openWindow('snakeWindow')">
+        <div class="icon" id="icon4" ondblclick="openWindow('snakeWindow')" ontouchend="handleTouch(event, 'snakeWindow')">
             <img src="assets/images/snake-icon.png" alt="Snake">
             <span>Snake</span>
         </div>
-        <div class="icon" id="icon5" ondblclick="openWindow('paintWindow')">
+        <div class="icon" id="icon5" ondblclick="openWindow('paintWindow')" ontouchend="handleTouch(event, 'paintWindow')">
             <img src="assets/images/paint-icon.png" alt="Paint">
             <span>Paint</span>
         </div>
     </div>
+    
     
     <div class="window" id="mainWindow">
         <div class="title-bar">

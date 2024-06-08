@@ -51,13 +51,44 @@ function hideLoadingScreen() {
 }
 
 function enableSingleClickHighlight(element) {
-    element.onclick = function(event) {
+    element.addEventListener('click', function(event) {
         event.stopPropagation();
         document.querySelectorAll('.icon').forEach(function(icon) {
             icon.classList.remove('highlighted');
         });
         element.classList.add('highlighted');
-    };
+    });
+
+    element.addEventListener('touchend', function(event) {
+        event.stopPropagation();
+        document.querySelectorAll('.icon').forEach(function(icon) {
+            icon.classList.remove('highlighted');
+        });
+        element.classList.add('highlighted');
+    });
+}
+
+// Initialize highlight functionality for each icon
+document.querySelectorAll('.icon').forEach(function(icon) {
+    enableSingleClickHighlight(icon);
+});
+
+
+var lastTouchEnd = 0;
+
+function handleTouch(event, target) {
+    var currentTime = new Date().getTime();
+    var timeDiff = currentTime - lastTouchEnd;
+
+    if (timeDiff < 300 && timeDiff > 0) {
+        if (typeof target === 'string' && target.startsWith('http')) {
+            redirectToURL(target);
+        } else {
+            openWindow(target);
+        }
+    }
+
+    lastTouchEnd = currentTime;
 }
 
 function redirectToURL(url) {
