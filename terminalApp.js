@@ -87,42 +87,43 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // Function to parse as plain text
-    function parseAsPlainText(data) {
-        const adventureData = {};
-        const nodePattern = /"(\w+)": \{([^]*?)\}/g;
-        const descriptionPattern = /"description":\s*"([^"]*?)"/;
-        const choicesPattern = /"choices": \{([^}]+)\}/;
-        const choicePattern = /"([^"]+)":\s*"(\w+)"/g;
+// Function to parse as plain text
+function parseAsPlainText(data) {
+    const adventureData = {};
+    const nodePattern = /"(\w+)": \{([^]*?)\}/g;
+    const descriptionPattern = /"description":\s*"([^"]*?)"/;
+    const choicesPattern = /"choices": \{([^]*?)\}/;
+    const choicePattern = /"([^"]+)":\s*"(\w+)"/g;
 
-        let match;
-        while ((match = nodePattern.exec(data)) !== null) {
-            const nodeName = match[1];
-            const nodeContent = match[2];
+    let match;
+    while ((match = nodePattern.exec(data)) !== null) {
+        const nodeName = match[1];
+        const nodeContent = match[2];
 
-            // Parse the description
-            const descriptionMatch = descriptionPattern.exec(nodeContent);
-            const description = descriptionMatch ? descriptionMatch[1] : "";
+        // Parse the description
+        const descriptionMatch = descriptionPattern.exec(nodeContent);
+        const description = descriptionMatch ? descriptionMatch[1] : "";
 
-            // Parse the choices
-            const choicesMatch = choicesPattern.exec(nodeContent);
-            const choicesText = choicesMatch ? choicesMatch[1] : "";
-            const choices = {};
-            let choiceMatch;
-            while ((choiceMatch = choicePattern.exec(choicesText)) !== null) {
-                const choiceDescription = choiceMatch[1];
-                const nextState = choiceMatch[2];
-                choices[choiceDescription] = nextState;
-            }
-
-            adventureData[nodeName] = {
-                description: description,
-                choices: choices
-            };
+        // Parse the choices
+        const choicesMatch = choicesPattern.exec(nodeContent);
+        const choicesText = choicesMatch ? choicesMatch[1] : "";
+        const choices = {};
+        let choiceMatch;
+        while ((choiceMatch = choicePattern.exec(choicesText)) !== null) {
+            const choiceDescription = choiceMatch[1];
+            const nextState = choiceMatch[2];
+            choices[choiceDescription] = nextState;
         }
 
-        return adventureData;
+        adventureData[nodeName] = {
+            description: description,
+            choices: choices
+        };
     }
+
+    return adventureData;
+}
+
 
     // Terminal commands
     const commands = {
