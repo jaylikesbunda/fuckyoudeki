@@ -89,7 +89,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function parseAsPlainText(data) {
         const adventureData = {};
-        const nodePattern = /"(\w+)":\s*{\s*"description":\s*"([^"]+)",\s*"choices":\s*{([^}]+)}\s*}/g;
+        const nodePattern = /"(\w+)":\s*{\s*"description":\s*"([^"]+)",\s*"choices":\s*{([^}]*)}\s*}/g;
         const choicePattern = /"([^"]+)":\s*"([^"]+)"/g;
     
         let match;
@@ -114,7 +114,6 @@ document.addEventListener('DOMContentLoaded', () => {
     
         return adventureData;
     }
-    
     // Terminal commands
     const commands = {
         clear: function(outputElement) {
