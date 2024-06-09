@@ -90,14 +90,14 @@ document.addEventListener('DOMContentLoaded', () => {
     // Function to parse as plain text
     function parseAsPlainText(data) {
         const adventureData = {};
-        const sections = data.split(/(?="description":)/g); // Split by descriptions
+        const sections = data.split(/(?=\s*"\w+":\s*\{)/g); // Split by states
 
         sections.forEach(section => {
-            const match = section.match(/"(\w+)":\s*{([^]*?)}/);
+            const match = section.match(/"(\w+)":\s*\{([^]*?)\}/);
             if (match) {
                 const key = match[1];
-                const value = parseSection(match[2]);
-                adventureData[key] = value;
+                const value = match[2];
+                adventureData[key] = parseSection(value);
             }
         });
 
@@ -111,7 +111,7 @@ document.addEventListener('DOMContentLoaded', () => {
             result.description = descriptionMatch[1];
         }
 
-        const choicesMatch = section.match(/"choices":\s*{([^]*?)}/);
+        const choicesMatch = section.match(/"choices":\s*\{([^]*?)\}/);
         if (choicesMatch) {
             result.choices = parseChoices(choicesMatch[1]);
         }
@@ -121,7 +121,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function parseChoices(choicesSection) {
         const choices = {};
-        const choicePairs = choicesSection.split(/,(?=\s*")/);
+        const choicePairs = choicesSection.split(/,\s*(?=")/);
 
         choicePairs.forEach(pair => {
             const match = pair.match(/"([^"]*?)":\s*"([^"]*?)"/);
@@ -204,7 +204,6 @@ Mock file listing:
             }
         }
     };
-
     // Display the current state of the text adventure game
     function displayState(outputElement) {
         try {
