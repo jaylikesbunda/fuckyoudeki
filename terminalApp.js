@@ -114,20 +114,19 @@ document.addEventListener('DOMContentLoaded', () => {
     
         return adventureData;
     }
-    // Terminal commands
     const commands = {
         clear: function(outputElement) {
             outputElement.value = '';
         },
         help: function(outputElement) {
             const helpText = `
-Available commands:
-  clear     - Clears the terminal screen
-  help      - Displays this help text
-  echo      - Echoes the input text
-  list      - Lists mock files
-  start     - Starts the text adventure game
-  choice    - Make a choice in the text adventure game (usage: choice <option>)
+    Available commands:
+      clear     - Clears the terminal screen
+      help      - Displays this help text
+      echo      - Echoes the input text
+      list      - Lists mock files
+      start     - Starts the text adventure game and asks for arch nemesis
+      choice    - Make a choice in the text adventure game (usage: choice <option>)
             `;
             outputElement.value += helpText;
         },
@@ -137,16 +136,18 @@ Available commands:
         },
         list: function(outputElement) {
             const files = `
-Mock file listing:
-  file1.txt
-  file2.txt
-  directory1/
-  directory2/
+    Mock file listing:
+      file1.txt
+      file2.txt
+      directory1/
+      directory2/
             `;
             outputElement.value += files;
         },
         start: async function(outputElement) {
             try {
+                const nemesis = prompt("Who is your arch nemesis?");
+                if (!nemesis) throw new Error('No nemesis provided. Please start again.');
                 const loaded = await loadAdventureData();
                 if (!loaded) {
                     throw new Error('Adventure game data not loaded. Check JSON file for syntax errors.');
@@ -156,6 +157,7 @@ Mock file listing:
                     throw new Error('Initial state "start" not found in adventure data.');
                 }
                 currentState = 'start';
+                adventureData.nemesis = nemesis;
                 displayState(outputElement);
             } catch (error) {
                 outputElement.value += `${error.message}\n`;
@@ -169,9 +171,9 @@ Mock file listing:
                 if (!currentState || !adventureData[currentState]) {
                     throw new Error('Game not started or invalid state. Use the "start" command to begin.');
                 }
-                const choiceInput = args.join(' ').toLowerCase();
+                const choiceInput = args.join(' ').toLowerCase().replace(/\s+/g, '_');
                 const choices = Object.keys(adventureData[currentState].choices);
-                const choice = choices.find(c => c.toLowerCase().includes(choiceInput));
+                const choice = choices.find(c => c.toLowerCase() === choiceInput);
                 if (choice) {
                     currentState = adventureData[currentState].choices[choice];
                     displayState(outputElement);
@@ -183,44 +185,31 @@ Mock file listing:
             }
         }
     };
-
-    // Display the current state of the text adventure game
+    
     function displayState(outputElement) {
         try {
             if (!adventureData || !adventureData[currentState]) {
-                throw new Error(`Invalid state: ${currentState}. Restart the game using the "start" command.`);
+                outputElement.value += `It looks like we've hit a snag. This part of the adventure isn't written yet. Please restart the game using the "start" command or choose a different option.\n`;
+                return;
             }
             const state = adventureData[currentState];
-            outputElement.value += `\n${state.description}\n`;
-            Object.keys(state.choices).forEach(choice => {
-                outputElement.value += `- ${choice}\n`;
-            });
+            let description = state.description.replace(/@\[\]/g, adventureData.nemesis)
+                                               .replace(/@\[\]'s Mother/g, `${adventureData.nemesis}'s Mother`);
+            outputElement.value += `\n${description}\n`;
+    
+            if (Object.keys(state.choices).length === 0) {
+                outputElement.value += `It seems like this path hasn't been completed yet. Stay tuned for updates or try another choice!\n`;
+            } else {
+                Object.keys(state.choices).forEach(choice => {
+                    outputElement.value += `- ${choice.replace(/_/g, ' ')}\n`;
+                });
+            }
             outputElement.scrollTop = outputElement.scrollHeight; // Scroll to the bottom
         } catch (error) {
-            outputElement.value += `${error.message}\n`;
+            outputElement.value += `Oops! An error occurred: ${error.message}. Please try restarting the game.\n`;
         }
     }
-
-    // Terminal input handling
-    window.handleTerminalInput = function(event) {
-        if (event.key === 'Enter') {
-            const input = document.getElementById('terminalInput').value.trim();
-            const output = document.getElementById('terminalOutput');
-            output.value += `\n$ ${input}\n`;
-            document.getElementById('terminalInput').value = ''; // Clear input
-
-            if (input) {
-                const [command, ...args] = input.split(' ');
-                if (commands[command]) {
-                    commands[command](output, args);
-                } else {
-                    output.value += `Command not found: ${command}\n`;
-                }
-                output.scrollTop = output.scrollHeight; // Scroll to the bottom
-            }
-        }
-    }
-
+    
 
     // Show programs list on hover or touch
     window.showPrograms = function() {
