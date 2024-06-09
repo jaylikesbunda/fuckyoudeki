@@ -198,11 +198,11 @@ Mock file listing:
 
     // Display the current state of the text adventure game
     function displayState(outputElement) {
-        const state = adventureData[currentState];
-        if (!state) {
+        if (!adventureData || !adventureData[currentState]) {
             outputElement.value += `Invalid state: ${currentState}. Restart the game using the "start" command.\n`;
             return;
         }
+        const state = adventureData[currentState];
         outputElement.value += `\n${state.description}\n`;
         Object.keys(state.choices).forEach(choice => {
             outputElement.value += `- ${choice}\n`;
