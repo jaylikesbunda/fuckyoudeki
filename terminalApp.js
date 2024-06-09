@@ -114,6 +114,7 @@ document.addEventListener('DOMContentLoaded', () => {
     
         return adventureData;
     }
+    // Terminal commands
     const commands = {
         clear: function(outputElement) {
             outputElement.value = '';
@@ -185,7 +186,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
     };
-    
+
     function displayState(outputElement) {
         try {
             if (!adventureData || !adventureData[currentState]) {
@@ -210,6 +211,27 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
     
+
+    // Terminal input handling
+    window.handleTerminalInput = function(event) {
+        if (event.key === 'Enter') {
+            const input = document.getElementById('terminalInput').value.trim();
+            const output = document.getElementById('terminalOutput');
+            output.value += `\n$ ${input}\n`;
+            document.getElementById('terminalInput').value = ''; // Clear input
+
+            if (input) {
+                const [command, ...args] = input.split(' ');
+                if (commands[command]) {
+                    commands[command](output, args);
+                } else {
+                    output.value += `Command not found: ${command}\n`;
+                }
+                output.scrollTop = output.scrollHeight; // Scroll to the bottom
+            }
+        }
+    }
+
 
     // Show programs list on hover or touch
     window.showPrograms = function() {
