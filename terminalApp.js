@@ -90,49 +90,38 @@ document.addEventListener('DOMContentLoaded', () => {
     // Function to parse as plain text
     function parseAsPlainText(data) {
         const adventureData = {};
-        const sections = data.split(/(?=\s*"\w+":\s*\{)/g); // Split by states
+        const nodePattern = /"(\w+)": \{([^]*?)\}/g;
+        const descriptionPattern = /"description":\s*"([^"]*?)"/;
+        const choicesPattern = /"choices": \{([^}]+)\}/;
+        const choicePattern = /"([^"]+)":\s*"(\w+)"/g;
 
-        sections.forEach(section => {
-            const match = section.match(/"(\w+)":\s*\{([^]*?)\}/);
-            if (match) {
-                const key = match[1];
-                const value = match[2];
-                adventureData[key] = parseSection(value);
+        let match;
+        while ((match = nodePattern.exec(data)) !== null) {
+            const nodeName = match[1];
+            const nodeContent = match[2];
+
+            // Parse the description
+            const descriptionMatch = descriptionPattern.exec(nodeContent);
+            const description = descriptionMatch ? descriptionMatch[1] : "";
+
+            // Parse the choices
+            const choicesMatch = choicesPattern.exec(nodeContent);
+            const choicesText = choicesMatch ? choicesMatch[1] : "";
+            const choices = {};
+            let choiceMatch;
+            while ((choiceMatch = choicePattern.exec(choicesText)) !== null) {
+                const choiceDescription = choiceMatch[1];
+                const nextState = choiceMatch[2];
+                choices[choiceDescription] = nextState;
             }
-        });
+
+            adventureData[nodeName] = {
+                description: description,
+                choices: choices
+            };
+        }
 
         return adventureData;
-    }
-
-    function parseSection(section) {
-        const result = {};
-        const descriptionMatch = section.match(/"description":\s*"([^"]*?)"/);
-        if (descriptionMatch) {
-            result.description = descriptionMatch[1];
-        }
-
-        const choicesMatch = section.match(/"choices":\s*\{([^]*?)\}/);
-        if (choicesMatch) {
-            result.choices = parseChoices(choicesMatch[1]);
-        }
-
-        return result;
-    }
-
-    function parseChoices(choicesSection) {
-        const choices = {};
-        const choicePairs = choicesSection.split(/,\s*(?=")/);
-
-        choicePairs.forEach(pair => {
-            const match = pair.match(/"([^"]*?)":\s*"([^"]*?)"/);
-            if (match) {
-                const key = match[1];
-                const value = match[2];
-                choices[key] = value;
-            }
-        });
-
-        return choices;
     }
 
     // Terminal commands
@@ -204,6 +193,7 @@ Mock file listing:
             }
         }
     };
+
     // Display the current state of the text adventure game
     function displayState(outputElement) {
         try {
@@ -240,6 +230,7 @@ Mock file listing:
             }
         }
     }
+
 
     // Show programs list on hover or touch
     window.showPrograms = function() {
