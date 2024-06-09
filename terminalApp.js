@@ -1,140 +1,139 @@
 document.addEventListener('DOMContentLoaded', () => {
-    console.log('DOMContentLoaded event fired'); // Log when DOMContentLoaded event fires
+    console.log('DOMContentLoaded event fired');
 
     let adventureData = null;
     let currentState = 'start';
 
-// Function to load the adventure game JSON data
-async function loadAdventureData() {
-    try {
-        const response = await fetch('./adventure.json');
-        if (!response.ok) {
-            throw new Error(`HTTP error! Status: ${response.status}`);
-        }
-        const data = await response.text(); // Get the raw text
+    // Function to load the adventure game JSON data
+    async function loadAdventureData() {
         try {
-            adventureData = JSON.parse(data); // Attempt to parse the JSON data
-            console.log('Adventure game data loaded successfully.');
-            return true;
-        } catch (jsonError) {
-            console.error('Error parsing adventure game data:', jsonError);
-            adventureData = tryPartialParse(data); // Attempt partial parsing
-            if (adventureData) {
-                console.log('Partially loaded adventure game data.');
+            const response = await fetch('./adventure.json');
+            if (!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+            const data = await response.text(); // Get the raw text
+            try {
+                adventureData = JSON.parse(data); // Attempt to parse the JSON data
+                console.log('Adventure game data loaded successfully.');
                 return true;
-            } else {
-                console.log('Attempting plain text parsing as a final backup.');
-                adventureData = parseAsPlainText(data);
+            } catch (jsonError) {
+                console.error('Error parsing adventure game data:', jsonError);
+                adventureData = tryPartialParse(data); // Attempt partial parsing
                 if (adventureData) {
-                    console.log('Plain text parsing successful.');
+                    console.log('Partially loaded adventure game data.');
                     return true;
                 } else {
-                    console.error('Plain text parsing failed.');
-                    return false;
+                    console.log('Attempting plain text parsing as a final backup.');
+                    adventureData = parseAsPlainText(data);
+                    if (adventureData) {
+                        console.log('Plain text parsing successful.');
+                        return true;
+                    } else {
+                        console.error('Plain text parsing failed.');
+                        return false;
+                    }
                 }
             }
+        } catch (networkError) {
+            console.error('Error loading adventure game data:', networkError);
+            return false;
         }
-    } catch (networkError) {
-        console.error('Error loading adventure game data:', networkError);
-        return false;
     }
-}
 
-// Function to attempt partial parsing of the JSON data
-function tryPartialParse(data) {
-    let sanitizedData = data;
+    // Function to attempt partial parsing of the JSON data
+    function tryPartialParse(data) {
+        let sanitizedData = data;
 
-    // First pass at cleaning the JSON
-    sanitizedData = sanitizedData
-        .replace(/,\s*([\]}])/g, '$1') // Remove trailing commas
-        .replace(/([{,])\s*([^":\s]+)\s*:/g, '$1"$2":') // Quote unquoted keys
-        .replace(/,\s*$/, '') // Remove trailing commas at end of file
-        .replace(/(['"])?([a-zA-Z0-9_]+)(['"])?\s*:/g, '"$2":') // Ensure keys are quoted
-        .replace(/:\s*(['"])?([a-zA-Z0-9_]+)(['"])?(\s*,?)/g, ': "$2"$4') // Ensure values are quoted
-        .replace(/:\s*(['"])?([^",\s\]}]+)(['"])?(\s*,?)/g, ': "$2"$4'); // Quote unquoted string values
-
-    try {
-        return JSON.parse(sanitizedData);
-    } catch (e) {
-        console.error('Sanitized parse failed:', e);
-
-        // Further attempts to sanitize the JSON by fixing specific issues
+        // First pass at cleaning the JSON
         sanitizedData = sanitizedData
-            .replace(/\\[rn]/g, '') // Remove escape sequences
-            .replace(/\s*([{}[\],])\s*/g, '$1') // Remove unnecessary whitespaces
-            .replace(/(\w+):/g, '"$1":') // Ensure all keys are quoted
-            .replace(/:\s*([^",\s\]}]+)/g, ': "$1"'); // Ensure all values are quoted
+            .replace(/,\s*([\]}])/g, '$1') // Remove trailing commas
+            .replace(/([{,])\s*([^":\s]+)\s*:/g, '$1"$2":') // Quote unquoted keys
+            .replace(/,\s*$/, '') // Remove trailing commas at end of file
+            .replace(/(['"])?([a-zA-Z0-9_]+)(['"])?\s*:/g, '"$2":') // Ensure keys are quoted
+            .replace(/:\s*(['"])?([a-zA-Z0-9_]+)(['"])?(\s*,?)/g, ': "$2"$4') // Ensure values are quoted
+            .replace(/:\s*(['"])?([^",\s\]}]+)(['"])?(\s*,?)/g, ': "$2"$4'); // Quote unquoted string values
 
         try {
             return JSON.parse(sanitizedData);
-        } catch (secondError) {
-            console.error('Further sanitized parse failed:', secondError);
+        } catch (e) {
+            console.error('Sanitized parse failed:', e);
 
-            // Attempt a final cleaning with more aggressive strategies
+            // Further attempts to sanitize the JSON by fixing specific issues
             sanitizedData = sanitizedData
-                .replace(/'/g, '"') // Replace single quotes with double quotes
-                .replace(/(\s+)?\n(\s+)?/g, '') // Remove newlines
-                .replace(/([^,\s])}/g, '$1,}') // Add missing commas before closing braces
-                .replace(/([^,\s])]/g, '$1,]'); // Add missing commas before closing brackets
+                .replace(/\\[rn]/g, '') // Remove escape sequences
+                .replace(/\s*([{}[\],])\s*/g, '$1') // Remove unnecessary whitespaces
+                .replace(/(\w+):/g, '"$1":') // Ensure all keys are quoted
+                .replace(/:\s*([^",\s\]}]+)/g, ': "$1"'); // Ensure all values are quoted
 
             try {
                 return JSON.parse(sanitizedData);
-            } catch (finalError) {
-                console.error('Final sanitized parse failed:', finalError);
-                return null;
+            } catch (secondError) {
+                console.error('Further sanitized parse failed:', secondError);
+
+                // Attempt a final cleaning with more aggressive strategies
+                sanitizedData = sanitizedData
+                    .replace(/'/g, '"') // Replace single quotes with double quotes
+                    .replace(/(\s+)?\n(\s+)?/g, '') // Remove newlines
+                    .replace(/([^,\s])}/g, '$1,}') // Add missing commas before closing braces
+                    .replace(/([^,\s])]/g, '$1,]'); // Add missing commas before closing brackets
+
+                try {
+                    return JSON.parse(sanitizedData);
+                } catch (finalError) {
+                    console.error('Final sanitized parse failed:', finalError);
+                    return null;
+                }
             }
         }
     }
-}
 
-// Function to parse as plain text
-function parseAsPlainText(data) {
-    const adventureData = {};
-    const sections = data.split(/(?="description":)/g); // Split by descriptions
+    // Function to parse as plain text
+    function parseAsPlainText(data) {
+        const adventureData = {};
+        const sections = data.split(/(?="description":)/g); // Split by descriptions
 
-    sections.forEach(section => {
-        const match = section.match(/"(\w+)":\s*{([^]*?)}/);
-        if (match) {
-            const key = match[1];
-            const value = parseSection(match[2]);
-            adventureData[key] = value;
-        }
-    });
+        sections.forEach(section => {
+            const match = section.match(/"(\w+)":\s*{([^]*?)}/);
+            if (match) {
+                const key = match[1];
+                const value = parseSection(match[2]);
+                adventureData[key] = value;
+            }
+        });
 
-    return adventureData;
-}
-
-function parseSection(section) {
-    const result = {};
-    const descriptionMatch = section.match(/"description":\s*"([^"]*?)"/);
-    if (descriptionMatch) {
-        result.description = descriptionMatch[1];
+        return adventureData;
     }
 
-    const choicesMatch = section.match(/"choices":\s*{([^]*?)}/);
-    if (choicesMatch) {
-        result.choices = parseChoices(choicesMatch[1]);
+    function parseSection(section) {
+        const result = {};
+        const descriptionMatch = section.match(/"description":\s*"([^"]*?)"/);
+        if (descriptionMatch) {
+            result.description = descriptionMatch[1];
+        }
+
+        const choicesMatch = section.match(/"choices":\s*{([^]*?)}/);
+        if (choicesMatch) {
+            result.choices = parseChoices(choicesMatch[1]);
+        }
+
+        return result;
     }
 
-    return result;
-}
+    function parseChoices(choicesSection) {
+        const choices = {};
+        const choicePairs = choicesSection.split(/,(?=\s*")/);
 
-function parseChoices(choicesSection) {
-    const choices = {};
-    const choicePairs = choicesSection.split(/,(?=\s*")/);
+        choicePairs.forEach(pair => {
+            const match = pair.match(/"([^"]*?)":\s*"([^"]*?)"/);
+            if (match) {
+                const key = match[1];
+                const value = match[2];
+                choices[key] = value;
+            }
+        });
 
-    choicePairs.forEach(pair => {
-        const match = pair.match(/"([^"]*?)":\s*"([^"]*?)"/);
-        if (match) {
-            const key = match[1];
-            const value = match[2];
-            choices[key] = value;
-        }
-    });
-
-    return choices;
-}
-
+        return choices;
+    }
 
     // Terminal commands
     const commands = {
@@ -181,7 +180,7 @@ Mock file listing:
                 outputElement.value += 'Adventure game data not loaded.\n';
                 return;
             }
-            if (currentState === 'start') {
+            if (!currentState) {
                 outputElement.value += 'Game not started. Use the "start" command to begin.\n';
                 return;
             }
@@ -200,6 +199,10 @@ Mock file listing:
     // Display the current state of the text adventure game
     function displayState(outputElement) {
         const state = adventureData[currentState];
+        if (!state) {
+            outputElement.value += `Invalid state: ${currentState}. Restart the game using the "start" command.\n`;
+            return;
+        }
         outputElement.value += `\n${state.description}\n`;
         Object.keys(state.choices).forEach(choice => {
             outputElement.value += `- ${choice}\n`;
