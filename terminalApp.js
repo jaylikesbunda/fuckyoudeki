@@ -39,8 +39,10 @@ document.addEventListener('DOMContentLoaded', () => {
         // Attempt to fix common JSON errors
         sanitizedData = sanitizedData
             .replace(/,\s*([\]}])/g, '$1') // Remove trailing commas
-            .replace(/(['"])?([a-zA-Z0-9_]+)(['"])?\s*:/g, '"$2":') // Quote keys
-            .replace(/([{,])\s*([^":\s]+)\s*:/g, '$1"$2":'); // Ensure keys are quoted
+            .replace(/([{,])\s*([^":\s]+)\s*:/g, '$1"$2":') // Quote unquoted keys
+            .replace(/,\s*$/, '') // Remove trailing commas at end of file
+            .replace(/(['"])?([a-zA-Z0-9_]+)(['"])?\s*:/g, '"$2":') // Ensure keys are quoted
+            .replace(/:\s*(['"])?([a-zA-Z0-9_]+)(['"])?(\s*,?)/g, ': "$2"$4'); // Ensure values are quoted
 
         try {
             return JSON.parse(sanitizedData);
