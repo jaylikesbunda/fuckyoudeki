@@ -180,20 +180,36 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (!currentState || !adventureData[currentState]) {
                     throw new Error('Game not started or invalid state. Use the "start" command to begin.');
                 }
-                const choiceInput = args.join(' ').toLowerCase().replace(/\s+/g, '_');
+                const choiceInput = args.join(' ').toLowerCase();
                 const choices = Object.keys(adventureData[currentState].choices);
-                const choice = choices.find(c => c.toLowerCase() === choiceInput);
+                let choice = choices.find(c => c.toLowerCase().replace(/\s+/g, '_') === choiceInput.replace(/\s+/g, '_'));
+    
+                if (!choice) {
+                    // If no exact match, find the closest match
+                    let bestMatch = { choice: null, count: 0 };
+                    choices.forEach(c => {
+                        const similarity = c.toLowerCase().split('').reduce((acc, curr, idx) => {
+                            return choiceInput[idx] && curr === choiceInput[idx] ? acc + 1 : acc;
+                        }, 0);
+                        if (similarity > bestMatch.count) {
+                            bestMatch = { choice: c, count: similarity };
+                        }
+                    });
+                    choice = bestMatch.choice;
+                }
+    
                 if (choice) {
                     currentState = adventureData[currentState].choices[choice];
                     displayState(outputElement);
                 } else {
-                    outputElement.value += `Invalid choice: ${choiceInput}. Please try again.\n`;
+                    outputElement.value += `Invalid choice: ${choiceInput}. Please try again or type more clearly.\n`;
                 }
             } catch (error) {
                 outputElement.value += `${error.message}\n`;
             }
         }
     };
+    
 
     function displayState(outputElement) {
         try {
