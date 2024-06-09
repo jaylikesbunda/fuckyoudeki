@@ -6,6 +6,7 @@
             console.log(`openWindow called with windowId: ${windowId}`); // Log openWindow calls
             const windowElement = document.getElementById(windowId);
             windowElement.classList.add('show');
+            windowElement.style.display = 'block';
 
             // Get screen dimensions
             var screenWidth = window.innerWidth;
@@ -45,16 +46,43 @@
 
             windowElement.style.transform = 'none';
             windowElement.style.position = 'absolute';
+
+            // Update taskbar icons after opening a window
+            updateTaskbarIcons();
         }
 
         window.minimizeWindow = function(windowId) {
             console.log(`minimizeWindow called with windowId: ${windowId}`); // Log minimizeWindow calls
-            document.getElementById(windowId).classList.remove('show');
+            const windowElement = document.getElementById(windowId);
+            windowElement.classList.remove('show');
+            windowElement.style.display = 'none'; // Hide the window
+            updateTaskbarIcons(); // Update taskbar icons after minimizing a window
         }
 
         window.maximizeWindow = function(windowId) {
             console.log(`maximizeWindow called with windowId: ${windowId}`); // Log maximizeWindow calls
-            document.getElementById(windowId).classList.toggle('maximized');
+            const windowElement = document.getElementById(windowId);
+            const isMaximized = windowElement.classList.toggle('maximized');
+
+            if (isMaximized) {
+                windowElement.style.width = '100vw';
+                windowElement.style.height = '100vh';
+                windowElement.style.top = '0';
+                windowElement.style.left = '0';
+                windowElement.style.transform = 'none';
+            } else {
+                openWindow(windowId); // Reset to default size and position
+            }
+            
+            updateTaskbarIcons(); // Update taskbar icons after maximizing a window
+        }
+
+        window.closeWindow = function(windowId) {
+            console.log(`closeWindow called with windowId: ${windowId}`); // Log closeWindow calls
+            const windowElement = document.getElementById(windowId);
+            windowElement.classList.remove('show');
+            windowElement.style.display = 'none'; // Hide the window
+            updateTaskbarIcons(); // Update taskbar icons after closing a window
         }
 
         window.handleTouch = function(event, windowId) {
