@@ -92,26 +92,34 @@ document.addEventListener('DOMContentLoaded', () => {
         const nodePattern = /"(\w+)": \{([^]*?)\}/g;
         const descriptionPattern = /"description":\s*"([^"]*?)"/;
         const choicesPattern = /"choices": \{([^]*?)\}/;
-        const choicePattern = /"([^"]+)":\s*"(\w+)"/g;
+        const choicePattern = /"([^"]+)":\s*"(\w+)"/;
     
         let match;
         while ((match = nodePattern.exec(data)) !== null) {
             const nodeName = match[1];
             const nodeContent = match[2];
+            console.log(`Node: ${nodeName}`);  // Log node name
     
             // Parse the description
             const descriptionMatch = descriptionPattern.exec(nodeContent);
             const description = descriptionMatch ? descriptionMatch[1] : "";
+            console.log(`Description: ${description}`);  // Log description
     
             // Parse the choices
             const choicesMatch = choicesPattern.exec(nodeContent);
-            const choicesText = choicesMatch ? choicesMatch[1] : "";
+            const choicesText = choicesMatch ? choicesMatch[1].trim() : "";
             const choices = {};
-            let choiceMatch;
-            while ((choiceMatch = choicePattern.exec(choicesText)) !== null) {
-                const choiceDescription = choiceMatch[1];
-                const nextState = choiceMatch[2];
-                choices[choiceDescription] = nextState;
+            if (choicesText) {
+                const choicesArray = choicesText.split(/,(?![^{}]*})/);  // Split by comma, ignoring commas inside braces
+                choicesArray.forEach(choice => {
+                    const choiceMatch = choicePattern.exec(choice.trim());
+                    if (choiceMatch) {
+                        const choiceDescription = choiceMatch[1];
+                        const nextState = choiceMatch[2];
+                        choices[choiceDescription] = nextState;
+                        console.log(`Choice: ${choiceDescription} -> ${nextState}`);  // Log each choice
+                    }
+                });
             }
     
             adventureData[nodeName] = {
