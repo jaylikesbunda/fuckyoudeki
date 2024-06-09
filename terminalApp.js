@@ -135,13 +135,13 @@ document.addEventListener('DOMContentLoaded', () => {
         return choices;
     }
 
-    // Terminal commands
-    const commands = {
-        clear: function(outputElement) {
-            outputElement.value = '';
-        },
-        help: function(outputElement) {
-            const helpText = `
+// Terminal commands
+const commands = {
+    clear: function(outputElement) {
+        outputElement.value = '';
+    },
+    help: function(outputElement) {
+        const helpText = `
 Available commands:
   clear     - Clears the terminal screen
   help      - Displays this help text
@@ -149,40 +149,42 @@ Available commands:
   list      - Lists mock files
   start     - Starts the text adventure game
   choice    - Make a choice in the text adventure game (usage: choice <option>)
-            `;
-            outputElement.value += helpText;
-        },
-        echo: function(outputElement, args) {
-            const echoText = args.join(' ') + '\n';
-            outputElement.value += echoText;
-        },
-        list: function(outputElement) {
-            const files = `
+        `;
+        outputElement.value += helpText;
+    },
+    echo: function(outputElement, args) {
+        const echoText = args.join(' ') + '\n';
+        outputElement.value += echoText;
+    },
+    list: function(outputElement) {
+        const files = `
 Mock file listing:
   file1.txt
   file2.txt
   directory1/
   directory2/
-            `;
-            outputElement.value += files;
-        },
-        start: async function(outputElement) {
+        `;
+        outputElement.value += files;
+    },
+    start: async function(outputElement) {
+        try {
             const loaded = await loadAdventureData();
             if (!loaded) {
-                outputElement.value += 'Adventure game data not loaded. Check JSON file for syntax errors.\n';
-                return;
+                throw new Error('Adventure game data not loaded. Check JSON file for syntax errors.');
             }
             currentState = 'start';
             displayState(outputElement);
-        },
-        choice: function(outputElement, args) {
+        } catch (error) {
+            outputElement.value += `${error.message}\n`;
+        }
+    },
+    choice: function(outputElement, args) {
+        try {
             if (!adventureData) {
-                outputElement.value += 'Adventure game data not loaded.\n';
-                return;
+                throw new Error('Adventure game data not loaded.');
             }
-            if (!currentState) {
-                outputElement.value += 'Game not started. Use the "start" command to begin.\n';
-                return;
+            if (!currentState || !adventureData[currentState]) {
+                throw new Error('Game not started. Use the "start" command to begin.');
             }
             const choiceInput = args.join(' ').toLowerCase();
             const choices = Object.keys(adventureData[currentState].choices);
@@ -193,14 +195,17 @@ Mock file listing:
             } else {
                 outputElement.value += `Invalid choice: ${choiceInput}. Please try again.\n`;
             }
+        } catch (error) {
+            outputElement.value += `${error.message}\n`;
         }
-    };
+    }
+};
 
-    // Display the current state of the text adventure game
-    function displayState(outputElement) {
+// Display the current state of the text adventure game
+function displayState(outputElement) {
+    try {
         if (!adventureData || !adventureData[currentState]) {
-            outputElement.value += `Invalid state: ${currentState}. Restart the game using the "start" command.\n`;
-            return;
+            throw new Error(`Invalid state: ${currentState}. Restart the game using the "start" command.`);
         }
         const state = adventureData[currentState];
         outputElement.value += `\n${state.description}\n`;
@@ -208,7 +213,10 @@ Mock file listing:
             outputElement.value += `- ${choice}\n`;
         });
         outputElement.scrollTop = outputElement.scrollHeight; // Scroll to the bottom
+    } catch (error) {
+        outputElement.value += `${error.message}\n`;
     }
+}
 
     // Terminal input handling
     window.handleTerminalInput = function(event) {
