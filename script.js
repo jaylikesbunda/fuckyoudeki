@@ -281,22 +281,35 @@ function updateTime() {
 
 function updateTaskbarIcons() {
     var taskbarIcons = document.getElementById('taskbarIcons');
-    taskbarIcons.innerHTML = '';
+    taskbarIcons.innerHTML = '';  // Clear existing icons to refresh the list
 
+    // Select all windows that are currently being shown
     var windows = document.querySelectorAll('.window.show');
     windows.forEach(function(window) {
-        var icon = document.createElement('img');
-        icon.src = 'assets/images/folder-icon.png'; // Use relevant icon
-        icon.alt = 'Window Icon';
-        icon.onclick = function() {
-            restoreWindow(window.id);
-        };
-        taskbarIcons.appendChild(icon);
+        var windowId = window.id;
+        // Query the desktop icon using a selector that matches the window ID in the 'ondblclick' attribute
+        var desktopIcon = document.querySelector(`.icon[ondblclick*="${windowId}"] img`);
+        
+        if (desktopIcon) {
+            // Create a new image element for the taskbar icon
+            var icon = document.createElement('img');
+            icon.src = desktopIcon.src; // Use the same src as the desktop icon
+            icon.alt = desktopIcon.alt; // Use the same alt text for accessibility
+            icon.onclick = function() {
+                restoreWindow(windowId);  // Function to restore the window when icon is clicked
+            };
+            taskbarIcons.appendChild(icon);  // Append the new icon to the taskbar
+        }
     });
 }
 
+
+
 function restoreWindow(windowId) {
-    var window = document.getElementById(windowId);
-    window.style.display = 'block';
-    window.classList.add('show');
+    var windowElement = document.getElementById(windowId);
+    if (windowElement) {
+        windowElement.classList.add('show');
+        windowElement.style.display = 'block';
+    }
+    updateTaskbarIcons();
 }
