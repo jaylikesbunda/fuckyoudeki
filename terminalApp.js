@@ -93,7 +93,7 @@ function parseAsPlainText(data) {
     const nodePattern = /"(\w+)": \{([^]*?)\}/g;
     const descriptionPattern = /"description":\s*"([^"]*?)"/;
     const choicesPattern = /"choices": \{([^]*?)\}/;
-    const choicePattern = /"([^"]+)":\s*"(\w+)"/g;
+    const choicePattern = /"([^"]+?)":\s*"([^"]+?)"/g;
 
     let match;
     while ((match = nodePattern.exec(data)) !== null) {
@@ -123,6 +123,7 @@ function parseAsPlainText(data) {
 
     return adventureData;
 }
+
 
 
     // Terminal commands
