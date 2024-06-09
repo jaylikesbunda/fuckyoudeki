@@ -89,35 +89,22 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function parseAsPlainText(data) {
         const adventureData = {};
-        const nodePattern = /"(\w+)": \{([^]*?)\}/g;
-        const descriptionPattern = /"description":\s*"([^"]*?)"/;
-        const choicesPattern = /"choices": \{([^]*?)\}/;
-        const choicePattern = /"([^"]+)":\s*"(\w+)"/g;
+        const nodePattern = /"(\w+)":\s*{\s*"description":\s*"([^"]+)",\s*"choices":\s*{([^}]+)}\s*}/g;
+        const choicePattern = /"([^"]+)":\s*"([^"]+)"/g;
     
         let match;
         while ((match = nodePattern.exec(data)) !== null) {
             const nodeName = match[1];
-            const nodeContent = match[2];
-            
-            // Parse the description
-            const descriptionMatch = descriptionPattern.exec(nodeContent);
-            const description = descriptionMatch ? descriptionMatch[1] : "";
-            
-            // Parse the choices
-            const choicesMatch = choicesPattern.exec(nodeContent);
-            const choicesText = choicesMatch ? choicesMatch[1] : "";
+            const description = match[2];
+            const choicesText = match[3].trim();
             const choices = {};
-    
-            // Split the choices block into individual choices
-            const individualChoices = choicesText.split(/,(?![^{}]*})/);
-            individualChoices.forEach(choiceText => {
-                const choiceMatch = choicePattern.exec(choiceText.trim());
-                if (choiceMatch) {
-                    const choiceDescription = choiceMatch[1].trim();
-                    const nextState = choiceMatch[2].trim();
-                    choices[choiceDescription] = nextState;
-                }
-            });
+            
+            let choiceMatch;
+            while ((choiceMatch = choicePattern.exec(choicesText)) !== null) {
+                const choiceDescription = choiceMatch[1].trim();
+                const nextState = choiceMatch[2].trim();
+                choices[choiceDescription] = nextState;
+            }
     
             adventureData[nodeName] = {
                 description: description,
@@ -127,7 +114,7 @@ document.addEventListener('DOMContentLoaded', () => {
     
         return adventureData;
     }
-
+    
     // Terminal commands
     const commands = {
         clear: function(outputElement) {
