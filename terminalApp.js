@@ -184,7 +184,7 @@ Mock file listing:
                 throw new Error('Adventure game data not loaded.');
             }
             if (!currentState || !adventureData[currentState]) {
-                throw new Error('Game not started. Use the "start" command to begin.');
+                throw new Error('Game not started or invalid state. Use the "start" command to begin.');
             }
             const choiceInput = args.join(' ').toLowerCase();
             const choices = Object.keys(adventureData[currentState].choices);
