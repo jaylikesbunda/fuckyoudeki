@@ -180,22 +180,28 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (!currentState || !adventureData[currentState]) {
                     throw new Error('Game not started or invalid state. Use the "start" command to begin.');
                 }
+    
                 const choiceInput = args.join(' ').toLowerCase();
                 const choices = Object.keys(adventureData[currentState].choices);
                 let choice = choices.find(c => c.toLowerCase().replace(/\s+/g, '_') === choiceInput.replace(/\s+/g, '_'));
     
+                // Keyword-based matching if no exact match is found
                 if (!choice) {
-                    // If no exact match, find the closest match
-                    let bestMatch = { choice: null, count: 0 };
+                    let bestMatch = null;
+                    let bestMatchScore = 0;
                     choices.forEach(c => {
-                        const similarity = c.toLowerCase().split('').reduce((acc, curr, idx) => {
-                            return choiceInput[idx] && curr === choiceInput[idx] ? acc + 1 : acc;
+                        // Calculate match score based on word presence
+                        let matchScore = choiceInput.split(' ').reduce((acc, inputWord) => {
+                            if (c.toLowerCase().includes(inputWord)) acc += 1;
+                            return acc;
                         }, 0);
-                        if (similarity > bestMatch.count) {
-                            bestMatch = { choice: c, count: similarity };
+                        // Update the best match if the current score is higher
+                        if (matchScore > bestMatchScore) {
+                            bestMatch = c;
+                            bestMatchScore = matchScore;
                         }
                     });
-                    choice = bestMatch.choice;
+                    choice = bestMatchScore > 0 ? bestMatch : null;
                 }
     
                 if (choice) {
