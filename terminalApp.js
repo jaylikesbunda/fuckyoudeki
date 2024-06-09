@@ -35,10 +35,12 @@ document.addEventListener('DOMContentLoaded', () => {
     // Function to attempt partial parsing of the JSON data
     function tryPartialParse(data) {
         let sanitizedData = data;
+
         // Attempt to fix common JSON errors
         sanitizedData = sanitizedData
             .replace(/,\s*([\]}])/g, '$1') // Remove trailing commas
-            .replace(/(['"])?([a-zA-Z0-9_]+)(['"])?\s*:/g, '"$2":'); // Quote keys
+            .replace(/(['"])?([a-zA-Z0-9_]+)(['"])?\s*:/g, '"$2":') // Quote keys
+            .replace(/([{,])\s*([^":\s]+)\s*:/g, '$1"$2":'); // Ensure keys are quoted
 
         try {
             return JSON.parse(sanitizedData);
