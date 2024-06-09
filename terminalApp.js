@@ -1,6 +1,25 @@
 document.addEventListener('DOMContentLoaded', () => {
     console.log('DOMContentLoaded event fired'); // Log when DOMContentLoaded event fires
 
+    let adventureData = null;
+    let currentState = 'start';
+
+    // Function to load the adventure game JSON data
+    async function loadAdventureData() {
+        try {
+            const response = await fetch('./adventure.json');
+            if (!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+            adventureData = await response.json();
+            console.log('Adventure game data loaded successfully.');
+            return true;
+        } catch (error) {
+            console.error('Error loading adventure game data:', error);
+            return false;
+        }
+    }
+
     // Terminal commands
     const commands = {
         clear: function(outputElement) {
@@ -13,6 +32,8 @@ Available commands:
   help      - Displays this help text
   echo      - Echoes the input text
   list      - Lists mock files
+  start     - Starts the text adventure game
+  choice    - Make a choice in the text adventure game (usage: choice <option>)
             `;
             outputElement.value += helpText;
         },
@@ -29,8 +50,46 @@ Mock file listing:
   directory2/
             `;
             outputElement.value += files;
+        },
+        start: async function(outputElement) {
+            const loaded = await loadAdventureData();
+            if (!loaded) {
+                outputElement.value += 'Adventure game data not loaded.\n';
+                return;
+            }
+            currentState = 'start';
+            displayState(outputElement);
+        },
+        choice: function(outputElement, args) {
+            if (!adventureData) {
+                outputElement.value += 'Adventure game data not loaded.\n';
+                return;
+            }
+            if (currentState === 'start') {
+                outputElement.value += 'Game not started. Use the "start" command to begin.\n';
+                return;
+            }
+            const choiceInput = args.join(' ').toLowerCase();
+            const choices = Object.keys(adventureData[currentState].choices);
+            const choice = choices.find(c => c.toLowerCase().includes(choiceInput));
+            if (choice) {
+                currentState = adventureData[currentState].choices[choice];
+                displayState(outputElement);
+            } else {
+                outputElement.value += `Invalid choice: ${choiceInput}. Please try again.\n`;
+            }
         }
     };
+
+    // Display the current state of the text adventure game
+    function displayState(outputElement) {
+        const state = adventureData[currentState];
+        outputElement.value += `\n${state.description}\n`;
+        Object.keys(state.choices).forEach(choice => {
+            outputElement.value += `- ${choice}\n`;
+        });
+        outputElement.scrollTop = outputElement.scrollHeight; // Scroll to the bottom
+    }
 
     // Terminal input handling
     window.handleTerminalInput = function(event) {

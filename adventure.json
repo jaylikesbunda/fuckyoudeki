@@ -1,0 +1,1233 @@
+{
+  "start": {
+    "description": "You wake up to another sunny day in your peaceful suburban neighborhood. Across the street lives @[]'s mother, known for her charm, elegance and large breasts.",
+    "choices": {
+      "look out the window": "window",
+      "prepare breakfast": "kitchen",
+      "go back to bed hoping you dream of her": "start",
+      "go outside to have a cigarette": "cig_outside",
+      "sit down on your computer and play league of legends": "wtf_start"
+
+    }
+  },
+  "wtf_start": {
+    "description": "What the fuck is wrong with you? You sit down and continue your pathetic existence.",
+    "choices": {
+      "have a cig, hoping it will fill the void inside you.": "cig_outside",
+      "pull out your military binoculars and watch your neighbour from afar": "stalking_intro",
+      "walk outside in a haze and desperately ask your neighbour out": "desperate_start"
+    }
+  },
+  "cig_outside": {
+    "description": "You step outside onto your back porch and pull out a tasty preroll, smoke hits your lungs and you are happy.",
+    "choices": {
+      "you go inside after your smoke to brew some coffee": "coffee",
+      "try baking some cookies afterwards": "baking",
+      "go to your computer and play league of legends": "wtf_start",
+      "go for a stroll into the woods to find a nice smoke spot": "woods_intro",
+      "go back to bed": "start"
+    }
+  },
+  "woods_intro": {
+    "description": "You decide to go for a walk in the woods, you see nothing but trees and bushes in front and around you.",
+    "choices": {
+      "keep walking straight": "straight_1",
+      "veer off to the left": "left_1",
+      "veer off to the right": "right_1",
+      "sit down on a log to relax": "log_1",
+      "turn back and go home before it gets late": "turn_back"
+    }
+  },
+  "turn_back": {
+    "description": "You head back home before it gets too late in the day",
+    "choices": {
+      "make some coffee": "coffee",
+      "bake some cookies": "baking",
+
+    }
+  },
+  "window": {
+    "description": "From your window, you see her tending to their garden. She seems approachable and friendly.",
+    "choices": {
+      "go outside to greet her": "outside",
+      "watch from afar": "start",
+      "prepare breakfast": "kitchen",
+      "walk outside in a haze and desperately ask her out": "desperate_start",
+      "clean window": "clean_window"
+    }
+  },
+  "clean_window": {
+    "description": "You decide to clean your window with a bottle of Windex® for an unbeatable, streak-free shine!",
+    "choices": {
+      "go outside to greet her": "outside",
+      "watch from afar": "start",
+      "walk outside in a haze and desperately ask her out": "desperate_start"
+    }
+  },
+  "kitchen": {
+    "description": "In the kitchen, you ponder over making a move. Maybe something to share with @[]'s mother?",
+    "choices": {
+      "bake cookies": "baking",
+      "make coffee": "coffee"
+    }
+  },
+  "baking": {
+    "description": "You decide to bake some cookies. The aroma of success fills your house.",
+    "choices": {
+      "take cookies to neighbor": "give_cookies",
+      "eat them yourself": "start"
+    }
+  },
+  "coffee": {
+    "description": "You brew a fresh pot of coffee. It smells like success.",
+    "choices": {
+      "invite neighbor for coffee": "invite_coffee",
+      "enjoy coffee alone": "start"
+    }
+  },
+  "outside": {
+    "description": "Outside, you strike up a conversation about her garden as she works. She smells like fresh Jasmine and Rose and smiles at you with her beautiful eyes and a gorgeous rack.",
+    "choices": {
+      "compliment her garden": "compliment_garden",
+      "ask about her day": "ask_day",
+      "inquire about her garden's plants": "inquire_plants",
+      "offer to assist in the garden": "offer_help",
+      "mention your interest in gardening": "mention_gardening"
+    }
+  },
+  "give_cookies": {
+    "description": "You take the cookies over to @[]'s mother. She's pleasantly surprised and invites you inside for a chat.",
+    "choices": {
+      "go inside": "inside_chat",
+      "suggest enjoying cookies in the garden": "garden_cookies",
+      "politely decline": "start"
+    }
+  },
+  "invite_coffee": {
+    "description": "You invite @[]'s mother over for coffee. She accepts and seems excited to visit.",
+    "choices": {
+      "prepare the living room": "coffee_chat",
+      "suggest a walk while drinking coffee": "coffee_walk",
+      "change your mind": "start"
+    }
+  },
+  "compliment_garden": {
+    "description": "She appreciates your compliment and shares some gardening tips with you. You listen to her with a smile on your face, you aren't paying attention but she doesn't know that.",
+    "choices": {
+      "offer help in garden": "help_garden",
+      "ask for a tour of her garden": "garden_tour",
+      "say goodbye": "start"
+    }
+  },
+  "ask_day": {
+    "description": "She talks about her day and seems to enjoy the company. You continue to plan your approach.",
+    "choices": {
+      "offer to make dinner": "offer_dinner",
+      "suggest a casual walk": "casual_walk",
+      "end conversation": "start"
+    }
+  },
+  "help_garden": {
+    "description": "You spend some time helping in the garden with @[]'s mother. It's a non-chalant way to get to know each other better.",
+    "choices": {
+      "invite for dinner": "offer_dinner",
+      "compliment her on the garden": "compliment_garden",
+      "say goodbye": "start"
+    }
+  },
+  "offer_dinner": {
+    "description": "@[]'s mother is delighted by your offer and agrees to come over to your place for dinner.",
+    "choices": {
+      "cook dinner": "cook_dinner",
+      "order takeout": "order_takeout",
+      "suggest cooking together": "cook_together"
+    }
+  },
+  "inside_chat": {
+    "description": "Inside, you brew some coffee and have a warm, friendly chat with her over some cookies.",
+    "choices": {
+      "offer to make dinner": "offer_dinner",
+      "suggest a board game": "board_game",
+      "thank for the chat": "start"
+    }
+  },
+  "coffee_chat": {
+    "description": "You have a lovely time chatting over coffee with @[]'s mother. You both share stories and laugh.",
+    "choices": {
+      "offer to make dinner": "offer_dinner",
+      "propose a movie": "suggest_movie",
+      "thank for coming over": "start"
+    }
+  },
+  "cook_dinner": {
+    "description": "You cook a wonderful dinner for @[]'s mother. The evening is filled with good food, great conversation and a spark of romance in the air.",
+    "choices": {
+      "watch a movie together": "movie",
+      "suggest stargazing": "stargazing",
+      "end the evening": "start"
+    }
+  },
+  "order_takeout": {
+    "description": "You order some takeout with @[]'s mother. You're both having a good time.",
+    "choices": {
+      "watch a movie together": "movie",
+      "play a card game": "card_game",
+      "end the evening": "start"
+    }
+  },
+  "garden_cookies": {
+    "description": "You both enjoy the cookies in her beautifully tended garden, surrounded by the fragrance of flowers.. or is that her? God, she smells so good.",
+    "choices": {
+      "compliment her garden": "compliment_garden",
+      "ask about her favorite flowers": "favorite_flowers",
+      "end the visit": "start"
+    }
+  },
+  "coffee_walk": {
+    "description": "Taking a stroll with your coffee, you both enjoy the pleasant neighborhood and engaging conversation.",
+    "choices": {
+      "talk about your interests": "talk_interests",
+      "ask about her life experiences": "life_experiences",
+      "finish the walk": "start"
+    }
+  },
+  "garden_tour": {
+    "description": "She gives you a tour of her garden, explaining the different plants and flowers with enthusiasm. You couldn't care less but you can't screw this chance up.",
+    "choices": {
+      "show genuine interest": "show_interest",
+      "offer help in garden": "help_garden",
+      "thank her and leave": "start"
+    }
+  },
+  "casual_walk": {
+    "description": "You both enjoy a casual walk, sharing stories, enjoying the fresh air and enjoying each other's company.",
+    "choices": {
+      "open up about your life": "open_up",
+      "listen to her stories": "listen_stories",
+      "head back": "start"
+    }
+  },
+  "cook_together": {
+    "description": "Cooking together turns out to be a fun and intimate, creating a delicious meal together.",
+    "choices": {
+      "compliment her cooking skills": "compliment_cooking",
+      "share a personal story": "share_story",
+      "enjoy the meal": "enjoy_meal"
+    }
+  },
+  "board_game": {
+    "description": "You play a board game, enjoying the competitive yet friendly atmosphere.",
+    "choices": {
+      "compliment her strategic skills": "compliment_strategy",
+      "share a laugh": "share_laugh",
+	  "brag about how good you are at the game": "brag_game",
+      "wrap up the evening": "start"
+	}
+  },
+  "brag_game": {
+    "description": "You brag at how good you are. You keep insisting that she is a horrible player and keep degrading her. She doesn't seem to be amused, she stares at you with disgust.",
+    "choices": {
+      "apologise profusely": "apologise_brag",
+      "leave in a tantrum insisting she can't handle how good you are": "start"
+	}
+  },
+  "apologise_brag": {
+    "description": "You immediately apologise, you didn't mean it to come out like that. She reluctantly agrees to continue the night.",
+    "choices": {
+      "suggest watching a movie": "suggest_movie",
+      "suggest stargazing": "stargazing",
+	  "open up to her": "open_up"
+	}
+  },
+  "suggest_movie": {
+    "description": "You suggest watching a movie together, and she happily agrees.",
+    "choices": {
+      "pick a movie": "movie_choice",
+      "change your mind": "start"
+    }
+  },
+  "stargazing": {
+    "description": "The night sky is clear, perfect for stargazing. You both lie back in her backyard and look at the stars.",
+    "choices": {
+      "talk about the constellations": "constellations",
+      "share your thoughts": "share_thoughts",
+      "say goodnight": "start"
+    }
+  },
+  "card_game": {
+    "description": "You play a card game, filled with laughter and playful banter.",
+    "choices": {
+      "teach her a new game": "new_game",
+      "compliment her play style": "compliment_play",
+      "end the game": "start"
+    }
+  },
+  "favorite_flowers": {
+    "description": "She talks about her favorite flowers and the stories behind them, showing a more personal side.",
+    "choices": {
+      "share your favorite plants": "share_plants",
+      "offer help in garden": "help_garden",
+      "end the visit": "start"
+    }
+  }, 
+  "talk_interests": {
+    "description": "You share your interests and hobbies, finding common ground and sparking intriguing conversations.",
+    "choices": {
+      "express admiration for her insights": "admire_insights",
+      "reveal a personal dream": "personal_dream",
+      "conclude the walk": "start"
+    }
+  },
+  "life_experiences": {
+    "description": "She shares stories from her past, revealing depth and resilience. You're captivated by her experiences.",
+    "choices": {
+      "share a similar experience": "share_experience",
+      "offer a word of empathy": "empathy",
+      "end the walk": "start"
+    }
+  },
+  "show_interest": {
+    "description": "Your genuine interest in her garden brings a smile to her face, and she opens up more about her passion.",
+    "choices": {
+      "ask about gardening challenges": "gardening_challenges",
+      "share your own gardening experience": "share_gardening",
+      "thank her for the tour": "start"
+    }
+  },
+  "open_up": {
+    "description": "Opening up about your life, you share personal stories and aspirations, creating a deeper connection.",
+    "choices": {
+      "ask about her aspirations": "her_aspirations",
+      "offer a thoughtful compliment": "thoughtful_compliment",
+      "head back home": "start"
+    }
+  },
+  "listen_stories": {
+    "description": "You listen intently to her stories, finding them engaging and revealing a lot about her personality.",
+    "choices": {
+      "laugh at her funny anecdotes": "laugh_anecdotes",
+      "comment on her experiences": "comment_experience",
+      "go home after a lovely night": "start"
+    }
+  },
+  "compliment_cooking": {
+    "description": "You compliment her cooking skills, and she blushes with pride, pleased by your recognition.",
+    "choices": {
+      "suggest cooking together again": "cook_again",
+      "share a recipe idea": "recipe_idea",
+      "enjoy the meal": "enjoy_meal"
+    }
+  },
+  "share_story": {
+    "description": "You share a personal story, revealing a more vulnerable side of yourself. She listens attentively.",
+    "choices": {
+      "ask about her experiences": "ask_experiences",
+      "watch her reaction": "watch_reaction",
+      "continue with dinner": "enjoy_meal"
+    }
+  },
+  "compliment_strategy": {
+    "description": "You compliment her strategic skills in the game, sparking a playful debate about tactics.",
+    "choices": {
+      "challenge her to a rematch": "rematch",
+      "discuss other games": "discuss_games",
+      "end the game": "start"
+    }
+  },
+  "movie_choice": {
+    "description": "You pick a movie together, finding common interests in film genres and themes.",
+    "choices": {
+      "discuss the movie plot": "discuss_movie",
+      "share your favorite movie": "share_movie",
+      "explain the behind the scenes and trivia of the movie you learned from reddit": "nerd_movie",
+      "start the movie": "movie"
+    }
+  },
+  "constellations": {
+    "description": "You talk about constellations, sharing knowledge and stories about the stars.",
+    "choices": {
+      "point out a constellation": "point_constellation",
+      "share a star-related memory": "star_memory",
+      "wrap up the night": "start"
+    }
+  },
+  "new_game": {
+    "description": "You teach her a new card game, enjoying the challenge and excitement of learning something new together.",
+    "choices": {
+      "compliment her quick learning": "compliment_learning",
+      "laugh at the fun moments": "laugh_fun",
+      "flirt through the game": "flirty_gameplay",
+      "suggest a more adult game": "adult_game_suggestion",
+      "end the game and go home": "start"
+    }
+  },
+  "inquire_plants": {
+    "description": "You express curiosity about the various plants in her garden. She's delighted to share her knowledge and passion.",
+    "choices": {
+      "offer to help with gardening": "help_garden",
+      "ask about her favorite plant": "favorite_flowers",
+      "compliment her gardening skills": "compliment_garden"
+    }
+  },
+  "offer_help": {
+    "description": "Offering to help @[]'s mum in her garden, you find yourselves in a serene environment. Your close proximity and shared task open up an opportunity for subtle romantic gestures.",
+    "choices": {
+      "chat about daily life": "ask_day",
+      "joke about gardening mishaps": "gardening_challenges",
+      "thank her and leave": "start"
+      
+    }
+  },
+  "mention_gardening": {
+    "description": "Your shared interest in gardening sparks a lively conversation. You sense a bond forming over shared experiences.",
+    "choices": {
+      "offer to exchange gardening books": "exchange_books",
+      "ask for gardening advice": "inquire_plants",
+      "compliment her garden": "compliment_garden",
+      "joke about being her personal gardener": "gardener_joke",
+      "offer a gentle touch while helping": "gentle_touch"
+    }
+  },
+  "movie": {
+    "description": "The movie ends, leaving both of you in a reflective mood. You sense a deepening connection.",
+    "choices": {
+      "discuss the movie": "discuss_movie",
+      "share a personal reflection": "personal_reflection",
+      "say goodnight": "start"
+    }
+  },
+  "enjoy_meal": {
+    "description": "The meal is delightful, filled with laughter and shared stories. The evening seems to bring you closer.",
+    "choices": {
+      "suggest watching a movie": "suggest_movie",
+      "talk about favorite cuisines": "talk_cuisines",
+      "end the evening": "start"
+    }
+  },
+  "share_laugh": {
+    "description": "Your laughter creates a light-hearted and joyful atmosphere, making the evening feel special.",
+    "choices": {
+      "compliment her sense of humor": "compliment_humor",
+      "suggest another game": "new_game",
+      "end the evening": "start"
+    }
+  },
+  "share_thoughts": {
+    "description": "You share your thoughts under the starry sky, creating an intimate moment of understanding and closeness.",
+    "choices": {
+      "ask about her dreams": "her_aspirations",
+      "point out a constellation": "constellations",
+      "say goodnight": "start"
+    }
+  },
+  "compliment_play": {
+    "description": "Your compliment on her play style brings a blush to her cheeks. There's a playful, flirtatious air between you.",
+    "choices": {
+      "suggest a different game": "board_game",
+      "share a gaming memory": "laugh_fun",
+      "end the game": "start"
+    }
+  },
+  "share_plants": {
+    "description": "You talk about your favorite plants, sharing personal stories linked to them. It adds a personal touch to the conversation.",
+    "choices": {
+      "ask for gardening advice": "inquire_plants",
+      "offer to help in her garden": "help_garden",
+      "thank her and leave": "start"
+    }
+  },
+  "admire_insights": {
+    "description": "Your admiration for her insights leads to a deeper discussion. She's visibly flattered and more open.",
+    "choices": {
+      "reveal a personal dream": "personal_dream",
+      "ask about her life goals": "her_aspirations",
+      "conclude the walk": "start"
+    }
+  },
+  "personal_dream": {
+    "description": "Sharing your personal dream brings a new level of intimacy to your conversation. She listens intently, clearly moved.",
+    "choices": {
+      "ask about her dreams": "her_aspirations",
+      "offer a thoughtful compliment": "thoughtful_compliment",
+      "end the walk": "start"
+    }
+  },
+  "share_experience": {
+    "description": "Your shared experiences create a sense of empathy and understanding. The conversation feels more meaningful.",
+    "choices": {
+      "offer a word of empathy": "empathy",
+      "ask about her life challenges": "life_challenges",
+      "end the walk": "start"
+    }
+  },
+  "empathy": {
+    "description": "You offer a word of empathy to @[]'s mum, touching on the complexities and challenges of adult life. She seems touched by your understanding and opens up more about her experiences.",
+    "choices": {
+      "share your own experiences": "share_experience",
+      "listen to her stories": "listen_stories",
+      "suggest a change of topic": "start"
+    }
+  },
+  "gardening_challenges": {
+     "description": "You ask @[]'s mum about the challenges she faces in gardening. She laughs and shares a few funny stories about her gardening misadventures, creating a light-hearted and intimate atmosphere.",
+     "choices": {
+       "offer help in her garden": "offer_help",
+       "share your own gardening mishaps": "mention_gardening",
+       "compliment her resilience": "compliment_garden"
+    }
+  },
+  "her_aspirations": {
+     "description": "Curious about her deeper aspirations, you ask @[]'s mum about her dreams and goals. She reflects thoughtfully, revealing her desire for companionship and new experiences.",
+     "choices": {
+       "share your dreams": "personal_dream",
+       "offer to experience new things together": "new_experience",
+       "suggest returning to a lighter topic": "start"
+    }
+  },
+  "share_gardening": {
+     "description": "You share your own gardening experiences with @[]'s mum, discussing the joys and pitfalls of nurturing plants. She listens intently, clearly interested in your stories.",
+     "choices": {
+       "ask about her favorite plants": "inquire_plants",
+       "offer to help with her gardening": "offer_help",
+       "change the topic": "start"
+    }
+  },
+  "listen_stories": {
+    "description": "As @[]'s mum shares her stories, you find yourself engrossed in the vivid details of her life. Her tales are a mix of adventure, humor, and the wisdom gained from experience.",
+    "choices": {
+      "laugh at her funny anecdotes": "laugh_anecdotes",
+      "comment on her experiences": "comment_experience"
+    }
+  },
+  "compliment_cooking": {
+    "description": "Impressed by her culinary skills, you compliment @[]'s mum on the delicious meal. She beams with pride and you sense an opportunity to deepen your connection.",
+    "choices": {
+      "suggest cooking together again": "cook_again",
+      "share a recipe idea": "recipe_idea"
+    }
+  },
+  "share_story": {
+    "description": "You decide to share a personal story with @[]'s mum, revealing a part of your life that few people know. She listens attentively, her eyes reflecting a mix of curiosity and empathy.",
+    "choices": {
+      "ask about her experiences": "ask_experiences",
+      "watch her reaction": "watch_reaction"
+    }
+  },
+  "compliment_strategy": {
+    "description": "You playfully tease @[]'s mum about her strategic prowess in the game. The air crackles with flirtatious energy as you suggest a more intimate 'rematch' later.",
+    "choices": {
+      "challenge her to a private rematch": "private_rematch",
+      "discuss other games with a wink": "flirty_game_talk"
+    }
+  },
+  "movie_choice": {
+    "description": "As the movie starts, you and @[]'s mum cozy up on the couch. The dim light and the emotional movie set a romantic tone, drawing you closer together.",
+    "choices": {
+      "comment on the romantic scenes": "romantic_comment",
+      "suggest watching something more intimate": "intimate_movie",
+      "wrap an arm around her": "arm_around"
+    }
+  },
+  "constellations": {
+    "description": "Under the starlit sky, you point out constellations to @[]'s mum. The romantic ambiance and the beauty of the night deepen your connection, inviting a closer embrace.",
+    "choices": {
+      "point out a romantic constellation": "romantic_constellation",
+      "share a heartfelt star-related memory": "heartfelt_memory",
+      "move closer to her": "move_closer"
+    }
+  },
+  "thoughtful_compliment": {
+    "description": "You offer @[]'s mum a thoughtful compliment that touches her deeply, sparking a blush and a deeper emotional connection.",
+    "choices": {
+      "ask if she's single": "ask_single",
+      "gently touch her hand": "touch_hand"
+    
+    }
+  },
+  "laugh_anecdotes": {
+    "description": "Her funny anecdotes leave you laughing heartily, creating a lively and flirtatious atmosphere between you and @[]'s mum.",
+    "choices": {
+      "compliment her sense of humor": "compliment_humor",
+      "share a humorous story of your own": "share_funny_story"
+	}
+  },
+  "comment_experience": {
+    "description": "Your insightful comments on her experiences show your deep understanding, drawing you closer to @[]'s mum.",
+    "choices": {
+      "ask about her dreams": "ask_dreams",
+      "offer a hug": "offer_hug"
+    }
+    
+  },
+  "cook_again": {
+    "description": "Suggesting to cook together again, you ignite a spark of anticipation in @[]'s mum, hinting at more intimate gatherings in the future.",
+    "choices": {
+      "plan a dinner date at a nice resturaunt": "post_hike_dinner",
+      "flirtatiously suggest a cooking challenge": "cooking_challenge"
+    }
+  },
+  "recipe_idea": {
+    "description": "Sharing your recipe idea, you find a moment of shared passion with @[]'s mum, stirring a mix of culinary and romantic excitement.",
+    "choices": {
+      "offer to cook it together": "cook_together",
+      "ask her for her favorite recipe": "ask_favorite_recipe"
+    }
+  },
+  "private_rematch": {
+    "description": "You suggest a private rematch to @[]'s mum, your tone playful yet hinting at more. She catches the suggestion, her eyes twinkling with interest.",
+    "choices": {
+      "playfully set the stakes": "set_stakes",
+      "move in closer": "move_closer"
+    }
+  },
+  "flirty_game_talk": {
+    "description": "Discussing other games with a wink, you keep the conversation light yet filled with innuendo, keeping @[]'s mum engaged and smiling.",
+    "choices": {
+      "suggest a two-player game": "two_player_game",
+      "compliment her gaming skills": "compliment_skills"
+    }
+  },
+  "forward_comment": {
+    "description": "You make a comment that's a bit too forward, and @[]'s mum raises an eyebrow, clearly taken aback Sby the sudden shift in tone.",
+    "choices": {
+      "apologize and change the topic": "apologize_change_topic",
+      "try to laugh it off": "laugh_off"
+    }
+  },
+  "romantic_comment": {
+    "description": "As a romantic scene unfolds on screen, you comment softly, drawing @[]'s mum closer into an intimate conversation about love and relationships.",
+    "choices": {
+      "ask about her romantic views": "ask_romantic_views",
+      "share your own romantic ideals": "share_romantic_ideals"
+    }
+  },
+  "intimate_movie": {
+    "description": "Suggesting a more intimate movie, you gauge @[]'s mum's reaction. She seems intrigued by the idea, a hint of curiosity in her eyes.",
+    "choices": {
+      "select a romantic film": "select_romantic_film",
+      "ask her preference": "ask_preference"
+    }
+  },
+  "arm_around": {
+    "description": "Casually, you wrap an arm around @[]'s mum. She leans into your embrace, the warmth between you growing as the movie continues.",
+    "choices": {
+      "pull her closer": "pull_closer",
+      "make a light-hearted comment": "light_hearted_comment"
+    }
+  },
+  "exchange_books": {
+    "description": "You suggest exchanging gardening books. She agrees, and you both head to your respective houses. When you return, you're carrying a book titled 'Gardening on Mars: The Red Planet Green Thumb Guide'. She raises an eyebrow, clearly amused by your unconventional choice.",
+    "choices": {
+      "propose_martian_garden": "propose_martian_garden",
+      "discuss_earth_gardening": "discuss_earth_gardening"
+    }
+  },
+  "propose_martian_garden": {
+    "description": "You excitedly propose starting a Martian garden as your next project. She looks at you bewildered, wondering if you're serious about gardening in space suits.",
+    "choices": {
+      "insist_on_martian_garden": "insist_on_martian_garden",
+      "laugh_it_off": "laugh_off_martian_garden"
+    }
+  },
+  "insist_on_martian_garden": {
+    "description": "You insist on the feasibility of Martian gardening, even suggesting a space-themed garden party. She quickly realizes you're not joking, gives a polite smile, and swiftly changes the topic, clearly not on board with the interstellar idea.",
+    "choices": {
+      "walk_away_silently": "start"
+    }
+  },
+  "laugh_off_martian_garden": {
+    "description": "Seeing her confused expression, you laugh it off as a joke. She gives a relieved chuckle and suggests sticking to more terrestrial gardening topics.",
+    "choices": {
+      "discuss_earth_gardening": "discuss_earth_gardening"
+    }
+  },
+  "discuss_earth_gardening": {
+    "description": "Deciding not to venture into cosmic horticulture, you discuss your favorite earthbound plants and gardening techniques. She seems genuinely interested, and the conversation flows smoothly.",
+    "choices": {
+      "share_gardening_tips": "share_gardening_tips",
+      "plan_a_garden_visit": "plan_a_garden_visit"
+    }
+  },
+  "share_gardening_tips": {
+    "description": "You exchange practical gardening tips, bonding over your shared love for horticulture.",
+    "choices": {
+      "suggest_exotic_plants": "suggest_exotic_plants",
+      "keep_it_simple": "discuss_earth_gardening"
+    }
+  },
+  "suggest_exotic_plants": {
+    "description": "Getting carried away, you suggest importing exotic, carnivorous plants. Your enthusiasm wanes as she looks horrified at the idea of man-eating plants in her peaceful garden.",
+    "choices": {
+      "apologize_and_walk_away": "start"
+    }
+  },
+  "plan_a_garden_visit": {
+    "description": "You plan a visit to a local botanical garden to get more inspiration for your earthly green spaces.",
+    "choices": {
+      "propose_a_costume_theme": "propose_costume_theme",
+      "just_visit_normally": "discuss_earth_gardening"
+    }
+  },
+  "propose_costume_theme": {
+    "description": "In a burst of excitement, you propose making the garden visit a costume event, dressing up as famous botanists. She pauses, unsure if you're serious, then politely declines, citing a sudden 'busy schedule'.",
+    "choices": {
+      "end_conversation_awkwardly": "start"
+    }
+  },
+  "gardener_joke": {
+    "description": "You make a playful joke about becoming her personal gardener, complete with an exaggerated bow and a flourish of an imaginary hat. She laughs, but you can tell she's unsure if you're serious.",
+    "choices": {
+      "double_down_on_joke": "double_down_on_joke",
+      "clarify_it_was_just_a_joke": "clarify_just_a_joke"
+    }
+  },
+  "double_down_on_joke": {
+    "description": "You double down on the gardener joke, asking her repeatedly if she needs any yard work done or if anyone she knows does. She chuckles uncomfortably, quickly excuses herself to 'check on something inside', leaving you alone with your thoughts.",
+    "choices": {
+      "walk_away_embarrassed": "start"
+    }
+  },
+  "clarify_just_a_joke": {
+    "description": "Realizing the joke might have been a bit much, you quickly clarify that it was just a playful comment. She sighs in relief, and the conversation shifts back to more comfortable territory.",
+    "choices": {
+      "continue_conversation": "discuss_earth_gardening"
+    }
+  },
+  "gentle_touch": {
+    "description": "You offer a gentle touch to assist her in the garden, reaching out as if to guide her hand. However, you dramatically miss and end up gently caressing a nearby garden gnome instead.",
+    "choices": {
+      "apologize_for_gnome_incident": "apologize_for_gnome_incident",
+      "pretend_it_was_intentional": "pretend_gnome_intentional"
+    }
+  },
+  "apologize_for_gnome_incident": {
+    "description": "Realizing your misstep, you quickly apologize for the accidental gnome caress. She bursts into laughter, finding the situation amusingly awkward. The mood lightens, but you decide to keep your hands to yourself for now.",
+    "choices": {
+      "change_topic": "discuss_earth_gardening"
+    }
+  },
+  "pretend_gnome_intentional": {
+    "description": "You decide to pretend that caressing the gnome was intentional, and decide to make a joke about making love to the gnome. She raises an eyebrow, and says she left her washing in the washing machine and walks away abruptly.",
+    "choices": {
+      "awkwardly walk home": "start"
+    }
+  },
+  "personal_reflection": {
+    "description": "As the credits roll, you lean closer, sharing a deep and somewhat sultry reflection inspired by the movie. Your attempt at sounding profound, however, comes off as confusingly abstract.",
+    "choices": {
+      "add_a_flirtatious_twist": "add_flirtatious_twist",
+      "admit_it_sounded_better_in_your_head": "admit_nonsense"
+    }
+  },
+  "personal_reflection": {
+    "description": "As the credits roll, you lean closer, sharing a deep and somewhat sultry reflection inspired by the movie. Your attempt at sounding profound, however, comes off as confusingly abstract.",
+    "choices": {
+      "add_a_flirtatious_twist": "add_flirtatious_twist",
+      "admit_it_sounded_better_in_your_head": "admit_nonsense",
+      "divert_to_a_funny_anecdote": "funny_anecdote",
+      "suggest_a_change_of_scene": "suggest_change_of_scene"
+    }
+  },
+  "add_flirtatious_twist": {
+    "description": "Seizing the moment, you add a flirtatious twist to your reflection, suggesting a personal reenactment of the movie's steamy scene. She seems intrigued, her eyes sparkling with a mix of amusement and curiosity.",
+    "choices": {
+      "play_movie_characters": "play_movie_characters",
+      "offer_a_daring_bet": "daring_bet",
+      "retract_and_suggest_another_movie": "suggest_another_movie"
+    }
+  },
+  "play_movie_characters": {
+    "description": "You propose playing characters from the movie, each taking on a sultry role. She leans in, excited by the idea, and you start discussing who would play which character, the air charged with playful anticipation.",
+    "choices": {
+      "start_the_role_play": "start_role_play",
+      "suggest_preparing_costumes": "prepare_costumes"
+    }
+  },
+  "daring_bet": {
+    "description": "You up the ante with a daring bet related to the movie's plot, promising a tantalizing reward for the winner. She giggles, clearly enjoying the risqué turn of the evening.",
+    "choices": {
+      "play_the_bet_game": "bet_game",
+      "reveal_the_reward": "reveal_reward"
+    }
+  },
+  "start_role_play": {
+    "description": "You both start role-playing, immersing yourselves in the characters. The room fills with laughter and flirtatious banter, bringing the movie's romance to life.",
+    "choices": {
+      "escalate_the_role_play": "escalate_role_play",
+      "laugh_and_suggest_a_break": "suggest_break"
+    }
+  },
+  "escalate_role_play": {
+    "description": "As the role play intensifies, the atmosphere becomes charged with excitement and desire. The evening takes a decidedly steamy turn, bringing you both closer in an unexpected but thrilling way.",
+    "choices": {
+      "take_things_to_the_next_level": "next_level",
+      "cool_things_down": "cool_down"
+    }
+  },
+  "cool_down": {
+    "description": "Sensing things might be moving too fast, you decide to cool things down a bit. You both appreciate the fun you've had and agree to meet again soon.",
+    "choices": {
+      "plan_another_date": "plan_date",
+      "end_the_evening": "start"
+    }
+  },
+  "get_cold_feet_and_cancel": {
+    "description": "Nervous about the costume idea, you decide to cancel. She understands, but there's a hint of disappointment in her voice.",
+    "choices": {
+      "apologize_and_reschedule": "plan_date",
+      "end_conversation": "start"
+    }
+  },
+  "raise_stakes": {
+    "description": "Raising the stakes, the game takes a daring turn. The tension and excitement grow, leading to a night filled with unexpected and sensual moments.",
+    "choices": {
+      "embrace_the_moment": "embrace_moment",
+      "step_back_and_relax": "relax_after_game"
+    }
+  },
+  "relax_after_game": {
+    "description": "After the game, you both decide to relax and unwind. The excitement of the game transitions into comfortable and intimate conversations.",
+    "choices": {
+      "talk_about_future_plans": "talk_future",
+      "end_the_night_on_a_good_note": "start"
+    }
+  },
+  "proceed_reward": {
+    "description": "You proceed with the reward, which leads to an intimate and memorable moment between you two, marking the evening as uniquely special.",
+    "choices": {
+      "reflect_on_the_evening": "reflect_evening",
+      "say_goodnight": "start"
+    }
+  },
+  "visit_lounge": {
+    "description": "You decide to visit a nearby lounge, where the ambiance is perfect for continuing the evening in a more relaxed and intimate setting.",
+    "choices": {
+      "enjoy_the_lounge_atmosphere": "enjoy_lounge",
+      "suggest_heading_home": "start"
+    }
+  },
+  "suggest_break": {
+    "description": "Realizing things might be getting too intense, you suggest taking a break. She agrees, and you both relax, chatting amiably about lighter topics.",
+    "choices": {
+      "resume_watching_movies": "suggest_another_movie",
+      "end_the_evening_early": "start"
+    }
+  },
+  "prepare_costumes": {
+    "description": "Excitedly, you both decide to prepare costumes to enhance the role-playing experience. She's all in for the fun, and you set a date for this adventurous evening.",
+    "choices": {
+      "discuss_costume_ideas": "discuss_costumes",
+      "get_cold_feet_and_cancel": "start"
+    }
+  },
+  "bet_game": {
+    "description": "You play the bet game, each teasing and playfully competing. The game becomes an excuse for flirtation and witty banter, making the night more thrilling.",
+    "choices": {
+      "raise_the_stakes": "raise_stakes",
+      "keep_it_playful_and_light": "keep_it_light"
+    }
+  },
+  "keep_it_light": {
+    "description": "You keep the game light and playful, enjoying the fun without pushing too far. The evening remains enjoyable and flirty, striking a comfortable balance.",
+    "choices": {
+      "continue_the_game": "bet_game",
+      "wind_down_the_evening": "start"
+    }
+  },
+  "reveal_reward": {
+    "description": "You reveal the reward, something delightfully intimate and exciting. She blushes, both surprised and intrigued, making the game even more enticing.",
+    "choices": {
+      "proceed_with_the_reward": "proceed_reward",
+      "back_out_politely": "start"
+    }
+  },
+  "funny_anecdote": {
+    "description": "Seeing the confusion, you quickly switch to a funny anecdote related to the movie. She laughs, the tension dissipating as you both enjoy a lighter moment.",
+    "choices": {
+      "suggest_another_movie": "suggest_another_movie",
+      "end_the_evening_on_a_high_note": "start"
+    }
+  },
+  "suggest_change_of_scene": {
+    "description": "You suggest changing the scene, perhaps going for a late-night walk or visiting a nearby lounge. She's receptive to the idea, eager for a change of pace.",
+    "choices": {
+      "go_for_a_walk": "casual_walk",
+      "visit_a_lounge": "visit_lounge"
+    }
+  },
+  "suggest_another_movie": {
+    "description": "Feeling the moment might be too forward, you retract and suggest watching another movie. She agrees, perhaps a little disappointed, but the mood remains light and pleasant.",
+    "choices": {
+      "pick_a_comedy": "watch_comedy",
+      "call_it_a_night": "start"
+    }
+  },
+  "next_level": {
+    "description": "You decide to take things to the next level, and the evening evolves into a passionate and unforgettable experience, deepening your connection.",
+    "choices": {
+      "propose_a_daring_adventure": "daring_adventure",
+      "share_intimate_conversations": "intimate_conversations",
+      "suggest_something_wild": "something_wild",
+      "decide_to_slow_down": "slow_down",
+      "say_goodnight": "start"
+    }
+  },
+  "daring_adventure": {
+    "description": "Feeling adventurous, you propose an unexpected but thrilling activity. She's excited by the idea, and you both head out for a spontaneous night-time adventure.",
+    "choices": {
+      "enjoy_the_adventure": "enjoy_adventure",
+      "decide_its_too_much": "start"
+    }
+  },
+  "intimate_conversations": {
+    "description": "You engage in deep, intimate conversations, sharing secrets and desires. The connection between you deepens, making the evening more meaningful.",
+    "choices": {
+      "continue_the_conversation": "reflect_evening",
+      "end_on_a_high_note": "start"
+    }
+  },
+  "something_wild": {
+    "description": "In a bold move, you suggest something utterly wild and out of the ordinary. She laughs, finding the idea amusing but a bit too much, and suggests keeping things a bit more grounded.",
+    "choices": {
+      "tone_it_down": "enjoy_lounge",
+      "insist_on_your_idea": "start"
+    }
+  },
+  "slow_down": {
+    "description": "You decide to slow things down a bit, not wanting to rush the moment. It turns out to be the right move, as you both enjoy a more relaxed yet still intimate end to the evening.",
+    "choices": {
+      "plan_a_future_date": "plan_date",
+      "say_goodbye_for_the_night": "start"
+    }
+  },
+  "plan_date": {
+    "description": "You discuss plans for another date, both excited about the prospect of continuing to explore your connection.",
+    "choices": {
+      "set_a_date": "set_date",
+      "leave_it_open_ended": "leave_open_ended"
+    }
+  },
+  "embrace_moment": {
+    "description": "Embracing the moment, you both indulge in the heightened excitement, creating a night that neither of you will forget anytime soon.",
+    "choices": {
+      "reflect_on_the_experience": "reflect_evening",
+      "plan_another_adventure": "plan_date",
+      "end_the_evening_on_a_high_note": "start"
+    }
+  },
+  "reflect_evening": {
+    "description": "You take a moment to reflect on the evening, sharing thoughts and feelings about the night's events. It's a warm, intimate conversation that brings you even closer.",
+    "choices": {
+      "discuss_future_plans": "plan_date",
+      "end_the_evening_with_a_kiss": "start"
+    }
+  },
+  "enjoy_lounge": {
+    "description": "At the lounge, you both enjoy the ambiance, with soft music and dim lights setting the perfect mood for deep conversations and shared laughs.",
+    "choices": {
+      "talk_about_life_and_dreams": "life_and_dreams",
+      "propose_a_dance": "propose_dance",
+      "say_goodnight": "start"
+    }
+  },
+  "watch_comedy": {
+    "description": "You pick a comedy, and the rest of the evening is filled with laughter and light-hearted moments, providing a nice balance to the earlier intensity.",
+    "choices": {
+      "share_funny_life_stories": "funny_stories",
+      "discuss_favorite_comedians": "favorite_comedians",
+      "end_the_night_with_a_smile": "start"
+    }
+  },
+  "set_date": {
+    "description": "You both agree on a date and time for your next meeting, excited about the possibility of continuing the adventure.",
+    "choices": {
+      "say_goodbye_until_then": "start",
+      "start_planning_for_the_date": "plan_for_date"
+    }
+  },
+  "leave_open_ended": {
+    "description": "You leave the date plans open-ended, agreeing to get in touch when the time feels right. There's a sense of mystery and anticipation in the air.",
+    "choices": {
+      "part_with_a_promise_to_call": "start",
+      "make_a_spontaneous_plan": "spontaneous_plan"
+    }
+  },
+  "enjoy_adventure": {
+    "description": "The spontaneous adventure turns out to be exhilarating. You explore the city at night, discovering hidden gems and sharing laughs along the way.",
+    "choices": {
+      "find_a_quiet_place_to_talk": "quiet_place_talk",
+      "end_the_adventure_with_a_promise_to_meet_again": "start"
+    }
+  },
+  "quiet_place_talk": {
+    "description": "You find a quiet, romantic spot to talk. The conversation flows easily, and you both share personal stories, feeling a deeper connection.",
+    "choices": {
+      "plan_next_adventure": "plan_date",
+      "say_goodnight": "start"
+    }
+  },
+  "life_and_dreams": {
+    "description": "Over drinks, you delve into discussions about life, dreams, and ambitions. It's a meaningful exchange that brings you closer.",
+    "choices": {
+      "make_future_plans_together": "plan_date",
+      "enjoy_the_moment_and_leave_it_at_that": "start"
+    }
+  },
+  "propose_dance": {
+    "description": "You propose a dance, and she agrees. The dance floor provides a perfect, intimate setting for you to connect physically and emotionally.",
+    "choices": {
+      "continue_dancing": "continue_dance",
+      "sit_down_and_talk_more": "life_and_dreams"
+    }
+  },
+  "continue_dance": {
+    "description": "You continue dancing, lost in the music and each other. The connection between you grows with every song, making for a memorable evening.",
+    "choices": {
+      "plan_to_meet_again": "plan_date",
+      "end_the_night_on_the_dance_floor": "start"
+    }
+  },
+  "funny_stories": {
+    "description": "You share funny life stories, laughing together and enjoying the lighter side of life.",
+    "choices": {
+      "keep_sharing_stories": "more_funny_stories",
+      "wind_down_the_night": "start"
+    }
+  },
+  "more_funny_stories": {
+    "description": "You continue sharing hilarious stories, each one more amusing than the last. The laughter creates a bond that's both joyful and genuine.",
+    "choices": {
+      "suggest_meeting_up_again": "plan_date",
+      "say_goodbye_after_a_fun_evening": "start"
+    }
+  },
+  "favorite_comedians": {
+    "description": "You discuss your favorite comedians, sharing clips and jokes. It's a fun way to learn more about each other's humor and personalities.",
+    "choices": {
+      "exchange_contact_to_share_more_jokes": "exchange_contacts",
+      "call_it_a_night_with_plans_to_catch_a_comedy_show": "plan_comedy_show"
+    }
+  },
+  "exchange_contacts": {
+    "description": "You exchange contact information, promising to share more funny clips and jokes. There's an unspoken promise of more fun interactions to come.",
+    "choices": {
+      "send_a_funny_message_the_next_day": "send_funny_message",
+      "wait_for_her_to_contact_you": "start"
+    }
+  },
+  "plan_comedy_show": {
+    "description": "You make plans to catch a comedy show together. It's an exciting prospect, and you both look forward to sharing more laughs.",
+    "choices": {
+      "set_a_date_for_the_show": "set_show_date",
+      "leave_it_as_a_tentative_plan": "start"
+    }
+  },
+  "send_funny_message": {
+    "description": "You send her a funny message the next day, keeping the light-hearted vibe going. She responds with laughter, and the conversation flows naturally.",
+    "choices": {
+      "suggest_meeting_soon": "plan_date",
+      "keep_the_conversation_going": "continue_conversation"
+    }
+  },
+  "set_show_date": {
+    "description": "You set a date for the comedy show. Both of you are excited about the plan and the chance to spend more time together.",
+    "choices": {
+      "discuss_show_details": "discuss_details",
+      "look_forward_to_the_event": "start"
+    }
+  },
+  "plan_date": {
+    "description": "You discuss plans for another date, both excited about the prospect of continuing to explore your connection.",
+    "choices": {
+      "set_a_date": "set_date",
+      "leave_it_open_ended": "leave_open_ended",
+      "plan_a_comedy_show_visit": "plan_comedy_show",
+      "suggest_an_outdoor_adventure": "outdoor_adventure",
+      "think_about_a_cooking_class_together": "cooking_class",
+      "mention_going_to_a_live_music_event": "live_music",
+      "bring_up_the_idea_of_a_wine_tasting": "wine_tasting",
+      "set a reservation at a nice resturaunt": "cozy_resturant",
+      "suggest going to the casino": "slots_intro",
+      "decide to go fishing": "fishing_intro"
+    }
+  },
+  "slots_intro": {
+    "description": "You suggest going to the casino, she reluctantly agrees and you call a taxi to take you both out to the city.",
+    "choices": {
+      "sit down and play slots": "slots_game",
+      "sit down at the bar for a drink": "casino_bar1"
+    }
+  },
+  "casino_bar1": {
+    "description": "You both sit down at the bar, {}'s mum looks at you waiting for you to order her a drink.",
+    "choices": {
+      "leave her alone at the bar and go play slots": "slots_game",
+      "buy her a drink": "casino_drink1"
+    }
+  },
+  "casino_drink1": {
+    "description": "You buy her a drink...",
+    "choices": {
+      "leave her alone at the bar and go play slots": "slots_game",
+      "buy her another drink": "casino_drink2"
+    }
+  },
+  "outdoor_adventure": {
+    "description": "You suggest an outdoor adventure, like hiking or biking. She seems excited by the idea of exploring nature together.",
+    "choices": {
+      "pick_a_specific_trail_or_location": "pick_trail",
+      "keep_it_vague_and_adventurous": "keep_vague"
+    }
+  },
+  "cooking_class": {
+    "description": "A cooking class could be fun, learning a new cuisine together. She likes the idea of creating something delicious as a team.",
+    "choices": {
+      "look_up_classes_and_timings": "look_classes",
+      "suggest_a_specific_cuisine_to_learn": "specific_cuisine"
+    }
+  },
+  "live_music": {
+    "description": "You bring up the idea of attending a live music event. She's enthusiastic about the idea of enjoying music together.",
+    "choices": {
+      "discuss_different_music_genres": "music_genres",
+      "look_for_upcoming_concerts": "upcoming_concerts"
+    }
+  },
+  "wine_tasting": {
+    "description": "Mentioning a wine tasting event piques her interest. It sounds like a sophisticated and enjoyable way to spend an evening.",
+    "choices": {
+      "research_local_wine_tasting_events": "research_wine",
+      "suggest_pairing_it_with_a_dinner": "pair_with_dinner"
+    }
+  },
+  "set_date": {
+    "description": "You both agree on a date and time for your next meeting, excited about the possibility of continuing the adventure.",
+    "choices": {
+      "say_goodbye_until_then": "start",
+      "casually_mention_hanging_out_after": "casual_hangout"
+    }
+  },
+  "casual_hangout": {
+    "description": "You casually mention the idea of hanging out after your date, keeping it light. She seems open to it but prefers to see how the date goes first.",
+    "choices": {
+      "agree_and_leave_it_at_that": "start",
+      "suggest_specific_post-date_activities": "post_date_activities"
+    }
+  },
+  "post_date_activities": {
+    "description": "You suggest specific activities for after the date, like a walk or a visit to a nearby café. She's intrigued and agrees to decide after the date.",
+    "choices": {
+      "express_excitement_about_the_date": "start",
+      "joke_about_the_potential_for_an_epic_night": "joke_epic_night"
+    }
+  },
+  "joke_epic_night": {
+    "description": "You joke about the potential for an epic night together. She laughs, enjoying your humor, and the mood remains light and playful.",
+    "choices": {
+      "say_goodbye_with_a_wink": "start"
+    }
+  },  
+  "pick_trail": {
+    "description": "You pick a specific hiking trail known for its breathtaking views. She's excited about the idea of a scenic hike together.",
+    "choices": {
+      "finalize_hiking_plans": "finalize_hike",
+      "suggest_a_post_hike_dinner": "post_hike_dinner"
+    }
+  },
+  "finalize_hike": {
+    "description": "You finalize your hiking plans, setting a date and time. The anticipation of a day spent in nature adds a spark to your conversation.",
+    "choices": {
+      "look_forward_to_the_hike": "start",
+      "hint_at_relaxing_together_after": "relax_together"
+    }
+  },
+  "post_hike_dinner": {
+    "description": "You suggest having dinner together after the hike. She loves the idea of ending the day with a nice meal.",
+    "choices": {
+      "choose_a_cozy_restaurant": "cozy_restaurant",
+      "offer_to_cook_dinner": "cook_dinner"
+    }
+  },
+  "cozy_restaurant": {
+    "description": "You decide on a cozy restaurant for your post-hike dinner. The plans for the day seem perfect, and she's clearly looking forward to it.",
+    "choices": {
+      "make_reservations": "make_reservations",
+      "leave_dinner_as_a_spontaneous_decision": "spontaneous_dinner"
+    }
+  },
+  "cook_dinner": {
+    "description": "You offer to cook dinner at your place after the hike. She's pleasantly surprised by the gesture and agrees.",
+    "choices": {
+      "plan_the_menu": "plan_menu",
+      "suggest_going_to_her_place_instead": "her_place"
+    }
+  },
+  "her_place": {
+    "description": "You suggest, with a hint of flirtation, that maybe it would be more fun to have dinner at her place. She seems intrigued but wants to make sure you're both on the same page.",
+    "choices": {
+      "discuss_what_dinner_at_her_place_means": "discuss_dinner",
+      "playfully_suggest_a_movie_after_dinner": "movie_after_dinner",
+      "be_direct_about_your_intentions": "direct_intentions",
+      "back_off_and_suggest_a_public_place": "public_place"
+    }
+  },
+  "discuss_dinner": {
+    "description": "You discuss the idea of dinner at her place, keeping the conversation light yet flirtatious. She's enjoying the banter, but also wants to keep things somewhat unpredictable.",
+    "choices": {
+      "suggest_a_cooking_challenge": "cooking_challenge",
+      "offer_to_bring_a_special_dessert": "special_dessert",
+      "change_topic_to_something_else": "change_topic"
+    }
+  },
+  "movie_after_dinner": {
+    "description": "You playfully suggest watching a movie after dinner, hinting at a relaxed and cozy evening. She smiles at the idea, but playfully counters with a suggestion for a board game instead.",
+    "choices": {
+      "agree_to_the_board_game": "board_game",
+      "insist_on_a_movie": "insist_movie",
+      "suggest_going_out_instead": "go_out"
+    }
+  },
+  "direct_intentions": {
+    "description": "You're direct about your intentions, making it clear you're hoping for more than just dinner. She appreciates your honesty but decides it's a bit too forward for her taste.",
+    "choices": {
+      "apologize_and_suggest_a_casual_dinner": "casual_dinner",
+      "respectfully_end_the_conversation": "start"
+    }
+  },
+  "public_place": {
+    "description": "Sensing her hesitation, you back off and suggest going to a public place instead. She's relieved and agrees to the change of plans.",
+    "choices": {
+      "choose_a_local_cafe": "local_cafe",
+      "pick_a_lively_bar": "lively_bar",
+      "end_the_plan_gracefully": "start"
+    }
+  },
+  "insist_movie": {
+    "description": "You insist on watching a movie, but she's not convinced. The mood shifts slightly, and she suggests rescheduling for another time.",
+    "choices": {
+      "accept_the_rescheduling": "start",
+      "try_to_salvage_the_evening": "salvage_evening"
+    }
+  },
+  "go_out": {
+    "description": "You suggest going out instead, and she quickly agrees. A change of scenery might be just what you both need.",
+    "choices": {
+      "head_to_a_nearby_lounge": "nearby_lounge",
+      "explore_local_nightlife": "local_nightlife"
+    }
+  },
+  "casual_dinner": {
+    "description": "You apologize for being too forward and suggest a more casual dinner. She's glad for the change of pace and looks forward to a relaxed evening.",
+    "choices": {
+      "plan_a_simple_menu_together": "simple_menu",
+      "decide_to_order_takeout": "order_takeout"
+    }
+  },
+  "simple_menu": {
+    "description": "You both plan a simple menu for your dinner, keeping things light and easy. The evening is set to be comfortable and enjoyable.",
+    "choices": {
+      "cook_together_and_enjoy_the_evening": "cook_and_enjoy",
+      "bring_up_the_idea_of_a_movie_after_dinner": "movie_idea_again"
+    }
+  }
+}
