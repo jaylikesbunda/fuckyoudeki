@@ -130,7 +130,7 @@ body {
 .window {
     position: absolute;
     width: 80%;
-    max-width: 500px;
+    max-width: 5000px;
     background: #C3C3C3;
     border: 2px solid #000;
     display: none;
