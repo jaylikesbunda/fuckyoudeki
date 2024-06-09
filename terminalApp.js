@@ -114,7 +114,6 @@ document.addEventListener('DOMContentLoaded', () => {
     
         return adventureData;
     }
-    // Terminal commands
     const commands = {
         clear: function(outputElement) {
             outputElement.value = '';
@@ -146,19 +145,24 @@ document.addEventListener('DOMContentLoaded', () => {
             outputElement.value += files;
         },
         start: async function(outputElement) {
+            outputElement.value += "Please enter the name of your arch nemesis:\n";
+            currentState = 'awaiting_nemesis';
+        },
+        receiveNemesis: async function(outputElement, nemesis) {
+            if (!nemesis) {
+                outputElement.value += 'No nemesis provided. Please start again.\n';
+                return;
+            }
             try {
-                const nemesis = prompt("Who is your arch nemesis?");
-                if (!nemesis) throw new Error('No nemesis provided. Please start again.');
                 const loaded = await loadAdventureData();
                 if (!loaded) {
                     throw new Error('Adventure game data not loaded. Check JSON file for syntax errors.');
                 }
-                console.log('Adventure data:', adventureData); // Debug: show adventure data
                 if (!adventureData['start']) {
                     throw new Error('Initial state "start" not found in adventure data.');
                 }
-                currentState = 'start';
                 adventureData.nemesis = nemesis;
+                currentState = 'start';
                 displayState(outputElement);
             } catch (error) {
                 outputElement.value += `${error.message}\n`;
@@ -166,6 +170,10 @@ document.addEventListener('DOMContentLoaded', () => {
         },
         choice: function(outputElement, args) {
             try {
+                if (currentState === 'awaiting_nemesis') {
+                    commands.receiveNemesis(outputElement, args.join(' '));
+                    return;
+                }
                 if (!adventureData) {
                     throw new Error('Adventure game data not loaded.');
                 }
