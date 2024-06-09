@@ -1229,5 +1229,964 @@
       "cook_together_and_enjoy_the_evening": "cook_and_enjoy",
       "bring_up_the_idea_of_a_movie_after_dinner": "movie_idea_again"
     }
+  },
+  "stalking_intro": {
+    "description": "Feeling a twisted curiosity, you grab your military-grade binoculars and settle by the window. Your heart races as you adjust the focus, bringing your neighbor’s yard into clear view. She’s tending to her garden, her movements graceful and unguarded.",
+    "choices": {
+      "keep watching": "stalking_deeper",
+      "feel guilty and stop": "start"
+    }
+  },
+  "stalking_deeper": {
+    "description": "You decide to keep watching, feeling a strange mix of excitement and guilt. She’s oblivious to your prying eyes as she hums a tune and waters her flowers. Just then, she pauses and looks up, as if sensing your gaze. You freeze, barely daring to breathe.",
+    "choices": {
+      "duck down quickly": "duck_quickly",
+      "stay still and hope she doesn’t see you": "stay_still"
+    }
+  },
+  "duck_quickly": {
+    "description": "You duck down quickly, your heart pounding in your chest. After a moment, you cautiously peek over the windowsill. She’s gone back to her gardening, seemingly unaware of your presence.",
+    "choices": {
+      "resume watching, more carefully this time": "resume_watching",
+      "decide to do something productive instead": "start"
+    }
+  },
+  "stay_still": {
+    "description": "You stay as still as possible, barely breathing. She looks around for a moment, then shrugs and returns to her work. You let out a sigh of relief, but the guilt gnaws at you.",
+    "choices": {
+      "keep watching, despite the guilt": "resume_watching",
+      "stop and reflect on your actions": "start"
+    }
+  },
+  "resume_watching": {
+    "description": "You resume watching, this time more carefully. She continues tending to her garden, and you can’t help but admire her dedication and beauty. However, the longer you watch, the more the guilt grows.",
+    "choices": {
+      "push the guilt aside and keep watching": "watch_even_longer",
+      "finally decide to stop": "start"
+    }
+  },
+  "watch_even_longer": {
+    "description": "You push the guilt aside and keep watching. As the sun sets, she finishes up and goes inside. You put down the binoculars, feeling a mix of shame and longing.",
+    "choices": {
+      "go outside and try to speak to her": "attempt_speak",
+      "go to bed and try to forget this day": "start"
+    }
+  },
+  "attempt_speak": {
+    "description": "Summoning all your courage, you decide to go outside and try to speak to her. As you approach her house, you rehearse what you’re going to say in your mind. Your heart races as you reach her front door.",
+    "choices": {
+      "knock on the door": "door_knock",
+      "chicken out and go back home": "start"
+    }
+  },
+  "door_knock": {
+    "description": "You knock on the door, your palms sweating. After a few moments, she opens the door and looks at you with a friendly, yet puzzled expression.",
+    "choices": {
+      "introduce yourself nervously": "nervous_intro",
+      "blurt out a compliment about her garden": "garden_compliment"
+    }
+  },
+  "nervous_intro": {
+    "description": "You stammer an introduction, feeling incredibly awkward. To your surprise, she frowns and begins to close the door, but you wedge your foot in, desperate to keep talking.",
+    "choices": {
+      "apologize and back away": "start",
+      "push your way inside": "push_inside"
+    }
+  },
+  "garden_compliment": {
+    "description": "You blurt out a compliment about her garden. She looks at you suspiciously and tells you to leave, but you feel a twisted determination to keep engaging her.",
+    "choices": {
+      "insist on talking more": "insist_talk",
+      "leave reluctantly": "start"
+    }
+  },
+  "push_inside": {
+    "description": "Ignoring her protests, you push your way inside her house. She yells for you to leave, panic evident in her voice.",
+    "choices": {
+      "try to calm her down": "calm_down_attempt",
+      "realize the gravity of your actions and flee": "start"
+    }
+  },
+  "insist_talk": {
+    "description": "You insist on talking more, ignoring her discomfort. She threatens to call the police, but you feel an irrational need to stay.",
+    "choices": {
+      "forcefully enter her home": "push_inside",
+      "realize you've gone too far and leave": "start"
+    }
+  },
+  "calm_down_attempt": {
+    "description": "You try to calm her down, speaking in soothing tones, but she is terrified and reaches for her phone to call for help.",
+    "choices": {
+      "grab her phone": "grab_phone",
+      "plead with her to listen": "plead_listen"
+    }
+  },
+  "grab_phone": {
+    "description": "You grab her phone from her hand, preventing her from calling for help. The situation has spiraled out of control, and you feel a dark thrill from the power you hold.",
+    "choices": {
+      "demand she listens to you": "demand_listen",
+      "panic and flee": "start"
+    }
+  },
+  "plead_listen": {
+    "description": "You plead with her to listen, but she is beyond frightened and screams for help. Neighbors are likely to hear and come to her aid.",
+    "choices": {
+      "run away before someone arrives": "start",
+      "try to silence her": "silence_her"
+    }
+  },
+  "demand_listen": {
+    "description": "You demand she listens to you, but her fear only intensifies. The reality of what you've done starts to hit you.",
+    "choices": {
+      "realize the horror of your actions and flee": "start",
+      "double down and try to control her": "control_her"
+    }
+  },
+  "silence_her": {
+    "description": "In a panic, you try to silence her, covering her mouth with your hand. Her muffled screams and terrified eyes haunt you.",
+    "choices": {
+      "release her and flee": "start",
+      "keep her silent and try to explain": "explain_while_silencing"
+    }
+  },
+  "control_her": {
+    "description": "You try to assert control over her, but the situation is beyond saving. She is terrified and unresponsive to your attempts to calm her.",
+    "choices": {
+      "panic and run away": "start",
+      "realize the consequences of your actions": "realize_horror"
+    }
+  },
+  "explain_while_silencing": {
+    "description": "You try to explain yourself while keeping her silent, but your words make no sense in the madness of the situation.",
+    "choices": {
+      "let her go and flee": "start",
+      "keep holding her and hope she calms down": "hold_and_hope"
+    }
+  },
+  "realize_horror": {
+    "description": "The full horror of your actions hits you, and you realize there is no way to undo what you've done.",
+    "choices": {
+      "break down and flee": "start",
+      "continue trying to control the situation": "control_further"
+    }
+  },
+  "hold_and_hope": {
+    "description": "You hold her tightly, hoping she will calm down, but her fear only grows. The sound of sirens in the distance signals that your time is up.",
+    "choices": {
+      "release her and run": "start",
+      "accept the inevitable consequences": "accept_fate"
+    }
+  },
+  "control_further": {
+    "description": "You try to control the situation further, but it spirals even more out of control. The police are on their way.",
+    "choices": {
+      "try to escape before they arrive": "start",
+      "accept the consequences of your actions": "accept_fate"
+    }
+  },
+  "accept_fate": {
+    "description": "You accept the inevitable consequences of your actions. The police arrive, and you are arrested. The reality of your choices crashes down on you.",
+    "choices": {
+      "reflect on your life choices as you are taken away": "start"
+    }
+  },
+  "wtf_start": {
+    "description": "What the fuck is wrong with you? You sit down and continue your pathetic existence.",
+    "choices": {
+      "have a cig, hoping it will fill the void inside you": "cig_outside",
+      "pull out your military binoculars and watch your neighbour from afar": "stalking_intro",
+      "walk outside in a haze and desperately ask your neighbour out": "desperate_start"
+    }
+  },
+  "desperate_start": {
+    "description": "In a haze of desperation, you stumble outside and head towards your neighbor's house. Your mind races with irrational thoughts of confessing your feelings.",
+    "choices": {
+      "knock on her door": "knock_door_desperate",
+      "wait outside hoping to see her": "wait_outside",
+      "leave a creepy note on her door": "leave_note"
+    }
+  },
+  "knock_door_desperate": {
+    "description": "You knock on her door, your heart pounding in your chest. She opens the door, looking surprised and somewhat concerned.",
+    "choices": {
+      "confess your feelings desperately": "confess_feelings",
+      "try to act normal and ask for something trivial": "ask_trivial"
+    }
+  },
+  "wait_outside": {
+    "description": "You decide to wait outside her house, hoping to catch a glimpse of her. Hours pass, and you start feeling more anxious and desperate.",
+    "choices": {
+      "continue waiting": "wait_longer",
+      "give up and go home": "start"
+    }
+  },
+  "leave_note": {
+    "description": "You scribble a desperate, creepy note and leave it on her door. The note contains your contact information and an unsettling confession of your feelings.",
+    "choices": {
+      "wait to see her reaction from afar": "watch_reaction_note",
+      "leave and hope she contacts you": "start"
+    }
+  },
+  "confess_feelings": {
+    "description": "You blurt out a desperate confession of your feelings. She looks shocked and uncomfortable, taking a step back.",
+    "choices": {
+      "plead for her to understand": "plead_understand",
+      "try to force your way inside": "push_inside"
+    }
+  },
+  "ask_trivial": {
+    "description": "You try to act normal and ask for something trivial, like a cup of sugar. She hesitates but decides to help, sensing your unease.",
+    "choices": {
+      "thank her and leave awkwardly": "start",
+      "try to continue the conversation": "continue_conversation_trivial"
+    }
+  },
+  "wait_longer": {
+    "description": "You continue waiting outside, your anxiety growing with each passing minute. Eventually, a neighbor notices your suspicious behavior.",
+    "choices": {
+      "panic and run away": "start",
+      "try to explain yourself": "explain_waiting"
+    }
+  },
+  "watch_reaction_note": {
+    "description": "You hide nearby, watching for her reaction to the note. She eventually finds it, reads it, and looks horrified. She quickly goes back inside, clearly disturbed.",
+    "choices": {
+      "feel ashamed and leave": "start",
+      "wait and hope she contacts you": "wait_contact"
+    }
+  },
+  "plead_understand": {
+    "description": "You plead for her to understand your feelings, but your desperation only makes her more frightened. She threatens to call the police.",
+    "choices": {
+      "apologize and leave": "start",
+      "try to convince her you're harmless": "convince_harmless"
+    }
+  },
+  "push_inside": {
+    "description": "Ignoring her protests, you try to force your way inside her house. She screams and struggles against you.",
+    "choices": {
+      "realize what you're doing and stop": "realize_and_stop",
+      "continue forcing your way inside": "continue_forcing"
+    }
+  },
+  "continue_conversation_trivial": {
+    "description": "You try to continue the conversation, but your nervousness and desperation make her increasingly uneasy.",
+    "choices": {
+      "ask to come inside": "ask_inside",
+      "thank her and leave": "start"
+    }
+  },
+  "explain_waiting": {
+    "description": "You try to explain your presence to the neighbor, but your explanation only raises more suspicion.",
+    "choices": {
+      "leave quickly": "start",
+      "stand your ground and explain further": "explain_further"
+    }
+  },
+  "wait_contact": {
+    "description": "You wait, hoping she will contact you despite her horrified reaction. Days pass with no word, and you feel increasingly isolated and desperate.",
+    "choices": {
+      "leave another note": "leave_another_note",
+      "try to see her in person again": "try_in_person"
+    }
+  },
+  "convince_harmless": {
+    "description": "You try to convince her that you're harmless, but she doesn't believe you. The situation is rapidly escalating.",
+    "choices": {
+      "apologize and leave": "start",
+      "force your way inside": "continue_forcing"
+    }
+  },
+  "realize_and_stop": {
+    "description": "Realizing the horror of your actions, you stop and step back. She quickly shuts the door, and you hear her calling the police.",
+    "choices": {
+      "run away": "start",
+      "stay and face the consequences": "face_consequences"
+    }
+  },
+  "continue_forcing": {
+    "description": "You continue forcing your way inside. She screams and struggles, and you hear sirens in the distance.",
+    "choices": {
+      "try to escape": "start",
+      "accept your fate": "accept_fate"
+    }
+  },
+  "ask_inside": {
+    "description": "You nervously ask if you can come inside. She looks extremely uncomfortable and refuses, telling you to leave.",
+    "choices": {
+      "apologize and leave": "start",
+      "insist on coming inside": "push_inside"
+    }
+  },
+  "explain_further": {
+    "description": "You try to explain further, but the neighbor is not convinced and calls the police.",
+    "choices": {
+      "leave quickly": "start",
+      "wait for the police to arrive": "wait_police"
+    }
+  },
+  "leave_another_note": {
+    "description": "You leave another, even more desperate note. Her response is even more disturbed, and she contacts the authorities.",
+    "choices": {
+      "flee before the police arrive": "start",
+      "wait to be confronted": "wait_confront"
+    }
+  },
+  "try_in_person": {
+    "description": "You try to see her in person again, but she has already reported you to the police. You are confronted by law enforcement.",
+    "choices": {
+      "try to explain yourself": "explain_to_police",
+      "run away": "start"
+    }
+  },
+  "face_consequences": {
+    "description": "You decide to face the consequences of your actions. The police arrive and arrest you. The weight of your desperation crashes down on you.",
+    "choices": {
+      "reflect on your choices in a cell": "start"
+    }
+  },
+  "wait_police": {
+    "description": "You wait for the police to arrive, resigned to face the consequences of your actions. They arrest you, and you are left to reflect on your desperation.",
+    "choices": {
+      "think about your actions in the cell": "start"
+    }
+  },
+  "wait_confront": {
+    "description": "You wait to be confronted by the authorities. When they arrive, they arrest you, and you are taken away to face the consequences of your actions.",
+    "choices": {
+      "reflect on your decisions": "start"
+    }
+  },
+  "explain_to_police": {
+    "description": "You try to explain yourself to the police, but your desperation and erratic behavior make things worse. You are arrested and taken away.",
+    "choices": {
+      "reflect on your actions": "start"
+    }
+  },
+  "woods_intro": {
+    "description": "You decide to go for a walk in the woods, you see nothing but trees and bushes in front and around you.",
+    "choices": {
+      "keep walking straight": "straight_1",
+      "veer off to the left": "left_1",
+      "veer off to the right": "right_1",
+      "sit down on a log to relax": "log_1",
+      "turn back and go home before it gets late": "turn_back"
+    }
+  },
+  "turn_back": {
+    "description": "You decide to turn back and head home before it gets too late. The woods can be dangerous at night.",
+    "choices": {
+      "head back home": "start",
+      "change your mind and keep walking": "woods_intro"
+    }
+  },
+  "straight_1": {
+    "description": "You keep walking straight, the trees growing denser around you. The path ahead is unclear, and you feel a chill in the air.",
+    "choices": {
+      "keep going deeper": "deeper_woods",
+      "veer off to the left": "left_1",
+      "veer off to the right": "right_1",
+      "turn back and go home": "start"
+    }
+  },
+  "left_1": {
+    "description": "You veer off to the left, noticing a small stream. The sound of running water is calming.",
+    "choices": {
+      "follow the stream": "follow_stream",
+      "sit by the stream to relax": "stream_relax",
+      "head back to the main path": "woods_intro",
+      "turn back and go home": "start"
+    }
+  },
+  "right_1": {
+    "description": "You veer off to the right, noticing a rocky path leading uphill. The climb looks challenging but intriguing.",
+    "choices": {
+      "climb the rocky path": "climb_rocks",
+      "turn back and go home": "start",
+      "explore the surrounding area": "explore_area"
+    }
+  },
+  "log_1": {
+    "description": "You sit down on a log to relax. The forest is quiet, and you start to feel a sense of peace.",
+    "choices": {
+      "stay and relax longer": "relax_longer",
+      "get up and continue walking": "woods_intro",
+      "fall asleep on the log": "fall_asleep"
+    }
+  },
+  "deeper_woods": {
+    "description": "You walk deeper into the woods. The trees are so dense now that they block out most of the sunlight. You start to feel uneasy.",
+    "choices": {
+      "keep pushing forward": "deeper_dark",
+      "turn back and go home": "start",
+      "sit down to gather your thoughts": "gather_thoughts"
+    }
+  },
+  "follow_stream": {
+    "description": "You follow the stream, enjoying the sound of the water. After a while, you see a small clearing up ahead.",
+    "choices": {
+      "enter the clearing": "clearing_wizard",
+      "sit by the stream and relax": "stream_relax",
+      "turn back to the main path": "woods_intro"
+    }
+  },
+  "stream_relax": {
+    "description": "You sit by the stream, listening to the water and enjoying the peaceful atmosphere.",
+    "choices": {
+      "stay longer": "relax_longer",
+      "head back to the main path": "woods_intro",
+      "follow the stream": "follow_stream"
+    }
+  },
+  "climb_rocks": {
+    "description": "You climb the rocky path, each step feeling more treacherous than the last. At the top, you see a breathtaking view of the forest below.",
+    "choices": {
+      "admire the view": "admire_view",
+      "continue exploring": "explore_top",
+      "head back down": "woods_intro"
+    }
+  },
+  "explore_area": {
+    "description": "You explore the surrounding area, finding interesting plants and rocks. You feel a strange sense of being watched.",
+    "choices": {
+      "ignore the feeling and keep exploring": "ignore_feeling",
+      "head back to the main path": "woods_intro",
+      "turn back and go home": "start"
+    }
+  },
+  "relax_longer": {
+    "description": "You decide to relax longer, enjoying the calmness of the woods. Suddenly, you hear a rustling in the bushes.",
+    "choices": {
+      "investigate the noise": "investigate_noise",
+      "stay still and listen": "listen_noise",
+      "head back to the main path": "woods_intro"
+    }
+  },
+  "fall_asleep": {
+    "description": "You fall asleep on the log, the forest sounds lulling you into a deep sleep. You wake up hours later, disoriented and lost.",
+    "choices": {
+      "try to find your way back": "lost_woods",
+      "stay put and hope someone finds you": "stay_lost"
+    }
+  },
+  "deeper_dark": {
+    "description": "You push forward into the dark, dense forest. The air feels thick and heavy.",
+    "choices": {
+      "keep going": "lost_woods",
+      "turn back and go home": "start",
+      "sit down to rest": "gather_thoughts"
+    }
+  },
+  "gather_thoughts": {
+    "description": "You sit down to gather your thoughts. The forest seems to close in around you.",
+    "choices": {
+      "continue sitting and thinking": "think_longer",
+      "get up and keep walking": "woods_intro",
+      "turn back and go home": "start"
+    }
+  },
+  "think_longer": {
+    "description": "You continue sitting and thinking, feeling more and more isolated.",
+    "choices": {
+      "panic and run": "lost_woods",
+      "calm yourself and stand up": "woods_intro",
+      "stay put and wait": "stay_lost"
+    }
+  },
+  "admire_view": {
+    "description": "You admire the view, feeling a brief moment of peace.",
+    "choices": {
+      "stay and enjoy the view longer": "enjoy_view",
+      "head back down": "woods_intro",
+      "explore further": "explore_top"
+    }
+  },
+  "explore_top": {
+    "description": "You explore the top of the rocky path, finding interesting plants and stones. You notice a faint trail leading deeper into the woods.",
+    "choices": {
+      "follow the faint trail": "trail_wizard",
+      "head back down": "woods_intro",
+      "admire the view again": "admire_view"
+    }
+  },
+  "ignore_feeling": {
+    "description": "You ignore the feeling of being watched and keep exploring. Suddenly, you hear a noise behind you.",
+    "choices": {
+      "turn around quickly": "turn_around_noise",
+      "keep walking": "keep_walking_noise",
+      "run away": "run_away_noise"
+    }
+  },
+  "investigate_noise": {
+    "description": "You decide to investigate the noise. You carefully approach the bushes and find a small animal trapped.",
+    "choices": {
+      "help the animal": "help_animal",
+      "ignore it and keep walking": "ignore_animal",
+      "turn back and go home": "start"
+    }
+  },
+  "listen_noise": {
+    "description": "You stay still and listen. The noise gets louder, and you realize something is approaching.",
+    "choices": {
+      "prepare to defend yourself": "defend_noise",
+      "run away": "run_away_noise",
+      "call out to see who it is": "call_out_noise"
+    }
+  },
+  "lost_woods": {
+    "description": "You wander aimlessly, the forest seeming to shift and change around you. You start to panic as you realize you are completely lost.",
+    "choices": {
+      "keep trying to find your way": "lost_further",
+      "stay put and hope for rescue": "stay_lost",
+      "turn back and retrace your steps": "woods_intro"
+    }
+  },
+  "stay_lost": {
+    "description": "You decide to stay put, hoping someone will find you. Hours pass, and you feel increasingly desperate.",
+    "choices": {
+      "keep waiting": "wait_longer_lost",
+      "try to find your way again": "lost_further",
+      "give up and lie down": "give_up_lost"
+    }
+  },
+  "wait_longer_lost": {
+    "description": "You wait longer, the forest growing darker. You hear distant sounds but can't identify them.",
+    "choices": {
+      "call out for help": "call_out_lost",
+      "stay quiet and wait": "stay_quiet_lost",
+      "try to find your way again": "lost_further"
+    }
+  },
+  "give_up_lost": {
+    "description": "You give up and lie down, feeling the weight of your exhaustion. You drift into a restless sleep.",
+    "choices": {
+      "wake up in a hospital": "start",
+      "don't wake up": "game_over"
+    }
+  },
+  "call_out_lost": {
+    "description": "You call out for help, hoping someone will hear you. Your voice echoes through the forest.",
+    "choices": {
+      "wait for a response": "wait_response",
+      "call out again": "call_again",
+      "give up and stay quiet": "stay_quiet_lost"
+    }
+  },
+  "stay_quiet_lost": {
+    "description": "You decide to stay quiet, conserving your energy. The forest feels oppressive.",
+    "choices": {
+      "keep waiting": "wait_longer_lost",
+      "try to find your way again": "lost_further",
+      "give up and lie down": "give_up_lost"
+    }
+  },
+  "lost_further": {
+    "description": "You wander deeper into the woods, the trees closing in around you. You feel a growing sense of dread.",
+    "choices": {
+      "keep pushing forward": "lost_darker",
+      "turn back and try to retrace your steps": "woods_intro",
+      "sit down and gather your thoughts": "gather_thoughts"
+    }
+  },
+  "trail_wizard": {
+    "description": "You follow the faint trail, feeling a strange pull guiding you forward. The trees seem to whisper around you.",
+    "choices": {
+      "keep following the trail": "find_wizard",
+      "turn back and retrace your steps": "explore_top",
+      "sit down and rest": "rest_trail"
+    }
+  },
+  "turn_around_noise": {
+    "description": "You turn around quickly, but see nothing. The forest is eerily quiet.",
+    "choices": {
+      "keep walking": "keep_walking_noise",
+      "run away": "run_away_noise",
+      "turn back to the main path": "woods_intro"
+    }
+  },
+  "keep_walking_noise": {
+    "description": "You keep walking, trying to shake off the feeling of being watched. The noise seems to follow you.",
+    "choices": {
+      "turn around again": "turn_around_noise",
+      "run away": "run_away_noise",
+      "confront whatever is following you": "confront_noise"
+    }
+  },
+  "run_away_noise": {
+    "description": "You run away, your heart pounding in your chest. You don't stop until you're back on the main path.",
+    "choices": {
+      "keep running": "woods_intro",
+      "stop and catch your breath": "catch_breath"
+    }
+  },
+  "confront_noise": {
+    "description": "You turn around and confront whatever is following you. To your surprise, it's a strange old man who looks like a wizard.",
+    "choices": {
+      "talk to the wizard": "find_wizard",
+      "run away": "woods_intro",
+      "stay silent and wait": "wait_wizard"
+    }
+  },
+  "help_animal": {
+    "description": "You help the small animal, freeing it from the trap. It looks at you gratefully before scampering off.",
+    "choices": {
+      "feel good about yourself": "woods_intro",
+      "follow the animal": "follow_animal",
+      "turn back and go home": "start"
+    }
+  },
+  "ignore_animal": {
+    "description": "You ignore the animal and keep walking. The forest feels more oppressive.",
+    "choices": {
+      "keep walking": "keep_walking_noise",
+      "turn back to the main path": "woods_intro",
+      "sit down and rest": "gather_thoughts"
+    }
+  },
+  "defend_noise": {
+    "description": "You prepare to defend yourself, but nothing happens. The noise stops, and the forest is silent.",
+    "choices": {
+      "keep walking": "woods_intro",
+      "run away": "run_away_noise",
+      "sit down to rest": "gather_thoughts"
+    }
+  },
+  "call_out_noise": {
+    "description": "You call out to see who it is, but there's no response. The forest feels even more eerie.",
+    "choices": {
+      "keep walking": "woods_intro",
+      "run away": "run_away_noise",
+      "sit down to rest": "gather_thoughts"
+    }
+  },
+  "find_wizard": {
+    "description": "You finally find the source of the strange feeling – an old wizard standing in a clearing. He looks at you with a knowing smile.",
+    "choices": {
+      "talk to the wizard": "wizard_intro",
+      "run away": "woods_intro",
+      "ask for help": "ask_help"
+    }
+  },
+  "rest_trail": {
+    "description": "You sit down to rest on the faint trail. The forest feels alive around you.",
+    "choices": {
+      "keep resting": "rest_longer",
+      "get up and keep following the trail": "find_wizard",
+      "turn back and retrace your steps": "explore_top"
+    }
+  },
+  "catch_breath": {
+    "description": "You stop and catch your breath. The forest is quiet again.",
+    "choices": {
+      "continue walking": "woods_intro",
+      "sit down to rest": "gather_thoughts",
+      "turn back and go home": "start"
+    }
+  },
+  "follow_animal": {
+    "description": "You follow the animal, which seems to lead you through the forest. Eventually, you reach a small clearing where an old wizard stands.",
+    "choices": {
+      "talk to the wizard": "wizard_intro",
+      "run away": "woods_intro",
+      "thank the animal": "thank_animal"
+    }
+  },
+  "thank_animal": {
+    "description": "You thank the animal, which nods and disappears into the forest. The wizard looks at you with a kind smile.",
+    "choices": {
+      "talk to the wizard": "wizard_intro",
+      "turn back and go home": "start"
+    }
+  },
+  "wait_response": {
+    "description": "You wait for a response, but the forest is silent. The sense of isolation grows.",
+    "choices": {
+      "call out again": "call_again",
+      "stay quiet and wait": "stay_quiet_lost",
+      "try to find your way again": "lost_further"
+    }
+  },
+  "call_again": {
+    "description": "You call out again, your voice echoing through the trees. This time, you hear a faint reply.",
+    "choices": {
+      "follow the sound": "follow_reply",
+      "stay put and wait": "stay_quiet_lost",
+      "call out once more": "call_again"
+    }
+  },
+  "follow_reply": {
+    "description": "You follow the sound of the reply, feeling a mix of hope and fear. You eventually find an old wizard in a clearing.",
+    "choices": {
+      "talk to the wizard": "wizard_intro",
+      "turn back and go home": "woods_intro",
+      "ask for help": "ask_help"
+    }
+  },
+  "wizard_intro": {
+    "description": "The wizard introduces himself and offers you a love potion, claiming it will solve all your problems.",
+    "choices": {
+      "accept the potion": "accept_potion",
+      "decline and leave": "woods_intro",
+      "ask about the potion": "ask_potion"
+    }
+  },
+  "accept_potion": {
+    "description": "You accept the potion from the wizard. He gives you instructions on how to use it, warning you of the consequences.",
+    "choices": {
+      "head back home with the potion": "lovepotion_start",
+      "thank the wizard and leave": "woods_intro",
+      "ask more about the consequences": "ask_consequences"
+    }
+  },
+  "ask_potion": {
+    "description": "You ask the wizard about the potion. He explains its effects and the risks involved.",
+    "choices": {
+      "accept the potion": "accept_potion",
+      "decline and leave": "woods_intro",
+      "ask about the risks": "ask_risks"
+    }
+  },
+  "ask_help": {
+    "description": "You ask the wizard for help. He offers you a love potion, claiming it will solve all your problems.",
+    "choices": {
+      "accept the potion": "accept_potion",
+      "decline and leave": "woods_intro",
+      "ask more about the potion": "ask_potion"
+    }
+  },
+  "ask_consequences": {
+    "description": "You ask the wizard about the consequences of using the potion. He warns you that while it will make someone fall in love with you, it might come at a great personal cost.",
+    "choices": {
+      "accept the potion despite the risks": "accept_potion",
+      "decline and leave": "woods_intro",
+      "ask more about the risks": "ask_risks"
+    }
+  },
+  "ask_risks": {
+    "description": "You ask the wizard more about the risks. He tells you that the potion might bind the person to you in ways that could become dangerous.",
+    "choices": {
+      "accept the potion despite the risks": "accept_potion",
+      "decline and leave": "woods_intro",
+      "thank the wizard and leave": "woods_intro"
+    }
+  },
+  "follow_stream": {
+    "description": "You follow the stream, enjoying the sound of the water. After a while, you see a small clearing up ahead.",
+    "choices": {
+      "enter the clearing": "clearing_wizard",
+      "sit by the stream and relax": "stream_relax",
+      "turn back to the main path": "woods_intro"
+    }
+  },
+  "clearing_wizard": {
+    "description": "You enter the clearing and find an old wizard standing by a small fire. He looks at you with a knowing smile.",
+    "choices": {
+      "talk to the wizard": "find_wizard",
+      "turn back and retrace your steps": "follow_stream",
+      "run away back to the main path": "woods_intro"
+    }
+  },
+  "admire_view": {
+    "description": "You admire the view, feeling a brief moment of peace.",
+    "choices": {
+      "stay and enjoy the view longer": "enjoy_view",
+      "head back down": "woods_intro",
+      "explore further": "explore_top"
+    }
+  },
+  "enjoy_view": {
+    "description": "You stay longer, enjoying the view. Suddenly, you feel a presence behind you.",
+    "choices": {
+      "turn around": "confront_noise",
+      "ignore it and continue enjoying the view": "woods_intro",
+      "run away quickly": "woods_intro"
+    }
+  },
+  "give_up_lost": {
+    "description": "You give up and lie down, feeling the weight of your exhaustion. You drift into a restless sleep.",
+    "choices": {
+      "wake up in a hospital": "start",
+      "don't wake up": "game_over"
+    }
+  },
+  "game_over": {
+    "description": "You don't wake up. The forest claims you as another lost soul.",
+    "choices": {
+      "restart the game": "start"
+    }
+  },
+  "lost_further": {
+    "description": "You wander deeper into the woods, the trees closing in around you. You feel a growing sense of dread.",
+    "choices": {
+      "keep pushing forward": "lost_darker",
+      "turn back and try to retrace your steps": "woods_intro",
+      "sit down and gather your thoughts": "gather_thoughts"
+    }
+  },
+  "lost_darker": {
+    "description": "The forest grows darker and more oppressive. You feel completely lost and hopeless.",
+    "choices": {
+      "keep wandering aimlessly": "give_up_lost",
+      "try to find your way back": "woods_intro",
+      "collapse from exhaustion": "game_over"
+    }
+  },
+  "confront_noise": {
+    "description": "You turn around and confront whatever is following you. To your surprise, it's a strange old man who looks like a wizard.",
+    "choices": {
+      "talk to the wizard": "find_wizard",
+      "run away": "woods_intro",
+      "stay silent and wait": "wait_wizard"
+    }
+  },
+  "wait_wizard": {
+    "description": "You stay silent and wait. The wizard looks at you curiously and then speaks, offering you a love potion.",
+    "choices": {
+      "accept the potion": "accept_potion",
+      "decline and leave": "woods_intro",
+      "ask about the potion": "ask_potion"
+    }
+  },
+  "rest_trail": {
+    "description": "You sit down to rest on the faint trail. The forest feels alive around you.",
+    "choices": {
+      "keep resting": "rest_longer",
+      "get up and keep following the trail": "find_wizard",
+      "turn back and retrace your steps": "explore_top"
+    }
+  },
+  "rest_longer": {
+    "description": "You rest longer, feeling drowsy. As you close your eyes, you hear a rustling nearby.",
+    "choices": {
+      "investigate the noise": "investigate_noise",
+      "ignore it and keep resting": "game_over",
+      "get up and follow the trail": "find_wizard"
+    }
+  },
+  "lovepotion_start": {
+    "description": "Armed with the love potion, you head back home. The wizard's words echo in your mind as you approach your house, feeling a mix of excitement and trepidation.",
+    "choices": {
+      "look out the window to see if she's outside": "love_example_window",
+      "prepare the potion in a drink": "love_example_prepare_drink",
+      "wait for the right moment": "start"
+    }
+  },
+  "love_example_window": {
+    "description": "You look out the window and see her tending to her garden. The sight of her stirs a deep longing within you.",
+    "choices": {
+      "go outside and greet her with the potion": "love_example_greet_with_potion",
+      "watch her from afar": "start",
+      "prepare the potion in a drink and take it to her": "love_example_prepare_drink"
+    }
+  },
+  "love_example_prepare_drink": {
+    "description": "You prepare the potion in a drink, your hands shaking with anticipation. The mixture looks innocent enough, but you know its true power.",
+    "choices": {
+      "take the drink to her garden": "love_example_greet_with_potion",
+      "wait for her to come inside": "love_example_wait_inside",
+      "change your mind and dispose of the drink": "start"
+    }
+  },
+  "love_example_greet_with_potion": {
+    "description": "You walk outside with the drink, approaching her with a smile. She looks up and returns your smile warmly.",
+    "choices": {
+      "offer her the drink": "love_example_offer_drink",
+      "engage in small talk first": "love_example_small_talk",
+      "feel guilty and take the drink back inside": "start"
+    }
+  },
+  "love_example_wait_inside": {
+    "description": "You wait inside, nervously watching the door. Finally, you see her approaching, and your heart races.",
+    "choices": {
+      "invite her in for a drink": "love_example_invite_for_drink",
+      "prepare to go outside and meet her": "love_example_greet_with_potion",
+      "decide against it and hide the drink": "start"
+    }
+  },
+  "love_example_offer_drink": {
+    "description": "You offer her the drink, and she accepts it with a grateful smile. As she takes a sip, you watch with bated breath.",
+    "choices": {
+      "wait for the potion to take effect": "love_example_effects",
+      "engage in conversation": "love_example_conversation",
+      "leave abruptly out of guilt": "start"
+    }
+  },
+  "love_example_small_talk": {
+    "description": "You engage in small talk, your mind racing with the possibilities. She seems relaxed and enjoys your company.",
+    "choices": {
+      "offer her the drink now": "love_example_offer_drink",
+      "continue talking and wait for the right moment": "love_example_greet_with_potion",
+      "abandon the plan and just enjoy the moment": "start"
+    }
+  },
+  "love_example_invite_for_drink": {
+    "description": "You invite her in for a drink, and she accepts, stepping inside your house. The atmosphere feels charged with anticipation.",
+    "choices": {
+      "hand her the potion drink": "love_example_offer_drink",
+      "make small talk first": "love_example_small_talk",
+      "feel guilty and offer something else": "start"
+    }
+  },
+  "love_example_effects": {
+    "description": "As the potion takes effect, you notice a change in her demeanor. She looks at you with newfound affection and desire.",
+    "choices": {
+      "move closer and embrace her": "love_example_embrace",
+      "whisper sweet words to her": "love_example_whisper",
+      "lead her inside for privacy": "love_example_private"
+    }
+  },
+  "love_example_conversation": {
+    "description": "You engage her in conversation, feeling more confident as the potion works its magic. Her responses become increasingly affectionate.",
+    "choices": {
+      "suggest moving inside for privacy": "love_example_private",
+      "lean in for a kiss": "love_example_kiss",
+      "continue talking and enjoy the moment": "love_example_effects"
+    }
+  },
+  "love_example_embrace": {
+    "description": "You move closer and embrace her. She responds eagerly, her affection for you evident.",
+    "choices": {
+      "kiss her passionately": "love_example_kiss",
+      "lead her inside for more privacy": "love_example_private",
+      "whisper sweet words to her": "love_example_whisper"
+    }
+  },
+  "love_example_whisper": {
+    "description": "You whisper sweet words to her, and she blushes, leaning into your embrace.",
+    "choices": {
+      "kiss her passionately": "love_example_kiss",
+      "lead her inside for more privacy": "love_example_private",
+      "continue whispering and holding her": "love_example_embrace"
+    }
+  },
+  "love_example_private": {
+    "description": "You lead her inside for more privacy. The intimacy of the moment grows as you close the door behind you.",
+    "choices": {
+      "kiss her deeply": "love_example_kiss",
+      "take her hand and lead her to the living room": "love_example_living_room",
+      "whisper romantic words": "love_example_whisper"
+    }
+  },
+  "love_example_kiss": {
+    "description": "You kiss her passionately, and she responds with equal fervor. The potion has fully taken effect, and she is completely enamored with you.",
+    "choices": {
+      "continue kissing and move to the living room": "love_example_living_room",
+      "whisper your love for her": "love_example_whisper",
+      "suggest moving to the bedroom": "love_example_bedroom"
+    }
+  },
+  "love_example_living_room": {
+    "description": "You continue your intimate moment in the living room, the atmosphere charged with desire and affection.",
+    "choices": {
+      "move to the bedroom": "love_example_bedroom",
+      "whisper romantic words": "love_example_whisper",
+      "continue kissing and holding her": "love_example_kiss"
+    }
+  },
+  "love_example_bedroom": {
+    "description": "You lead her to the bedroom, where the intimacy of the moment reaches its peak. The night is filled with passion and love.",
+    "choices": {
+      "wake up the next morning feeling accomplished": "start"
+    }
   }
 }
