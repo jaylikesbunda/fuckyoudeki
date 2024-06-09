@@ -11,12 +11,43 @@ document.addEventListener('DOMContentLoaded', () => {
             if (!response.ok) {
                 throw new Error(`HTTP error! Status: ${response.status}`);
             }
-            adventureData = await response.json();
-            console.log('Adventure game data loaded successfully.');
-            return true;
-        } catch (error) {
-            console.error('Error loading adventure game data:', error);
+            const data = await response.text(); // Get the raw text
+            try {
+                adventureData = JSON.parse(data); // Parse the JSON data
+                console.log('Adventure game data loaded successfully.');
+                return true;
+            } catch (jsonError) {
+                console.error('Error parsing adventure game data:', jsonError);
+                adventureData = tryPartialParse(data); // Attempt partial parsing
+                if (adventureData) {
+                    console.log('Partially loaded adventure game data.');
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+        } catch (networkError) {
+            console.error('Error loading adventure game data:', networkError);
             return false;
+        }
+    }
+
+    // Function to attempt partial parsing of the JSON data
+    function tryPartialParse(data) {
+        const validData = data.split('\n').filter(line => {
+            try {
+                JSON.parse(line);
+                return true;
+            } catch (e) {
+                return false;
+            }
+        }).join('\n');
+
+        try {
+            return JSON.parse(validData);
+        } catch (e) {
+            console.error('Partial parse failed:', e);
+            return null;
         }
     }
 
@@ -54,7 +85,7 @@ Mock file listing:
         start: async function(outputElement) {
             const loaded = await loadAdventureData();
             if (!loaded) {
-                outputElement.value += 'Adventure game data not loaded.\n';
+                outputElement.value += 'Adventure game data not loaded. Check JSON file for syntax errors.\n';
                 return;
             }
             currentState = 'start';
