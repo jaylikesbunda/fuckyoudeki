@@ -19,14 +19,14 @@ const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
 const messagesRef = ref(db, 'messages');
 
-// Function to display messages with timestamp
 window.displayMessage = function(username, message, timestamp) {
     const messageContainer = document.createElement('div');
     messageContainer.classList.add('message');
-    const formattedTime = new Date(timestamp).toLocaleTimeString();
-    messageContainer.innerHTML = `<strong>${username}</strong>: ${message} <span class="timestamp">${formattedTime}</span>`;
+    const formattedDateTime = new Date(timestamp).toLocaleString(); // Includes date and time
+    messageContainer.innerHTML = `<strong>${username}</strong>: ${message} <span class="timestamp">${formattedDateTime}</span>`;
     document.getElementById('messages').appendChild(messageContainer);
 };
+
 
 // Override the existing submitMessage function to include Firebase submission
 window.submitMessage = function() {
