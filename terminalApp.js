@@ -13,7 +13,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
             const data = await response.text(); // Get the raw text
             try {
-                adventureData = JSON.parse(data); // Parse the JSON data
+                adventureData = JSON.parse(data); // Attempt to parse the JSON data
                 console.log('Adventure game data loaded successfully.');
                 return true;
             } catch (jsonError) {
@@ -34,19 +34,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Function to attempt partial parsing of the JSON data
     function tryPartialParse(data) {
-        const validData = data.split('\n').filter(line => {
-            try {
-                JSON.parse(line);
-                return true;
-            } catch (e) {
-                return false;
-            }
-        }).join('\n');
+        let sanitizedData = data;
+        // Attempt to fix common JSON errors
+        sanitizedData = sanitizedData
+            .replace(/,\s*([\]}])/g, '$1') // Remove trailing commas
+            .replace(/(['"])?([a-zA-Z0-9_]+)(['"])?\s*:/g, '"$2":'); // Quote keys
 
         try {
-            return JSON.parse(validData);
+            return JSON.parse(sanitizedData);
         } catch (e) {
-            console.error('Partial parse failed:', e);
+            console.error('Sanitized parse failed:', e);
             return null;
         }
     }
