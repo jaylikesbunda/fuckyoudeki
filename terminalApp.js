@@ -14,10 +14,10 @@ document.addEventListener('DOMContentLoaded', () => {
             const data = await response.text(); // Get the raw text
             try {
                 adventureData = JSON.parse(data); // Attempt to parse the JSON data
-                console.log('Adventure game data loaded successfully.');
+                console.log('Adventure game data loaded successfully as JSON.');
                 return true;
             } catch (jsonError) {
-                console.error('Error parsing adventure game data:', jsonError);
+                console.error('Error parsing adventure game data as JSON:', jsonError);
                 adventureData = tryPartialParse(data); // Attempt partial parsing
                 if (adventureData) {
                     console.log('Partially loaded adventure game data.');
@@ -172,6 +172,7 @@ Mock file listing:
                 if (!loaded) {
                     throw new Error('Adventure game data not loaded. Check JSON file for syntax errors.');
                 }
+                console.log('Adventure data:', adventureData); // Debug: show adventure data
                 if (!adventureData['start']) {
                     throw new Error('Initial state "start" not found in adventure data.');
                 }
