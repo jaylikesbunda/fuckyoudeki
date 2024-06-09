@@ -4,53 +4,67 @@ document.addEventListener('DOMContentLoaded', () => {
     let adventureData = null;
     let currentState = 'start';
 
-    // Function to load the adventure game JSON data
-    async function loadAdventureData() {
-        try {
-            const response = await fetch('./adventure.json');
-            if (!response.ok) {
-                throw new Error(`HTTP error! Status: ${response.status}`);
-            }
-            const data = await response.text(); // Get the raw text
-            try {
-                adventureData = JSON.parse(data); // Attempt to parse the JSON data
-                console.log('Adventure game data loaded successfully.');
-                return true;
-            } catch (jsonError) {
-                console.error('Error parsing adventure game data:', jsonError);
-                adventureData = tryPartialParse(data); // Attempt partial parsing
-                if (adventureData) {
-                    console.log('Partially loaded adventure game data.');
-                    return true;
-                } else {
-                    return false;
-                }
-            }
-        } catch (networkError) {
-            console.error('Error loading adventure game data:', networkError);
-            return false;
+// Function to load the adventure game JSON data
+async function loadAdventureData() {
+    try {
+        const response = await fetch('./adventure.json');
+        if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
         }
+        const data = await response.text(); // Get the raw text
+        try {
+            adventureData = JSON.parse(data); // Attempt to parse the JSON data
+            console.log('Adventure game data loaded successfully.');
+            return true;
+        } catch (jsonError) {
+            console.error('Error parsing adventure game data:', jsonError);
+            adventureData = tryPartialParse(data); // Attempt partial parsing
+            if (adventureData) {
+                console.log('Partially loaded adventure game data.');
+                return true;
+            } else {
+                return false;
+            }
+        }
+    } catch (networkError) {
+        console.error('Error loading adventure game data:', networkError);
+        return false;
     }
+}
 
-    // Function to attempt partial parsing of the JSON data
-    function tryPartialParse(data) {
-        let sanitizedData = data;
+// Function to attempt partial parsing of the JSON data
+function tryPartialParse(data) {
+    let sanitizedData = data;
 
-        // Attempt to fix common JSON errors
+    // Attempt to fix common JSON errors
+    sanitizedData = sanitizedData
+        .replace(/,\s*([\]}])/g, '$1') // Remove trailing commas
+        .replace(/([{,])\s*([^":\s]+)\s*:/g, '$1"$2":') // Quote unquoted keys
+        .replace(/,\s*$/, '') // Remove trailing commas at end of file
+        .replace(/(['"])?([a-zA-Z0-9_]+)(['"])?\s*:/g, '"$2":') // Ensure keys are quoted
+        .replace(/:\s*(['"])?([a-zA-Z0-9_]+)(['"])?(\s*,?)/g, ': "$2"$4') // Ensure values are quoted
+        .replace(/"([^"]*)":\s*([^",\s\]}]+)/g, '"$1": "$2"'); // Quote unquoted string values
+
+    try {
+        return JSON.parse(sanitizedData);
+    } catch (e) {
+        console.error('Sanitized parse failed:', e);
+
+        // Further attempts to sanitize the JSON by finding and fixing specific issues
         sanitizedData = sanitizedData
-            .replace(/,\s*([\]}])/g, '$1') // Remove trailing commas
-            .replace(/([{,])\s*([^":\s]+)\s*:/g, '$1"$2":') // Quote unquoted keys
-            .replace(/,\s*$/, '') // Remove trailing commas at end of file
-            .replace(/(['"])?([a-zA-Z0-9_]+)(['"])?\s*:/g, '"$2":') // Ensure keys are quoted
-            .replace(/:\s*(['"])?([a-zA-Z0-9_]+)(['"])?(\s*,?)/g, ': "$2"$4'); // Ensure values are quoted
+            .replace(/\\[rn]/g, '') // Remove escape sequences
+            .replace(/\s*([{}[\],])\s*/g, '$1') // Remove unnecessary whitespaces
+            .replace(/(\w+):/g, '"$1":') // Ensure all keys are quoted
+            .replace(/:\s*([^",\s\]}]+)/g, ': "$1"'); // Ensure all values are quoted
 
         try {
             return JSON.parse(sanitizedData);
-        } catch (e) {
-            console.error('Sanitized parse failed:', e);
+        } catch (secondError) {
+            console.error('Further sanitized parse failed:', secondError);
             return null;
         }
     }
+}
 
     // Terminal commands
     const commands = {
