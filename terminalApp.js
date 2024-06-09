@@ -23,7 +23,15 @@ async function loadAdventureData() {
                 console.log('Partially loaded adventure game data.');
                 return true;
             } else {
-                return false;
+                console.log('Attempting plain text parsing as a final backup.');
+                adventureData = parseAsPlainText(data);
+                if (adventureData) {
+                    console.log('Plain text parsing successful.');
+                    return true;
+                } else {
+                    console.error('Plain text parsing failed.');
+                    return false;
+                }
             }
         }
     } catch (networkError) {
@@ -36,21 +44,21 @@ async function loadAdventureData() {
 function tryPartialParse(data) {
     let sanitizedData = data;
 
-    // Attempt to fix common JSON errors
+    // First pass at cleaning the JSON
     sanitizedData = sanitizedData
         .replace(/,\s*([\]}])/g, '$1') // Remove trailing commas
         .replace(/([{,])\s*([^":\s]+)\s*:/g, '$1"$2":') // Quote unquoted keys
         .replace(/,\s*$/, '') // Remove trailing commas at end of file
         .replace(/(['"])?([a-zA-Z0-9_]+)(['"])?\s*:/g, '"$2":') // Ensure keys are quoted
         .replace(/:\s*(['"])?([a-zA-Z0-9_]+)(['"])?(\s*,?)/g, ': "$2"$4') // Ensure values are quoted
-        .replace(/"([^"]*)":\s*([^",\s\]}]+)/g, '"$1": "$2"'); // Quote unquoted string values
+        .replace(/:\s*(['"])?([^",\s\]}]+)(['"])?(\s*,?)/g, ': "$2"$4'); // Quote unquoted string values
 
     try {
         return JSON.parse(sanitizedData);
     } catch (e) {
         console.error('Sanitized parse failed:', e);
 
-        // Further attempts to sanitize the JSON by finding and fixing specific issues
+        // Further attempts to sanitize the JSON by fixing specific issues
         sanitizedData = sanitizedData
             .replace(/\\[rn]/g, '') // Remove escape sequences
             .replace(/\s*([{}[\],])\s*/g, '$1') // Remove unnecessary whitespaces
@@ -61,10 +69,72 @@ function tryPartialParse(data) {
             return JSON.parse(sanitizedData);
         } catch (secondError) {
             console.error('Further sanitized parse failed:', secondError);
-            return null;
+
+            // Attempt a final cleaning with more aggressive strategies
+            sanitizedData = sanitizedData
+                .replace(/'/g, '"') // Replace single quotes with double quotes
+                .replace(/(\s+)?\n(\s+)?/g, '') // Remove newlines
+                .replace(/([^,\s])}/g, '$1,}') // Add missing commas before closing braces
+                .replace(/([^,\s])]/g, '$1,]'); // Add missing commas before closing brackets
+
+            try {
+                return JSON.parse(sanitizedData);
+            } catch (finalError) {
+                console.error('Final sanitized parse failed:', finalError);
+                return null;
+            }
         }
     }
 }
+
+// Function to parse as plain text
+function parseAsPlainText(data) {
+    const adventureData = {};
+    const sections = data.split(/(?="description":)/g); // Split by descriptions
+
+    sections.forEach(section => {
+        const match = section.match(/"(\w+)":\s*{([^]*?)}/);
+        if (match) {
+            const key = match[1];
+            const value = parseSection(match[2]);
+            adventureData[key] = value;
+        }
+    });
+
+    return adventureData;
+}
+
+function parseSection(section) {
+    const result = {};
+    const descriptionMatch = section.match(/"description":\s*"([^"]*?)"/);
+    if (descriptionMatch) {
+        result.description = descriptionMatch[1];
+    }
+
+    const choicesMatch = section.match(/"choices":\s*{([^]*?)}/);
+    if (choicesMatch) {
+        result.choices = parseChoices(choicesMatch[1]);
+    }
+
+    return result;
+}
+
+function parseChoices(choicesSection) {
+    const choices = {};
+    const choicePairs = choicesSection.split(/,(?=\s*")/);
+
+    choicePairs.forEach(pair => {
+        const match = pair.match(/"([^"]*?)":\s*"([^"]*?)"/);
+        if (match) {
+            const key = match[1];
+            const value = match[2];
+            choices[key] = value;
+        }
+    });
+
+    return choices;
+}
+
 
     // Terminal commands
     const commands = {
