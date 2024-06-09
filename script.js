@@ -223,22 +223,25 @@ function openWindow(windowId) {
     windowElement.style.display = 'block';
     windowElement.style.visibility = 'hidden'; // Temporarily hide to get dimensions
 
-    if (window.innerWidth <= 768) {
+    var screenWidth = window.innerWidth;
+    var screenHeight = window.innerHeight;
+
+    if (screenWidth <= 768) { // Mobile devices
         windowElement.style.width = '95%';
         windowElement.style.height = '95%';
         windowElement.style.top = '2.5%';
         windowElement.style.left = '2.5%';
         windowElement.style.transform = 'none';
-    } else {
+    } else { // Desktop devices
         var defaultWidth = 800;
         var defaultHeight = 500;
 
-        var width = windowElement.getAttribute('data-width') || defaultWidth;
-        var height = windowElement.getAttribute('data-height') || defaultHeight;
+        var width = parseInt(windowElement.getAttribute('data-width')) || defaultWidth;
+        var height = parseInt(windowElement.getAttribute('data-height')) || defaultHeight;
 
         // Ensure height does not exceed screen height
-        if (height > window.innerHeight) {
-            height = window.innerHeight * 0.9; // Adjust to fit within the viewport
+        if (height > screenHeight) {
+            height = screenHeight * 0.9; // Adjust to fit within the viewport
         }
 
         // Apply width and height
@@ -246,8 +249,6 @@ function openWindow(windowId) {
         windowElement.style.height = height + 'px';
 
         // Calculate the position to center the window
-        var screenWidth = window.innerWidth;
-        var screenHeight = window.innerHeight;
         var windowWidth = windowElement.offsetWidth;
         var windowHeight = windowElement.offsetHeight;
         var left = (screenWidth - windowWidth) / 2;

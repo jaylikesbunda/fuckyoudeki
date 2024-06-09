@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="responsive.css">
     <link rel="icon" href="assets/images/folder-icon.png" type="image/png">
     <script src="script.js" defer></script>
+    <script src="terminalApp.js" defer></script>
     <script src="snakeGame.js" defer></script>
     <script src="responsive.js" defer></script>
     <script src="paint_App.js" defer></script>
@@ -50,8 +51,8 @@
             <img src="assets/images/messaging-icon.png" alt="Messaging">
             <span>Global Messaging</span>
         </div>
+
     </div>
-    
     
     <div class="window" id="mainWindow">
         <div class="title-bar">
@@ -141,8 +142,6 @@
         </div>
     </div>
     
-    
-
     <div class="window" id="messagingWindow">
         <div class="title-bar">
             <div class="title-bar-text">Global Messaging</div>
@@ -161,28 +160,48 @@
             <div id="messages" class="messages"></div>
         </div>
     </div>
-    
-    <div class="taskbar">
-        <div class="start-menu">
-            <button class="start-button" onclick="toggleStartMenu()">Start</button>
+
+    <!-- Terminal window -->
+    <div class="window" id="terminalWindow">
+        <div class="title-bar">
+            <div class="title-bar-text">Terminal</div>
+            <div class="title-bar-controls">
+                <button aria-label="Minimize" onclick="minimizeWindow('terminalWindow')">_</button>
+                <button aria-label="Close" onclick="minimizeWindow('terminalWindow')">×</button>
+            </div>
         </div>
-        <div id="startMenu" class="start-menu-dropdown">
-            <ul>
-                <li><a href="#">Programs</a></li>
-                <li><a href="#">Documents</a></li>
-                <li><a href="#">Settings</a></li>
-                <li><a href="#">Search</a></li>
-                <li><a href="#">Help</a></li>
-                <li><a href="#">Run...</a></li>
-                <li><a href="#">Shutdown</a></li>
-            </ul>
-        </div>
-        <div class="taskbar-icons" id="taskbarIcons"></div>
-        <div class="taskbar-time" id="taskbarTime">
-            <span></span>
+        <div class="window-body">
+            <textarea id="terminalOutput" readonly style="width:100%; height:90%;"></textarea>
+            <input type="text" id="terminalInput" onkeypress="handleTerminalInput(event)" style="width:100%;">
         </div>
     </div>
-    <!-- Existing scripts -->  
 
+<!-- Taskbar and start menu -->
+<div class="taskbar">
+    <div class="start-menu">
+        <button class="start-button" onclick="toggleStartMenu()">Start</button>
+    </div>
+    <div id="startMenu" class="start-menu-dropdown">
+        <ul id="programsList">
+            <li><a href="#" onmouseover="showPrograms()" ontouchstart="showPrograms()">Programs &raquo;</a></li>
+            <div id="programsDropdown" class="dropdown-content">
+                <ul id="programs">
+                    <!-- Program list items will be dynamically added here -->
+                </ul>
+            </div>
+            <li><a href="#" onclick="openWindow('terminalWindow')">Terminal</a></li>
+            <li><a href="#">Documents</a></li>
+            <li><a href="#">Settings</a></li>
+            <li><a href="#">Search</a></li>
+            <li><a href="#">Help</a></li>
+            <li><a href="#">Run...</a></li>
+            <li><a href="#">Shutdown</a></li>
+        </ul>
+    </div>
+    <div class="taskbar-icons" id="taskbarIcons"></div>
+    <div class="taskbar-time" id="taskbarTime">
+        <span></span>
+    </div>
+</div>
 </body>
 </html>
