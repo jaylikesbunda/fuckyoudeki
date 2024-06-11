@@ -1,4 +1,4 @@
-ddocument.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function() {
     setTimeout(hideLoadingScreen, 3000); // Show loading screen for 3 seconds
 
     initializeWindows();
