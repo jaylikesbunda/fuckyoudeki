@@ -4,22 +4,35 @@ document.addEventListener('DOMContentLoaded', function() {
     initializeWindows();
     initializeIcons();
 
-    // Set up double-click events for icons
-    document.getElementById('icon1').ondblclick = function() {
-        openWindow('mainWindow');
-    };
-    document.getElementById('icon2').ondblclick = function() {
-        redirectToURL('https://fuckyoufm.net');
-    };
-    document.getElementById('icon3').ondblclick = function() {
-        redirectToURL('https://vapefacts.com.au');
-    };
-    document.getElementById('icon4').ondblclick = function() {
-        openWindow('snakeWindow');
-    };
-    document.getElementById('icon5').ondblclick = function() {
-        openWindow('paintWindow');
-    };
+    // Set up double-click and touch events for icons
+    function setupIconEvents(iconId, openFunction) {
+        var icon = document.getElementById(iconId);
+
+        icon.ondblclick = function() {
+            openFunction();
+        };
+
+        enableSingleClickHighlight(icon);
+
+        var lastTouchEnd = 0;
+        var touchTimeout;
+
+        icon.addEventListener('touchstart', function(event) {
+            // Clear any previous timeouts for ensuring single tap does not open the window
+            clearTimeout(touchTimeout);
+        });
+
+        icon.addEventListener('touchend', function(event) {
+            handleTouch(event, openFunction, icon);
+        });
+    }
+
+    setupIconEvents('icon1', function() { openWindow('mainWindow'); });
+    setupIconEvents('icon2', function() { redirectToURL('https://fuckyoufm.net'); });
+    setupIconEvents('icon3', function() { redirectToURL('https://vapefacts.com.au'); });
+    setupIconEvents('icon4', function() { openWindow('snakeWindow'); });
+    setupIconEvents('icon5', function() { openWindow('paintWindow'); });
+    setupIconEvents('icon6', function() { openWindow('messagingWindow'); });
 
     updateTime();
     setInterval(updateTime, 1000); // Update time every second
@@ -49,13 +62,14 @@ function hideLoadingScreen() {
     var loadingScreen = document.getElementById('loadingScreen');
     loadingScreen.style.display = 'none';
 }
+
 var lastTouchEnd = 0;
 var touchTimeout;
 var longTouchTimeout;
 var longTouchDuration = 500; // duration to detect long touch in milliseconds
 var doubleTapTimeout = 300;  // increased to prevent accidental double-tap
 
-function handleTouch(event, target) {
+function handleTouch(event, targetFunction, icon) {
     // Prevent default behavior to avoid conflicts
     event.preventDefault();
 
@@ -75,22 +89,20 @@ function handleTouch(event, target) {
     } else if (event.type === "touchend") {
         clearTimeout(longTouchTimeout);
 
+        // Highlight immediately on touch end
+        highlightIcon(icon);
+
         // Detect double tap within the specified timeout
         if (timeDiff < doubleTapTimeout && timeDiff > 0) {
-            if (typeof target === 'string' && target.startsWith('http')) {
-                redirectToURL(target);
-            } else {
-                openWindow(target);
-            }
-        } else {
-            touchTimeout = setTimeout(function() {
-                highlightIcon(target);
-            }, doubleTapTimeout);
+            clearTimeout(touchTimeout); // Clear the timeout to avoid highlighting twice
+            targetFunction();
         }
 
         lastTouchEnd = currentTime;
     }
 }
+
+
 function highlightIcon(target) {
     // Remove highlight from any previously highlighted icon
     var highlighted = document.querySelector('.icon.highlighted');
@@ -111,18 +123,13 @@ function enableSingleClickHighlight(element) {
     });
 
     element.addEventListener('touchstart', function(event) {
-        handleTouch(event, element);
+        clearTimeout(touchTimeout); // Clear any previous timeouts
     });
 
     element.addEventListener('touchend', function(event) {
-        handleTouch(event, element);
+        highlightIcon(element);
     });
 }
-
-// Add event listeners to all icons dynamically
-document.querySelectorAll('.icon').forEach(function(icon) {
-    enableSingleClickHighlight(icon);
-});
 
 
 function redirectToURL(url) {
