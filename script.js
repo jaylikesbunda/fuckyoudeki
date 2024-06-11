@@ -1,4 +1,4 @@
-document.addEventListener('DOMContentLoaded', function() {
+ddocument.addEventListener('DOMContentLoaded', function() {
     setTimeout(hideLoadingScreen, 3000); // Show loading screen for 3 seconds
 
     initializeWindows();
@@ -14,12 +14,16 @@ document.addEventListener('DOMContentLoaded', function() {
 
         enableSingleClickHighlight(icon);
 
-        icon.addEventListener('touchstart', function(event) {
-            clearTimeout(touchTimeout); // Clear any previous timeouts
-        });
+        let lastTouchEnd = 0;
+        const doubleTapTimeout = 300;
 
         icon.addEventListener('touchend', function(event) {
             handleTouch(event, openFunction, icon);
+        });
+
+        icon.addEventListener('click', function(event) {
+            // Call highlight function directly for mouse clicks
+            highlightIcon(icon);
         });
     }
 
@@ -59,10 +63,6 @@ function hideLoadingScreen() {
     loadingScreen.style.display = 'none';
 }
 
-var lastTouchEnd = 0;
-var touchTimeout;
-var doubleTapTimeout = 300;
-
 function handleTouch(event, targetFunction, icon) {
     // Prevent default behavior to avoid conflicts
     event.preventDefault();
@@ -70,21 +70,12 @@ function handleTouch(event, targetFunction, icon) {
     var currentTime = new Date().getTime();
     var timeDiff = currentTime - lastTouchEnd;
 
-    // Clear any previous timeouts
-    clearTimeout(touchTimeout);
-
     // Highlight immediately on touch end
     highlightIcon(icon);
 
     // Detect double tap within the specified timeout
     if (timeDiff < doubleTapTimeout && timeDiff > 0) {
-        clearTimeout(touchTimeout); // Clear the timeout to avoid highlighting twice
         targetFunction();
-    } else {
-        touchTimeout = setTimeout(function() {
-            // Single tap highlight logic
-            highlightIcon(icon);
-        }, doubleTapTimeout);
     }
 
     lastTouchEnd = currentTime;
@@ -117,6 +108,7 @@ function enableSingleClickHighlight(element) {
         highlightIcon(element);
     });
 }
+
 
 
 function redirectToURL(url) {
