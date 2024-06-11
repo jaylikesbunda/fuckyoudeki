@@ -5,6 +5,12 @@
         window.openWindow = function(windowId) {
             console.log(`openWindow called with windowId: ${windowId}`); // Log openWindow calls
             const windowElement = document.getElementById(windowId);
+
+            if (!windowElement) {
+                console.error(`Element with ID ${windowId} not found.`);
+                return;
+            }
+
             windowElement.classList.add('show');
             windowElement.style.display = 'block';
 
@@ -54,6 +60,12 @@
         window.minimizeWindow = function(windowId) {
             console.log(`minimizeWindow called with windowId: ${windowId}`); // Log minimizeWindow calls
             const windowElement = document.getElementById(windowId);
+
+            if (!windowElement) {
+                console.error(`Element with ID ${windowId} not found.`);
+                return;
+            }
+
             windowElement.classList.remove('show');
             windowElement.style.display = 'none'; // Hide the window
             updateTaskbarIcons(); // Update taskbar icons after minimizing a window
@@ -62,6 +74,12 @@
         window.maximizeWindow = function(windowId) {
             console.log(`maximizeWindow called with windowId: ${windowId}`); // Log maximizeWindow calls
             const windowElement = document.getElementById(windowId);
+
+            if (!windowElement) {
+                console.error(`Element with ID ${windowId} not found.`);
+                return;
+            }
+
             const isMaximized = windowElement.classList.toggle('maximized');
 
             if (isMaximized) {
@@ -80,6 +98,12 @@
         window.closeWindow = function(windowId) {
             console.log(`closeWindow called with windowId: ${windowId}`); // Log closeWindow calls
             const windowElement = document.getElementById(windowId);
+
+            if (!windowElement) {
+                console.error(`Element with ID ${windowId} not found.`);
+                return;
+            }
+
             windowElement.classList.remove('show');
             windowElement.style.display = 'none'; // Hide the window
             updateTaskbarIcons(); // Update taskbar icons after closing a window
