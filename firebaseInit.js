@@ -20,6 +20,15 @@ const db = getDatabase(app);
 const messagesRef = ref(db, 'messages');
 
 
+function hashStringToColor(str) {
+    let hash = 0;
+    for (let i = 0; i < str.length; i++) {
+        hash = str.charCodeAt(i) + ((hash << 5) - hash);
+    }
+    const color = `hsl(${hash % 360}, 70%, 50%)`; // Generates a color in HSL format
+    return color;
+}
+
 window.displayMessage = function(username, message, timestamp) {
     const messageContainer = document.createElement('div');
     messageContainer.classList.add('message');
@@ -27,11 +36,20 @@ window.displayMessage = function(username, message, timestamp) {
 
     const messageText = document.createElement('div');
     messageText.classList.add('message-text');
-    messageText.innerHTML = `<strong>${username}</strong>: ${message}`;
+
+    const usernameSpan = document.createElement('span');
+    usernameSpan.style.color = hashStringToColor(username);
+    usernameSpan.innerHTML = `<strong>${username}</strong>: `;
+
+    const messageContent = document.createElement('span');
+    messageContent.textContent = message;
 
     const timestampSpan = document.createElement('span');
     timestampSpan.classList.add('timestamp');
     timestampSpan.textContent = formattedDateTime;
+
+    messageText.appendChild(usernameSpan);
+    messageText.appendChild(messageContent);
 
     messageContainer.appendChild(messageText);
     messageContainer.appendChild(timestampSpan);
