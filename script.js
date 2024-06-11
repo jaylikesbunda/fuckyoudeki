@@ -14,11 +14,20 @@ document.addEventListener('DOMContentLoaded', function() {
 
         enableSingleClickHighlight(icon);
 
-        let lastTouchEnd = 0;
-        const doubleTapTimeout = 300;
+        let lastTouchTime = 0;
+        const doubleTapThreshold = 300;
 
         icon.addEventListener('touchend', function(event) {
-            handleTouch(event, openFunction, icon);
+            var currentTime = new Date().getTime();
+            var timeDiff = currentTime - lastTouchTime;
+
+            if (timeDiff < doubleTapThreshold && timeDiff > 0) {
+                openFunction();
+            } else {
+                highlightIcon(icon);
+            }
+
+            lastTouchTime = currentTime;
         });
 
         icon.addEventListener('click', function(event) {
@@ -63,24 +72,6 @@ function hideLoadingScreen() {
     loadingScreen.style.display = 'none';
 }
 
-function handleTouch(event, targetFunction, icon) {
-    // Prevent default behavior to avoid conflicts
-    event.preventDefault();
-
-    var currentTime = new Date().getTime();
-    var timeDiff = currentTime - lastTouchEnd;
-
-    // Highlight immediately on touch end
-    highlightIcon(icon);
-
-    // Detect double tap within the specified timeout
-    if (timeDiff < doubleTapTimeout && timeDiff > 0) {
-        targetFunction();
-    }
-
-    lastTouchEnd = currentTime;
-}
-
 function highlightIcon(target) {
     // Remove highlight from any previously highlighted icon
     var highlighted = document.querySelector('.icon.highlighted');
@@ -101,13 +92,14 @@ function enableSingleClickHighlight(element) {
     });
 
     element.addEventListener('touchstart', function(event) {
-        clearTimeout(touchTimeout); // Clear any previous timeouts
+        // No action needed for touchstart in this simplified version
     });
 
     element.addEventListener('touchend', function(event) {
         highlightIcon(element);
     });
 }
+
 
 
 
@@ -248,59 +240,6 @@ function toggleMaximizeWindow(windowId) {
 
 
 
-
-
-function openWindow(windowId) {
-    var windowElement = document.getElementById(windowId);
-    windowElement.style.display = 'block';
-    windowElement.style.height = '0'; // Start with height 0
-    windowElement.style.visibility = 'hidden'; // Temporarily hide to get dimensions
-
-    var screenWidth = window.innerWidth;
-    var screenHeight = window.innerHeight;
-
-    if (screenWidth <= 768) { // Mobile devices
-        windowElement.style.width = '95%';
-        windowElement.style.height = '95%';
-        windowElement.style.top = '2.5%';
-        windowElement.style.left = '2.5%';
-    } else { // Desktop devices
-        var defaultWidth = 800;
-        var defaultHeight = 500;
-
-        var width = parseInt(windowElement.getAttribute('data-width')) || defaultWidth;
-        var height = parseInt(windowElement.getAttribute('data-height')) || defaultHeight;
-
-        // Ensure height does not exceed screen height
-        if (height > screenHeight) {
-            height = screenHeight * 0.9; // Adjust to fit within the viewport
-        }
-
-        // Apply width and height
-        windowElement.style.width = width + 'px';
-        windowElement.style.height = height + 'px';
-
-        // Calculate the position to center the window
-        var windowWidth = windowElement.offsetWidth;
-        var windowHeight = windowElement.offsetHeight;
-        var left = (screenWidth - windowWidth) / 2;
-        var top = (screenHeight - windowHeight) / 2;
-
-        windowElement.style.left = left + 'px';
-        windowElement.style.top = top + 'px';
-    }
-
-    windowElement.style.position = 'absolute';
-    windowElement.style.visibility = 'visible'; // Make visible again
-    windowElement.classList.add('animate-height'); // Add animation class
-
-    // Trigger the height transition
-    setTimeout(function() {
-        windowElement.style.height = 'auto';
-    }, 10);
-
-    updateTaskbarIcons();
-}
 
 
 
