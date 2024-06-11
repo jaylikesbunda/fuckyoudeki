@@ -50,74 +50,120 @@ function hideLoadingScreen() {
     loadingScreen.style.display = 'none';
 }
 
+var lastTouchEnd = 0;
+var touchTimeout;
+var longTouchTimeout;
+var longTouchDuration = 500; // duration to detect long touch in milliseconds
+
+function handleTouch(event, target) {
+    // Prevent default behavior to avoid conflicts
+    event.preventDefault();
+    
+    var currentTime = new Date().getTime();
+    var timeDiff = currentTime - lastTouchEnd;
+    
+    // Clear any previous timeouts
+    clearTimeout(touchTimeout);
+    clearTimeout(longTouchTimeout);
+    
+    // Long touch detection
+    if (event.type === "touchstart") {
+        longTouchTimeout = setTimeout(function() {
+            // Handle long touch logic if needed
+            console.log("Long touch detected");
+        }, longTouchDuration);
+    } else if (event.type === "touchend") {
+        clearTimeout(longTouchTimeout);
+
+        if (timeDiff < 300 && timeDiff > 0) {
+            if (typeof target === 'string' && target.startsWith('http')) {
+                redirectToURL(target);
+            } else {
+                openWindow(target);
+            }
+        } else {
+            touchTimeout = setTimeout(function() {
+                highlightIcon(target);
+            }, 300);
+        }
+
+        lastTouchEnd = currentTime;
+    }
+}
+
+function highlightIcon(target) {
+    // Remove highlight from any previously highlighted icon
+    var highlighted = document.querySelector('.icon.highlighted');
+    if (highlighted) {
+        highlighted.classList.remove('highlighted');
+    }
+
+    // Highlight the clicked icon
+    if (target && target.classList) {
+        target.classList.add('highlighted');
+    }
+}
+
 function enableSingleClickHighlight(element) {
     element.addEventListener('click', function(event) {
-        event.stopPropagation();
-        document.querySelectorAll('.icon').forEach(function(icon) {
-            icon.classList.remove('highlighted');
-        });
-        element.classList.add('highlighted');
+        // Call highlight function directly for mouse clicks
+        highlightIcon(element);
+    });
+
+    element.addEventListener('touchstart', function(event) {
+        handleTouch(event, element);
     });
 
     element.addEventListener('touchend', function(event) {
-        event.stopPropagation();
-        document.querySelectorAll('.icon').forEach(function(icon) {
-            icon.classList.remove('highlighted');
-        });
-        element.classList.add('highlighted');
+        handleTouch(event, element);
     });
 }
 
-// Initialize highlight functionality for each icon
+// Add event listeners to all icons dynamically
 document.querySelectorAll('.icon').forEach(function(icon) {
     enableSingleClickHighlight(icon);
 });
 
 
-var lastTouchEnd = 0;
-
-function handleTouch(event, target) {
-    var currentTime = new Date().getTime();
-    var timeDiff = currentTime - lastTouchEnd;
-
-    if (timeDiff < 300 && timeDiff > 0) {
-        if (typeof target === 'string' && target.startsWith('http')) {
-            redirectToURL(target);
-        } else {
-            openWindow(target);
-        }
-    }
-
-    lastTouchEnd = currentTime;
-}
-
 function redirectToURL(url) {
-    window.location.href = url;
+    window.open(url, '_blank');
 }
 
 function positionIcons() {
     var icons = document.querySelectorAll('.icon');
     var windowWidth = window.innerWidth;
-    var windowHeight = window.innerHeight;
     var iconWidth = icons[0].offsetWidth;
     var iconHeight = icons[0].offsetHeight;
     var margin = 10; // Space between icons
 
-    var columns = Math.floor((windowWidth - margin) / (iconWidth + margin));
-    var rows = Math.ceil(icons.length / columns);
+    var maxColumns = 4; // Maximum number of icons in a row
+    var currentColumn = 0;
+    var currentRow = 0;
 
     icons.forEach(function(icon, index) {
-        var row = Math.floor(index / columns);
-        var column = index % columns;
+        if (index % 4 === 0 && index !== 0) { // Wrap to new row after 5 icons
+            currentColumn = 0;
+            currentRow++;
+        } else if (currentColumn >= maxColumns) { // Move to new row after maxColumns
+            currentColumn = 0;
+            currentRow++;
+        }
 
-        var left = margin + column * (iconWidth + margin);
-        var top = margin + row * (iconHeight + margin);
+        var left = margin + currentColumn * (iconWidth + margin);
+        var top = margin + currentRow * (iconHeight + margin);
 
         icon.style.position = 'absolute';
         icon.style.top = top + 'px';
         icon.style.left = left + 'px';
+
+        currentColumn++;
     });
 }
+
+// Ensure icons are positioned correctly on load and on window resize
+window.addEventListener('load', positionIcons);
+window.addEventListener('resize', positionIcons);
+
 
 window.addEventListener('resize', positionIcons);
 window.addEventListener('load', positionIcons);
