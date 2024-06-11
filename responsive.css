@@ -116,69 +116,87 @@
 /* Add these styles to styles.css or responsive.css */
 
 /* Add these styles to styles.css or responsive.css */
+/* Messaging App Styles */
+/* Messaging App Styles */
+.messaging-window-body {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    background: #F5F5F5; /* Light background for contrast */
+    overflow: hidden; /* Ensures no content overflows */
+}
 
-        /* Messaging App Styles */
-        .messaging-window-body {
-            display: flex;
-            flex-direction: column;
-            height: 100%;
-        }
+.messaging-toolbar {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 10px;
+    background: #C0C0C0;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow for toolbar */
+}
 
-        .messaging-toolbar {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            padding: 10px;
-            background: #C0C0C0;
-            border-bottom: 2px solid #000;
-        }
+.messaging-toolbar input,
+.messaging-toolbar textarea {
+    width: 100%;
+    padding: 8px;
+    font-family: 'MS Sans Serif', sans-serif;
+    border: 1px solid #000;
+    background: #FFF;
+    box-sizing: border-box; /* Ensure padding is included in the element's width and height */
+    margin-bottom: 10px; /* Space between inputs */
+    resize: vertical; /* Allow only vertical resizing */
+    overflow: auto; /* Ensure scrollbar appears if needed */
+}
 
-        .messaging-toolbar input,
-        .messaging-toolbar textarea {
-            width: 100%;
-            padding: 5px;
-            font-family: 'MS Sans Serif', sans-serif;
-            border: 1px solid #000;
-            background: #FFF;
-            box-sizing: border-box; /* Ensure padding is included in the element's width and height */
-        }
+.messaging-toolbar button {
+    padding: 8px 12px;
+    background: #FFF;
+    cursor: pointer;
+    font-family: 'MS Sans Serif', sans-serif;
+    transition: background 0.3s, color 0.3s; /* Smooth transitions */
+}
 
-        .messaging-toolbar button {
-            padding: 5px 10px;
-            border: 1px solid #000;
-            background: #FFF;
-            cursor: pointer;
-            font-family: 'MS Sans Serif', sans-serif;
-        }
+.messaging-toolbar button:hover {
+    background: #808080;
+    color: #FFF;
+}
 
-        .messaging-toolbar button:hover {
-            background: #808080;
-            color: #FFF;
-        }
+#messages {
+    padding: 15px;
+    flex-grow: 1; /* Allow messages to take up remaining space */
+    overflow-y: auto;
+    background: #FFF;
+    border-top: 2px solid #000;
+    box-sizing: border-box; /* Ensure padding is included in the element's width and height */
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow inside message area */
+}
+.message {
+    padding: 5px;
+    margin-bottom: 10px;
+    border: 1px solid #000;
+    background: #E0E0E0;
+    word-wrap: break-word; /* Ensure long words break correctly */
+    position: relative; /* Ensure positioning of timestamp */
+}
 
-        #messages {
-            padding: 10px;
-            flex-grow: 1; /* Allow messages to take up remaining space */
-            overflow-y: auto;
-            background: #FFF;
-            border-top: 2px solid #000;
-            box-sizing: border-box; /* Ensure padding is included in the element's width and height */
-        }
+.timestamp {
+    position: absolute;
+    right: 5px;
+    bottom: 5px;
+    font-size: 0.8em;
+    color: gray;
+    white-space: nowrap; /* Prevent wrapping of timestamp */
+}
 
-        .message {
-            padding: 5px;
-            margin-bottom: 10px;
-            border: 1px solid #000;
-            background: #E0E0E0;
-            word-wrap: break-word; /* Ensure long words break correctly */
-        }
+@media (max-width: 768px) {
+    .message {
+        padding-right: 80px; /* Add padding to accommodate timestamp */
+    }
 
-        .timestamp {
-            float: right;
-            font-size: 0.8em;
-            color: gray;
-        }
-
+    .timestamp {
+        font-size: 0.7em;
+    }
+}
 
 
 

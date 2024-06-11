@@ -82,6 +82,7 @@
     "description": "You brew a fresh pot of coffee. It smells like success.",
     "choices": {
       "invite neighbor for coffee": "invite_coffee",
+      "consider doing something drastic to impress her": "consider_robbery",
       "enjoy coffee alone": "start"
     }
   },
@@ -220,7 +221,7 @@
     "choices": {
       "compliment her strategic skills": "compliment_strategy",
       "share a laugh": "share_laugh",
-	  "brag about how good you are at the game": "brag_game",
+	    "brag about how good you are at the game": "brag_game",
       "wrap up the evening": "start"
 	}
   },
@@ -2006,10 +2007,10 @@
     "description": "You give up and lie down, feeling the weight of your exhaustion. You drift into a restless sleep.",
     "choices": {
       "wake up in a hospital": "start",
-      "don't wake up": "game_over"
+      "don't wake up": "game_over_forrest"
     }
   },
-  "game_over": {
+  "game_over_forrest": {
     "description": "You don't wake up. The forest claims you as another lost soul.",
     "choices": {
       "restart the game": "start"
@@ -2188,5 +2189,635 @@
     "choices": {
       "wake up the next morning feeling accomplished": "start"
     }
+  },
+  "consider_robbery": {
+    "description": "While sipping your coffee, a wild and dangerous idea forms in your mind. What if you rob a bank to buy her something amazing and win her over?",
+    "choices": {
+      "plan the heist": "plan_heist",
+      "dismiss the idea": "start",
+      "talk to a shady friend for advice": "talk_shady_friend"
+    }
+  },
+  "talk_shady_friend": {
+    "description": "You meet up with a shady friend who has a reputation for knowing the underworld. He agrees to help you but warns you about the extreme risks involved.",
+    "choices": {
+      "accept his help": "plan_heist_with_help",
+      "decide to go alone": "plan_heist_alone",
+      "change your mind": "start"
+    }
+  },
+  "plan_heist_with_help": {
+    "description": "With the help of your shady friend, you start planning the heist meticulously. The plan involves distraction, deception, and a quick escape.",
+    "choices": {
+      "acquire a disguise": "acquire_disguise_with_help",
+      "map out the bank": "map_bank_with_help",
+      "get a weapon": "get_weapon_with_help",
+      "decide to go unarmed": "go_unarmed_with_help"
+    }
+  },
+  "plan_heist_alone": {
+    "description": "You decide to go ahead with the heist alone, not trusting anyone else to help. The risks are higher, but so is the potential reward.",
+    "choices": {
+      "acquire a disguise": "acquire_disguise_alone",
+      "map out the bank": "map_bank_alone",
+      "get a weapon": "get_weapon_alone",
+      "decide to go unarmed": "go_unarmed_alone"
+    }
+  },
+  "acquire_disguise_with_help": {
+    "description": "Your shady friend helps you find a convincing disguise that will help you blend in and avoid detection. A ski mask, dark clothes, and gloves should do the trick.",
+    "choices": {
+      "move to the next step of the heist": "map_bank_with_help",
+      "get cold feet and reconsider": "start",
+      "change disguise at the last moment": "change_disguise_with_help"
+    }
+  },
+  "acquire_disguise_alone": {
+    "description": "You find a convincing disguise that will help you blend in and avoid detection. A ski mask, dark clothes, and gloves should do the trick.",
+    "choices": {
+      "move to the next step of the heist": "map_bank_alone",
+      "get cold feet and reconsider": "start",
+      "change disguise at the last moment": "change_disguise_alone"
+    }
+  },
+  "change_disguise_with_help": {
+    "description": "You decide to change your disguise at the last moment, hoping a different look will give you an edge. Your friend advises you on a new look.",
+    "choices": {
+      "stick with the new disguise": "map_bank_with_help",
+      "revert to the original disguise": "acquire_disguise_with_help",
+      "abandon the plan": "start"
+    }
+  },
+  "change_disguise_alone": {
+    "description": "You decide to change your disguise at the last moment, hoping a different look will give you an edge.",
+    "choices": {
+      "stick with the new disguise": "map_bank_alone",
+      "revert to the original disguise": "acquire_disguise_alone",
+      "abandon the plan": "start"
+    }
+  },
+  "map_bank_with_help": {
+    "description": "You and your shady friend map out the bank, noting the security cameras, guards, and escape routes. Every detail matters in this high-stakes game.",
+    "choices": {
+      "move to the next step of the heist": "get_weapon_with_help",
+      "get cold feet and reconsider": "start",
+      "find an insider to help": "find_insider_with_help"
+    }
+  },
+  "map_bank_alone": {
+    "description": "You map out the bank alone, noting the security cameras, guards, and escape routes. Every detail matters in this high-stakes game.",
+    "choices": {
+      "move to the next step of the heist": "get_weapon_alone",
+      "get cold feet and reconsider": "start",
+      "find an insider to help": "find_insider_alone"
+    }
+  },
+  "find_insider_with_help": {
+    "description": "Your shady friend finds an insider at the bank who is willing to help you for a cut of the money. They provide you with critical information about the bank's layout and security.",
+    "choices": {
+      "trust the insider": "get_weapon_with_help",
+      "distrust the insider and go solo": "get_weapon_with_help",
+      "change your mind": "start"
+    }
+  },
+  "find_insider_alone": {
+    "description": "You find an insider at the bank who is willing to help you for a cut of the money. They provide you with critical information about the bank's layout and security.",
+    "choices": {
+      "trust the insider": "get_weapon_alone",
+      "distrust the insider and go solo": "get_weapon_alone",
+      "change your mind": "start"
+    }
+  },
+  "get_weapon_with_help": {
+    "description": "Your shady friend helps you acquire a weapon for the heist, knowing it's necessary for intimidation and control. A gun adds a serious edge to your plan.",
+    "choices": {
+      "finalize your heist plans": "heist_day_with_help",
+      "get cold feet and reconsider": "start",
+      "decide to go unarmed": "go_unarmed_with_help"
+    }
+  },
+  "get_weapon_alone": {
+    "description": "You acquire a weapon for the heist, knowing it's necessary for intimidation and control. A gun adds a serious edge to your plan.",
+    "choices": {
+      "finalize your heist plans": "heist_day_alone",
+      "get cold feet and reconsider": "start",
+      "decide to go unarmed": "go_unarmed_alone"
+    }
+  },
+  "go_unarmed_with_help": {
+    "description": "You decide to go unarmed, hoping to rely on fear and intimidation alone. Your shady friend advises against it, but you are determined.",
+    "choices": {
+      "proceed with the heist unarmed": "heist_day_unarmed_with_help",
+      "reconsider and get a weapon": "get_weapon_with_help"
+    }
+  },
+  "go_unarmed_alone": {
+    "description": "You decide to go unarmed, hoping to rely on fear and intimidation alone. It's a risky move, but it might pay off.",
+    "choices": {
+      "proceed with the heist unarmed": "heist_day_unarmed_alone",
+      "reconsider and get a weapon": "get_weapon_alone"
+    }
+  },
+  "heist_day_with_help": {
+    "description": "The day of the heist arrives. You're nervous but determined. With your shady friend by your side, you put on your disguise, grab your weapon, and head to the bank. The adrenaline is pumping.",
+    "choices": {
+      "enter the bank and proceed with the heist": "enter_bank_with_help",
+      "change your mind at the last minute": "start"
+    }
+  },
+  "heist_day_alone": {
+    "description": "The day of the heist arrives. You're nervous but determined. You put on your disguise, grab your weapon, and head to the bank alone. The adrenaline is pumping.",
+    "choices": {
+      "enter the bank and proceed with the heist": "enter_bank_alone",
+      "change your mind at the last minute": "start"
+    }
+  },
+  "heist_day_unarmed_with_help": {
+    "description": "The day of the heist arrives. You're nervous but determined. With your shady friend by your side, you put on your disguise and head to the bank, unarmed but confident.",
+    "choices": {
+      "enter the bank and proceed with the heist": "enter_bank_unarmed_with_help",
+      "change your mind at the last minute": "start"
+    }
+  },
+  "heist_day_unarmed_alone": {
+    "description": "The day of the heist arrives. You're nervous but determined. You put on your disguise and head to the bank alone, unarmed but confident.",
+    "choices": {
+      "enter the bank and proceed with the heist": "enter_bank_unarmed_alone",
+      "change your mind at the last minute": "start"
+    }
+  },
+  "enter_bank_with_help": {
+    "description": "You enter the bank with your shady friend, your heart pounding. You pull out your weapon and demand everyone to get on the floor. The tellers comply, and you start collecting money. Tension is thick in the air.",
+    "choices": {
+      "continue with the heist": "continue_heist_with_help",
+      "panic and flee": "panic_flee_with_help",
+      "take a hostage": "take_hostage_with_help"
+    }
+  },
+  "enter_bank_alone": {
+    "description": "You enter the bank alone, your heart pounding. You pull out your weapon and demand everyone to get on the floor. The tellers comply, and you start collecting money. Tension is thick in the air.",
+    "choices": {
+      "continue with the heist": "continue_heist_alone",
+      "panic and flee": "panic_flee_alone",
+      "take a hostage": "take_hostage_alone"
+    }
+  },
+  "enter_bank_unarmed_with_help": {
+    "description": "You enter the bank with your shady friend, your heart pounding. You shout at everyone to get on the floor, relying on fear and intimidation. The room falls silent as everyone complies.",
+    "choices": {
+      "continue with the heist": "continue_heist_unarmed_with_help",
+      "panic and flee": "panic_flee_unarmed_with_help",
+      "try to reason with the tellers": "reason_tellers_with_help"
+    }
+  },
+  "enter_bank_unarmed_alone": {
+    "description": "You enter the bank alone, your heart pounding. You shout at everyone to get on the floor, relying on fear and intimidation. The room falls silent as everyone complies.",
+    "choices": {
+      "continue with the heist": "continue_heist_unarmed_alone",
+      "panic and flee": "panic_flee_unarmed_alone",
+      "try to reason with the tellers": "reason_tellers_alone"
+    }
+  },
+  "continue_heist_with_help": {
+    "description": "You continue with the heist, but things start to go wrong. A security guard tries to be a hero and lunges at you. In the struggle, your weapon goes off, and the guard falls to the ground. The situation spirals out of control.",
+    "choices": {
+      "run away": "run_away_with_help",
+      "try to help the guard": "help_guard_with_help",
+      "take another hostage to secure your escape": "take_hostage_critical_with_help"
+    }
+  },
+  "continue_heist_alone": {
+    "description": "You continue with the heist alone, but things start to go wrong. A security guard tries to be a hero and lunges at you. In the struggle, your weapon goes off, and the guard falls to the ground. The situation spirals out of control.",
+    "choices": {
+      "run away": "run_away_alone",
+      "try to help the guard": "help_guard_alone",
+      "take another hostage to secure your escape": "take_hostage_critical_alone"
+    }
+  },
+  "continue_heist_unarmed_with_help": {
+    "description": "You continue with the heist, but things start to go wrong. A security guard tries to be a hero and tackles you. In the struggle, the alarm goes off. Chaos erupts.",
+    "choices": {
+      "run away": "run_away_unarmed_with_help",
+      "try to calm the guard": "calm_guard_with_help",
+      "take a hostage to secure your escape": "take_hostage_unarmed_critical_with_help"
+    }
+  },
+  "continue_heist_unarmed_alone": {
+    "description": "You continue with the heist alone, but things start to go wrong. A security guard tries to be a hero and tackles you. In the struggle, the alarm goes off. Chaos erupts.",
+    "choices": {
+      "run away": "run_away_unarmed_alone",
+      "try to calm the guard": "calm_guard_alone",
+      "take a hostage to secure your escape": "take_hostage_unarmed_critical_alone"
+    }
+  },
+  "take_hostage_with_help": {
+    "description": "In a desperate move, you take a hostage to increase your chances of escape. The room is filled with fear as you hold the weapon against the hostage's head.",
+    "choices": {
+      "demand a getaway car": "demand_car_with_help",
+      "use the hostage as a shield": "hostage_shield_with_help",
+      "negotiate with the police": "negotiate_police_with_help"
+    }
+  },
+  "take_hostage_alone": {
+    "description": "In a desperate move, you take a hostage to increase your chances of escape. The room is filled with fear as you hold the weapon against the hostage's head.",
+    "choices": {
+      "demand a getaway car": "demand_car_alone",
+      "use the hostage as a shield": "hostage_shield_alone",
+      "negotiate with the police": "negotiate_police_alone"
+    }
+  },
+  "take_hostage_unarmed_with_help": {
+    "description": "In a desperate move, you take a hostage to increase your chances of escape. The room is filled with fear as you use the hostage as leverage.",
+    "choices": {
+      "demand a getaway car": "demand_car_unarmed_with_help",
+      "use the hostage as a shield": "hostage_shield_unarmed_with_help",
+      "negotiate with the police": "negotiate_police_unarmed_with_help"
+    }
+  },
+  "take_hostage_unarmed_alone": {
+    "description": "In a desperate move, you take a hostage to increase your chances of escape. The room is filled with fear as you use the hostage as leverage.",
+    "choices": {
+      "demand a getaway car": "demand_car_unarmed_alone",
+      "use the hostage as a shield": "hostage_shield_unarmed_alone",
+      "negotiate with the police": "negotiate_police_unarmed_alone"
+    }
+  },
+  "run_away_with_help": {
+    "description": "You and your shady friend run away from the bank, the sound of sirens growing louder. You manage to escape to your hideout but know it's only a matter of time before you're caught.",
+    "choices": {
+      "prepare to leave town": "leave_town_with_help",
+      "wait and hope for the best": "start",
+      "contact another friend for help": "contact_friend_with_help"
+    }
+  },
+  "run_away_alone": {
+    "description": "You run away from the bank alone, the sound of sirens growing louder. You manage to escape to your hideout but know it's only a matter of time before you're caught.",
+    "choices": {
+      "prepare to leave town": "leave_town_alone",
+      "wait and hope for the best": "start",
+      "contact a friend for help": "contact_friend_alone"
+    }
+  },
+  "run_away_unarmed_with_help": {
+    "description": "You and your shady friend run away from the bank, the sound of sirens growing louder. You manage to escape to your hideout but know it's only a matter of time before you're caught.",
+    "choices": {
+      "prepare to leave town": "leave_town_unarmed_with_help",
+      "wait and hope for the best": "start",
+      "contact another friend for help": "contact_friend_unarmed_with_help"
+    }
+  },
+  "run_away_unarmed_alone": {
+    "description": "You run away from the bank alone, the sound of sirens growing louder. You manage to escape to your hideout but know it's only a matter of time before you're caught.",
+    "choices": {
+      "prepare to leave town": "leave_town_unarmed_alone",
+      "wait and hope for the best": "start",
+      "contact a friend for help": "contact_friend_unarmed_alone"
+    }
+  },
+  "help_guard_with_help": {
+    "description": "You and your shady friend try to help the guard, but it's too late. The police arrive, and you're arrested on the spot. The gravity of your actions hits you hard.",
+    "choices": {
+      "reflect on your life choices": "game_over"
+    }
+  },
+  "help_guard_alone": {
+    "description": "You try to help the guard, but it's too late. The police arrive, and you're arrested on the spot. The gravity of your actions hits you hard.",
+    "choices": {
+      "reflect on your life choices": "game_over"
+    }
+  },
+  "calm_guard_with_help": {
+    "description": "You and your shady friend try to calm the guard, but the situation escalates. The police arrive, and you're arrested on the spot. The reality of your situation sets in.",
+    "choices": {
+      "reflect on your life choices": "game_over"
+    }
+  },
+  "calm_guard_alone": {
+    "description": "You try to calm the guard, but the situation escalates. The police arrive, and you're arrested on the spot. The reality of your situation sets in.",
+    "choices": {
+      "reflect on your life choices": "game_over"
+    }
+  },
+  "demand_car_with_help": {
+    "description": "You and your shady friend demand a getaway car, using the hostage as leverage. The police agree to your demands, but time is running out.",
+    "choices": {
+      "wait for the car": "wait_car_with_help",
+      "try to escape with the hostage": "escape_hostage_with_help",
+      "negotiate for safe passage": "negotiate_police_with_help"
+    }
+  },
+  "demand_car_alone": {
+    "description": "You demand a getaway car, using the hostage as leverage. The police agree to your demands, but time is running out.",
+    "choices": {
+      "wait for the car": "wait_car_alone",
+      "try to escape with the hostage": "escape_hostage_alone",
+      "negotiate for safe passage": "negotiate_police_alone"
+    }
+  },
+  "demand_car_unarmed_with_help": {
+    "description": "You and your shady friend demand a getaway car, using the hostage as leverage. The police agree to your demands, but time is running out.",
+    "choices": {
+      "wait for the car": "wait_car_unarmed_with_help",
+      "try to escape with the hostage": "escape_hostage_unarmed_with_help",
+      "negotiate for safe passage": "negotiate_police_unarmed_with_help"
+    }
+  },
+  "demand_car_unarmed_alone": {
+    "description": "You demand a getaway car, using the hostage as leverage. The police agree to your demands, but time is running out.",
+    "choices": {
+      "wait for the car": "wait_car_unarmed_alone",
+      "try to escape with the hostage": "escape_hostage_unarmed_alone",
+      "negotiate for safe passage": "negotiate_police_unarmed_alone"
+    }
+  },
+  "hostage_shield_with_help": {
+    "description": "You and your shady friend use the hostage as a shield, trying to make your way out of the bank. The tension is high, and any wrong move could be fatal.",
+    "choices": {
+      "move towards the exit": "move_exit_with_help",
+      "negotiate with the police": "negotiate_police_with_help",
+      "release the hostage and surrender": "start"
+    }
+  },
+  "hostage_shield_alone": {
+    "description": "You use the hostage as a shield, trying to make your way out of the bank. The tension is high, and any wrong move could be fatal.",
+    "choices": {
+      "move towards the exit": "move_exit_alone",
+      "negotiate with the police": "negotiate_police_alone",
+      "release the hostage and surrender": "start"
+    }
+  },
+  "hostage_shield_unarmed_with_help": {
+    "description": "You and your shady friend use the hostage as a shield, trying to make your way out of the bank. The tension is high, and any wrong move could be fatal.",
+    "choices": {
+      "move towards the exit": "move_exit_unarmed_with_help",
+      "negotiate with the police": "negotiate_police_unarmed_with_help",
+      "release the hostage and surrender": "start"
+    }
+  },
+  "hostage_shield_unarmed_alone": {
+    "description": "You use the hostage as a shield, trying to make your way out of the bank. The tension is high, and any wrong move could be fatal.",
+    "choices": {
+      "move towards the exit": "move_exit_unarmed_alone",
+      "negotiate with the police": "negotiate_police_unarmed_alone",
+      "release the hostage and surrender": "start"
+    }
+  },
+  "leave_town_with_help": {
+    "description": "You and your shady friend pack your things and prepare to leave town, hoping to start a new life far away from here. But the police are already on your trail. They catch you before you can escape.",
+    "choices": {
+      "reflect on your life choices": "game_over"
+    }
+  },
+  "leave_town_alone": {
+    "description": "You pack your things and prepare to leave town, hoping to start a new life far away from here. But the police are already on your trail. They catch you before you can escape.",
+    "choices": {
+      "reflect on your life choices": "game_over"
+    }
+  },
+  "leave_town_unarmed_with_help": {
+    "description": "You and your shady friend pack your things and prepare to leave town, hoping to start a new life far away from here. But the police are already on your trail. They catch you before you can escape.",
+    "choices": {
+      "reflect on your life choices": "game_over"
+    }
+  },
+  "leave_town_unarmed_alone": {
+    "description": "You pack your things and prepare to leave town, hoping to start a new life far away from here. But the police are already on your trail. They catch you before you can escape.",
+    "choices": {
+      "reflect on your life choices": "game_over"
+    }
+  },
+  "contact_friend_with_help": {
+    "description": "You contact another friend for help, but they betray you to the police.",
+    "choices": {
+      "reflect on your life choices": "game_over"
+    }
+  },
+  "contact_friend_alone": {
+    "description": "You contact a friend for help, but they betray you to the police.",
+    "choices": {
+      "reflect on your life choices": "game_over"
+    }
+  },
+  "contact_friend_unarmed_with_help": {
+    "description": "You contact another friend for help, but they betray you to the police.",
+    "choices": {
+      "reflect on your life choices": "game_over"
+    }
+  },
+  "contact_friend_unarmed_alone": {
+    "description": "You contact a friend for help, but they betray you to the police.",
+    "choices": {
+      "reflect on your life choices": "game_over"
+    }
+  },
+  "wait_car_with_help": {
+    "description": "You and your shady friend wait for the getaway car, but the police are stalling. They eventually storm the bank and arrest you.",
+    "choices": {
+      "reflect on your life choices": "game_over"
+    }
+  },
+  "wait_car_alone": {
+    "description": "You wait for the getaway car, but the police are stalling. They eventually storm the bank and arrest you.",
+    "choices": {
+      "reflect on your life choices": "game_over"
+    }
+  },
+  "wait_car_unarmed_with_help": {
+    "description": "You and your shady friend wait for the getaway car, but the police are stalling. They eventually storm the bank and arrest you.",
+    "choices": {
+      "reflect on your life choices": "game_over"
+    }
+  },
+  "wait_car_unarmed_alone": {
+    "description": "You wait for the getaway car, but the police are stalling. They eventually storm the bank and arrest you.",
+    "choices": {
+      "reflect on your life choices": "game_over"
+    }
+  },
+  "escape_hostage_with_help": {
+    "description": "You and your shady friend try to escape with the hostage, but the police catch up to you. In the chaos, the hostage is injured, and you're arrested.",
+    "choices": {
+      "reflect on your life choices": "game_over"
+    }
+  },
+  "escape_hostage_alone": {
+    "description": "You try to escape with the hostage, but the police catch up to you. In the chaos, the hostage is injured, and you're arrested.",
+    "choices": {
+      "reflect on your life choices": "game_over"
+    }
+  },
+  "escape_hostage_unarmed_with_help": {
+    "description": "You and your shady friend try to escape with the hostage, but the police catch up to you. In the chaos, the hostage is injured, and you're arrested.",
+    "choices": {
+      "reflect on your life choices": "game_over"
+    }
+  },
+  "escape_hostage_unarmed_alone": {
+    "description": "You try to escape with the hostage, but the police catch up to you. In the chaos, the hostage is injured, and you're arrested.",
+    "choices": {
+      "reflect on your life choices": "game_over"
+    }
+  },
+  "move_exit_with_help": {
+    "description": "You and your shady friend keep moving towards the exit, but the police block your way. In the ensuing standoff, you're shot and captured.",
+    "choices": {
+      "reflect on your life choices": "game_over"
+    }
+  },
+  "move_exit_alone": {
+    "description": "You keep moving towards the exit, but the police block your way. In the ensuing standoff, you're shot and captured.",
+    "choices": {
+      "reflect on your life choices": "game_over"
+    }
+  },
+  "move_exit_unarmed_with_help": {
+    "description": "You and your shady friend keep moving towards the exit, but the police block your way. In the ensuing standoff, you're captured.",
+    "choices": {
+      "reflect on your life choices": "game_over"
+    }
+  },
+  "move_exit_unarmed_alone": {
+    "description": "You keep moving towards the exit, but the police block your way. In the ensuing standoff, you're captured.",
+    "choices": {
+      "reflect on your life choices": "game_over"
+    }
+  },
+  "negotiate_police_with_help": {
+    "description": "You and your shady friend try to negotiate with the police, but they don't trust you. The standoff ends with your arrest.",
+    "choices": {
+      "reflect on your life choices": "game_over"
+    }
+  },
+  "negotiate_police_alone": {
+    "description": "You try to negotiate with the police, but they don't trust you. The standoff ends with your arrest.",
+    "choices": {
+      "reflect on your life choices": "game_over"
+    }
+  },
+  "negotiate_police_unarmed_with_help": {
+    "description": "You and your shady friend try to negotiate with the police, but they don't trust you. The standoff ends with your arrest.",
+    "choices": {
+      "reflect on your life choices": "game_over"
+    }
+  },
+  "negotiate_police_unarmed_alone": {
+    "description": "You try to negotiate with the police, but they don't trust you. The standoff ends with your arrest.",
+    "choices": {
+      "reflect on your life choices": "game_over"
+    }
+  },
+  "game_over": {
+    "description": "The choices you've made have led you to this moment. Reflecting on your decisions, you realize that every action has consequences. This is the end of the path you've chosen.",
+    "choices": {
+      "restart the game": "start"
+    }
+  },
+  "plan_heist": {
+    "description": "You meticulously plan the heist, covering every detail from entry to escape. You feel ready to impress her with your daring move.",
+    "choices": {
+      "enter the bank with a shady friend": "enter_bank_with_help",
+      "enter the bank alone": "enter_bank_alone",
+      "enter the bank unarmed with a shady friend": "enter_bank_unarmed_with_help",
+      "enter the bank unarmed and alone": "enter_bank_unarmed_alone"
+    }
+  },
+  "panic_flee_with_help": {
+    "description": "You and your shady friend panic and decide to flee the bank. The plan falls apart and you find yourself on the run.",
+    "choices": {
+      "reflect on your life choices as you flee": "game_over"
+    }
+  },
+  "panic_flee_alone": {
+    "description": "You panic and decide to flee the bank alone. The plan falls apart and you find yourself on the run.",
+    "choices": {
+      "reflect on your life choices as you flee": "game_over"
+    }
+  },
+  "panic_flee_unarmed_with_help": {
+    "description": "You and your shady friend panic and decide to flee the bank unarmed. The plan falls apart and you find yourself on the run.",
+    "choices": {
+      "reflect on your life choices as you flee": "game_over"
+    }
+  },
+  "reason_tellers_with_help": {
+    "description": "You and your shady friend try to reason with the tellers, hoping to get the money without violence.",
+    "choices": {
+      "continue with the heist unarmed with help": "continue_heist_unarmed_with_help",
+      "panic and flee with your friend": "panic_flee_unarmed_with_help"
+    }
+  },
+  "panic_flee_unarmed_alone": {
+    "description": "You panic and decide to flee the bank unarmed and alone. The plan falls apart and you find yourself on the run.",
+    "choices": {
+      "reflect on your life choices as you flee": "game_over"
+    }
+  },
+  "reason_tellers_alone": {
+    "description": "You try to reason with the tellers, hoping to get the money without violence.",
+    "choices": {
+      "continue with the heist unarmed and alone": "continue_heist_unarmed_alone",
+      "panic and flee": "panic_flee_unarmed_alone"
+    }
+  },
+  "take_hostage_critical_with_help": {
+    "description": "You and your shady friend take a hostage, escalating the situation critically.",
+    "choices": {
+      "continue demanding money with the hostage": "demand_money_with_help",
+      "try to calm the situation down": "reason_tellers_with_help"
+    }
+  },
+  "take_hostage_critical_alone": {
+    "description": "You take a hostage, escalating the situation critically.",
+    "choices": {
+      "continue demanding money with the hostage": "demand_money_alone",
+      "try to calm the situation down": "reason_tellers_alone"
+    }
+  },
+  "take_hostage_unarmed_critical_with_help": {
+    "description": "You and your shady friend take a hostage, escalating the situation critically even though you are unarmed.",
+    "choices": {
+      "continue demanding money with the hostage": "demand_money_unarmed_with_help",
+      "try to calm the situation down": "reason_tellers_with_help"
+    }
+  },
+  "take_hostage_unarmed_critical_alone": {
+    "description": "You take a hostage, escalating the situation critically even though you are unarmed.",
+    "choices": {
+      "continue demanding money with the hostage": "demand_money_unarmed_alone",
+      "try to calm the situation down": "reason_tellers_alone"
+    }
+  },
+  "demand_money_with_help": {
+    "description": "You and your shady friend demand money with the hostage as leverage. The bank staff is terrified and complies, but the situation is tense.",
+    "choices": {
+      "take the money and run": "run_away_with_help",
+      "negotiate for a getaway car": "demand_car_with_help",
+      "use the hostage as a shield": "hostage_shield_with_help"
+    }
+  },
+  "demand_money_alone": {
+    "description": "You demand money with the hostage as leverage. The bank staff is terrified and complies, but the situation is tense.",
+    "choices": {
+      "take the money and run": "run_away_alone",
+      "negotiate for a getaway car": "demand_car_alone",
+      "use the hostage as a shield": "hostage_shield_alone"
+    }
+  },
+  "demand_money_unarmed_with_help": {
+    "description": "You and your shady friend demand money with the hostage as leverage, even though you're unarmed. The bank staff is terrified and complies, but the situation is tense.",
+    "choices": {
+      "take the money and run": "run_away_unarmed_with_help",
+      "negotiate for a getaway car": "demand_car_unarmed_with_help",
+      "use the hostage as a shield": "hostage_shield_unarmed_with_help"
+    }
+  },
+  "demand_money_unarmed_alone": {
+    "description": "You demand money with the hostage as leverage, even though you're unarmed. The bank staff is terrified and complies, but the situation is tense.",
+    "choices": {
+      "take the money and run": "run_away_unarmed_alone",
+      "negotiate for a getaway car": "demand_car_unarmed_alone",
+      "use the hostage as a shield": "hostage_shield_unarmed_alone"
+    }
   }
 }
+  
