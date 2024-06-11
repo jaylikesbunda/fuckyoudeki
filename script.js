@@ -14,12 +14,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
         enableSingleClickHighlight(icon);
 
-        var lastTouchEnd = 0;
-        var touchTimeout;
-
         icon.addEventListener('touchstart', function(event) {
-            // Clear any previous timeouts for ensuring single tap does not open the window
-            clearTimeout(touchTimeout);
+            clearTimeout(touchTimeout); // Clear any previous timeouts
         });
 
         icon.addEventListener('touchend', function(event) {
@@ -65,9 +61,7 @@ function hideLoadingScreen() {
 
 var lastTouchEnd = 0;
 var touchTimeout;
-var longTouchTimeout;
-var longTouchDuration = 500; // duration to detect long touch in milliseconds
-var doubleTapTimeout = 300;  // increased to prevent accidental double-tap
+var doubleTapTimeout = 300;
 
 function handleTouch(event, targetFunction, icon) {
     // Prevent default behavior to avoid conflicts
@@ -78,30 +72,23 @@ function handleTouch(event, targetFunction, icon) {
 
     // Clear any previous timeouts
     clearTimeout(touchTimeout);
-    clearTimeout(longTouchTimeout);
 
-    // Long touch detection
-    if (event.type === "touchstart") {
-        longTouchTimeout = setTimeout(function() {
-            // Handle long touch logic if needed
-            console.log("Long touch detected");
-        }, longTouchDuration);
-    } else if (event.type === "touchend") {
-        clearTimeout(longTouchTimeout);
+    // Highlight immediately on touch end
+    highlightIcon(icon);
 
-        // Highlight immediately on touch end
-        highlightIcon(icon);
-
-        // Detect double tap within the specified timeout
-        if (timeDiff < doubleTapTimeout && timeDiff > 0) {
-            clearTimeout(touchTimeout); // Clear the timeout to avoid highlighting twice
-            targetFunction();
-        }
-
-        lastTouchEnd = currentTime;
+    // Detect double tap within the specified timeout
+    if (timeDiff < doubleTapTimeout && timeDiff > 0) {
+        clearTimeout(touchTimeout); // Clear the timeout to avoid highlighting twice
+        targetFunction();
+    } else {
+        touchTimeout = setTimeout(function() {
+            // Single tap highlight logic
+            highlightIcon(icon);
+        }, doubleTapTimeout);
     }
-}
 
+    lastTouchEnd = currentTime;
+}
 
 function highlightIcon(target) {
     // Remove highlight from any previously highlighted icon
@@ -274,6 +261,7 @@ function toggleMaximizeWindow(windowId) {
 function openWindow(windowId) {
     var windowElement = document.getElementById(windowId);
     windowElement.style.display = 'block';
+    windowElement.style.height = '0'; // Start with height 0
     windowElement.style.visibility = 'hidden'; // Temporarily hide to get dimensions
 
     var screenWidth = window.innerWidth;
@@ -284,7 +272,6 @@ function openWindow(windowId) {
         windowElement.style.height = '95%';
         windowElement.style.top = '2.5%';
         windowElement.style.left = '2.5%';
-        windowElement.style.transform = 'none';
     } else { // Desktop devices
         var defaultWidth = 800;
         var defaultHeight = 500;
@@ -309,14 +296,21 @@ function openWindow(windowId) {
 
         windowElement.style.left = left + 'px';
         windowElement.style.top = top + 'px';
-        windowElement.style.transform = 'none';
     }
 
     windowElement.style.position = 'absolute';
     windowElement.style.visibility = 'visible'; // Make visible again
-    windowElement.classList.add('show');
+    windowElement.classList.add('animate-height'); // Add animation class
+
+    // Trigger the height transition
+    setTimeout(function() {
+        windowElement.style.height = 'auto';
+    }, 10);
+
     updateTaskbarIcons();
 }
+
+
 
 
 function toggleStartMenu() {
