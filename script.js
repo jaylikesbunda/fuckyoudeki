@@ -49,23 +49,23 @@ function hideLoadingScreen() {
     var loadingScreen = document.getElementById('loadingScreen');
     loadingScreen.style.display = 'none';
 }
-
 var lastTouchEnd = 0;
 var touchTimeout;
 var longTouchTimeout;
 var longTouchDuration = 500; // duration to detect long touch in milliseconds
+var doubleTapTimeout = 300;  // increased to prevent accidental double-tap
 
 function handleTouch(event, target) {
     // Prevent default behavior to avoid conflicts
     event.preventDefault();
-    
+
     var currentTime = new Date().getTime();
     var timeDiff = currentTime - lastTouchEnd;
-    
+
     // Clear any previous timeouts
     clearTimeout(touchTimeout);
     clearTimeout(longTouchTimeout);
-    
+
     // Long touch detection
     if (event.type === "touchstart") {
         longTouchTimeout = setTimeout(function() {
@@ -75,7 +75,8 @@ function handleTouch(event, target) {
     } else if (event.type === "touchend") {
         clearTimeout(longTouchTimeout);
 
-        if (timeDiff < 300 && timeDiff > 0) {
+        // Detect double tap within the specified timeout
+        if (timeDiff < doubleTapTimeout && timeDiff > 0) {
             if (typeof target === 'string' && target.startsWith('http')) {
                 redirectToURL(target);
             } else {
@@ -84,13 +85,12 @@ function handleTouch(event, target) {
         } else {
             touchTimeout = setTimeout(function() {
                 highlightIcon(target);
-            }, 300);
+            }, doubleTapTimeout);
         }
 
         lastTouchEnd = currentTime;
     }
 }
-
 function highlightIcon(target) {
     // Remove highlight from any previously highlighted icon
     var highlighted = document.querySelector('.icon.highlighted');
