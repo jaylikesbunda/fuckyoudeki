@@ -25,9 +25,13 @@ function hashStringToColor(str) {
     for (let i = 0; i < str.length; i++) {
         hash = str.charCodeAt(i) + ((hash << 5) - hash);
     }
-    const color = `hsl(${hash % 360}, 70%, 50%)`; // Generates a color in HSL format
+    const hue = hash % 360; // Full spectrum of colors
+    const saturation = 60 + ((hash >> 1) % 40); // Saturation between 60% and 100%
+    const lightness = 50 + ((hash >> 2) % 30); // Lightness between 50% and 80%
+    const color = `hsl(${hue}, ${saturation}%, ${lightness}%)`;
     return color;
 }
+
 
 window.displayMessage = function(username, message, timestamp) {
     const messageContainer = document.createElement('div');
