@@ -19,11 +19,22 @@ const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
 const messagesRef = ref(db, 'messages');
 
+
 window.displayMessage = function(username, message, timestamp) {
     const messageContainer = document.createElement('div');
     messageContainer.classList.add('message');
     const formattedDateTime = new Date(timestamp).toLocaleString(); // Includes date and time
-    messageContainer.innerHTML = `<strong>${username}</strong>: ${message} <span class="timestamp">${formattedDateTime}</span>`;
+
+    const messageText = document.createElement('div');
+    messageText.classList.add('message-text');
+    messageText.innerHTML = `<strong>${username}</strong>: ${message}`;
+
+    const timestampSpan = document.createElement('span');
+    timestampSpan.classList.add('timestamp');
+    timestampSpan.textContent = formattedDateTime;
+
+    messageContainer.appendChild(messageText);
+    messageContainer.appendChild(timestampSpan);
     document.getElementById('messages').appendChild(messageContainer);
 };
 

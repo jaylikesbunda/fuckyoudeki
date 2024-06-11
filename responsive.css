@@ -117,7 +117,6 @@
 
 /* Add these styles to styles.css or responsive.css */
 /* Messaging App Styles */
-/* Messaging App Styles */
 .messaging-window-body {
     display: flex;
     flex-direction: column;
@@ -170,35 +169,41 @@
     box-sizing: border-box; /* Ensure padding is included in the element's width and height */
     box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow inside message area */
 }
+
 .message {
-    padding: 5px;
+    display: flex;
+    justify-content: space-between; /* Ensure space between message text and timestamp */
+    align-items: flex-start; /* Align items at the start */
+    padding: 10px;
     margin-bottom: 10px;
     border: 1px solid #000;
     background: #E0E0E0;
     word-wrap: break-word; /* Ensure long words break correctly */
+    border-radius: 4px; /* Rounded corners */
     position: relative; /* Ensure positioning of timestamp */
 }
 
+.message-text {
+    flex: 1; /* Allow message text to take up available space */
+    padding-right: 50px; /* Ensure space for the timestamp */
+}
+
 .timestamp {
-    position: absolute;
-    right: 5px;
-    bottom: 5px;
+    margin-left: 10px;
     font-size: 0.8em;
     color: gray;
     white-space: nowrap; /* Prevent wrapping of timestamp */
 }
 
 @media (max-width: 768px) {
-    .message {
-        padding-right: 80px; /* Add padding to accommodate timestamp */
+    .message-text {
+        padding-right: 70px; /* Add padding to accommodate timestamp on smaller screens */
     }
 
     .timestamp {
         font-size: 0.7em;
     }
 }
-
-
 
 /* Terminal Window Styles */
 #terminalWindow .window-body {
