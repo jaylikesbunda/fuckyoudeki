@@ -196,8 +196,7 @@
 }
 
 @media (max-width: 768px) {
-    .message-text {
-        padding-right: 70px; /* Add padding to accommodate timestamp on smaller screens */
+    .message-text { 
     }
 
     .timestamp {
