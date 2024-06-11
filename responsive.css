@@ -185,7 +185,7 @@
 
 .message-text {
     flex: 1; /* Allow message text to take up available space */
-    padding-right: 50px; /* Ensure space for the timestamp */
+
 }
 
 .timestamp {
@@ -264,3 +264,5 @@
         padding: 10px;
     }
 }
+
+
