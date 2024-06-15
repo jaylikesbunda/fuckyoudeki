@@ -1,6 +1,7 @@
 function makeDraggable(titleBar) {
     const windowElement = titleBar.parentElement;
     let offsetX = 0, offsetY = 0, initialX = 0, initialY = 0;
+    let dragTimeout;
 
     titleBar.addEventListener('mousedown', dragMouseDown);
     titleBar.addEventListener('touchstart', dragMouseDown, { passive: false });
@@ -8,17 +9,19 @@ function makeDraggable(titleBar) {
     function dragMouseDown(e) {
         e.preventDefault();
 
-        if (e.type === 'touchstart') {
-            initialX = e.touches[0].clientX - windowElement.offsetLeft;
-            initialY = e.touches[0].clientY - windowElement.offsetTop;
-            document.addEventListener('touchend', closeDragElement);
-            document.addEventListener('touchmove', elementDrag, { passive: false });
-        } else {
-            initialX = e.clientX - windowElement.offsetLeft;
-            initialY = e.clientY - windowElement.offsetTop;
-            document.addEventListener('mouseup', closeDragElement);
-            document.addEventListener('mousemove', elementDrag);
-        }
+        dragTimeout = setTimeout(() => {
+            if (e.type === 'touchstart') {
+                initialX = e.touches[0].clientX - windowElement.offsetLeft;
+                initialY = e.touches[0].clientY - windowElement.offsetTop;
+                document.addEventListener('touchend', closeDragElement);
+                document.addEventListener('touchmove', elementDrag, { passive: false });
+            } else {
+                initialX = e.clientX - windowElement.offsetLeft;
+                initialY = e.clientX - windowElement.offsetTop;
+                document.addEventListener('mouseup', closeDragElement);
+                document.addEventListener('mousemove', elementDrag);
+            }
+        }, 150); // 150ms delay for long press
     }
 
     function elementDrag(e) {
@@ -37,15 +40,26 @@ function makeDraggable(titleBar) {
     }
 
     function closeDragElement() {
+        clearTimeout(dragTimeout);
         document.removeEventListener('mouseup', closeDragElement);
         document.removeEventListener('mousemove', elementDrag);
         document.removeEventListener('touchend', closeDragElement);
         document.removeEventListener('touchmove', elementDrag);
     }
+
+    titleBar.addEventListener('mouseup', clearDragTimeout);
+    titleBar.addEventListener('touchend', clearDragTimeout);
+    titleBar.addEventListener('mouseleave', clearDragTimeout);
+    titleBar.addEventListener('touchcancel', clearDragTimeout);
+
+    function clearDragTimeout() {
+        clearTimeout(dragTimeout);
+    }
 }
 
 function makeIconDraggable(element) {
     let offsetX = 0, offsetY = 0, initialX = 0, initialY = 0;
+    let dragTimeout;
 
     element.addEventListener('mousedown', dragMouseDown);
     element.addEventListener('touchstart', dragMouseDown, { passive: false });
@@ -53,17 +67,20 @@ function makeIconDraggable(element) {
     function dragMouseDown(e) {
         e.preventDefault();
 
-        if (e.type === 'touchstart') {
-            initialX = e.touches[0].clientX - element.offsetLeft;
-            initialY = e.touches[0].clientY - element.offsetTop;
-            document.addEventListener('touchend', closeDragElement);
-            document.addEventListener('touchmove', elementDrag, { passive: false });
-        } else {
-            initialX = e.clientX - element.offsetLeft;
-            initialY = e.clientY - element.offsetTop;
-            document.addEventListener('mouseup', closeDragElement);
-            document.addEventListener('mousemove', elementDrag);
-        }
+        dragTimeout = setTimeout(() => {
+            highlightIcon(element);
+            if (e.type === 'touchstart') {
+                initialX = e.touches[0].clientX - element.offsetLeft;
+                initialY = e.touches[0].clientY - element.offsetTop;
+                document.addEventListener('touchend', closeDragElement);
+                document.addEventListener('touchmove', elementDrag, { passive: false });
+            } else {
+                initialX = e.clientX - element.offsetLeft;
+                initialY = e.clientY - element.offsetTop;
+                document.addEventListener('mouseup', closeDragElement);
+                document.addEventListener('mousemove', elementDrag);
+            }
+        }, 150); // 150ms delay for long press
     }
 
     function elementDrag(e) {
@@ -82,17 +99,29 @@ function makeIconDraggable(element) {
     }
 
     function closeDragElement() {
+        clearTimeout(dragTimeout);
         document.removeEventListener('mouseup', closeDragElement);
         document.removeEventListener('mousemove', elementDrag);
         document.removeEventListener('touchend', closeDragElement);
         document.removeEventListener('touchmove', elementDrag);
     }
+
+    element.addEventListener('mouseup', clearDragTimeout);
+    element.addEventListener('touchend', clearDragTimeout);
+    element.addEventListener('mouseleave', clearDragTimeout);
+    element.addEventListener('touchcancel', clearDragTimeout);
+
+    function clearDragTimeout() {
+        clearTimeout(dragTimeout);
+    }
 }
+
 
 document.addEventListener('DOMContentLoaded', function() {
     initializeWindows();
     initializeIcons();
 });
+
 
 function initializeWindows() {
     // Make windows draggable by their title bars
@@ -142,4 +171,19 @@ function initializeIcons() {
     document.querySelectorAll('.icon').forEach(icon => {
         makeIconDraggable(icon);
     });
+}
+
+
+
+function openErrorWindow(message) {
+    document.getElementById('errorMessage').innerText = message;
+    document.getElementById('errorWindow').style.display = 'block';
+}
+
+function closeErrorWindow() {
+    document.getElementById('errorWindow').style.display = 'none';
+}
+
+function showCorruptedError() {
+    openErrorWindow('Error: The file is corrupted and cannot be opened.');
 }

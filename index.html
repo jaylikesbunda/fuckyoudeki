@@ -51,8 +51,27 @@
             <img src="assets/images/messaging-icon.png" alt="Messaging">
             <span>Global Messaging</span>
         </div>
+        <div class="icon" id="icon7" ondblclick="showCorruptedError()">
+            <img src="assets/images/doom-icon.png" alt="Doom">
+            <span>doom.exe</span>
+        </div>        
     </div>
     
+    <div class="window" id="errorWindow">
+        <div class="title-bar">
+            <div class="title-bar-text">Error</div>
+            <div class="title-bar-controls">
+                <button aria-label="Close" onclick="closeErrorWindow()">×</button>
+            </div>
+        </div>
+        <div class="window-body">
+            <p id="errorMessage">Error: The file is corrupted and cannot be opened.</p>
+            <button onclick="closeErrorWindow()">OK</button>
+        </div>
+    </div>
+    
+
+
     <div class="window" id="mainWindow">
         <div class="title-bar">
             <div class="title-bar-text">Windows Explorer</div>
@@ -192,8 +211,7 @@
             <li><a href="#">Documents</a></li>
             <li><a href="#">Settings</a></li>
             <li><a href="#">Search</a></li>
-            <li><a href="#">Help</a></li>
-            <li><a href="#">Run...</a></li>
+            <li><a href="#">About</a></li>
             <li><a href="#">Shutdown</a></li>
         </ul>
     </div>

@@ -42,6 +42,8 @@ document.addEventListener('DOMContentLoaded', function() {
     setupIconEvents('icon4', function() { openWindow('snakeWindow'); });
     setupIconEvents('icon5', function() { openWindow('paintWindow'); });
     setupIconEvents('icon6', function() { openWindow('messagingWindow'); });
+    setupIconEvents('icon7', function() { showCorruptedError(); }); // New icon for corrupted Doom executable
+    
 
     updateTime();
     setInterval(updateTime, 1000); // Update time every second
