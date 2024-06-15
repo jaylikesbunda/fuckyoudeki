@@ -231,9 +231,9 @@ const SnakeGame = (() => {
             gameSpeed -= 10;
         }
 
-        const eatSound = new Audio('https://audio.jukehost.co.uk/sOzTYVOu0JLq91FEIJvyHnXhzjeInoGp');
-        eatSound.volume = 0.2; 
-        eatSound.play();
+        // const eatSound = new Audio('https://audio.jukehost.co.uk/sOzTYVOu0JLq91FEIJvyHnXhzjeInoGp');
+        // eatSound.volume = 0.2; 
+        // eatSound.play();
     }
 
     function isGameOver() {
