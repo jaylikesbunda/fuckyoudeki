@@ -136,6 +136,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function displayStatistics() {
         const statsDiv = document.getElementById('stats');
+        statsDiv.innerHTML = ''; // Clear previous stats
+
+        let currentStatIndex = 0;
+        const allStats = [];
+
         questions.forEach(question => {
             getStatisticsForQuestion(question, (answers) => {
                 const stats = answers.reduce((acc, answer) => {
@@ -143,20 +148,41 @@ document.addEventListener('DOMContentLoaded', () => {
                     return acc;
                 }, {});
 
-                const questionStatsDiv = document.createElement('div');
-                questionStatsDiv.classList.add('question-stats');
-                questionStatsDiv.innerHTML = `<h4>${question}</h4>`;
+                const questionStats = Object.entries(stats).map(([answer, count]) => ({
+                    question,
+                    answer,
+                    count
+                }));
 
-                for (const [answer, count] of Object.entries(stats)) {
-                    const statDiv = document.createElement('div');
-                    statDiv.classList.add('stat');
-                    statDiv.innerText = `${answer}: ${count}`;
-                    questionStatsDiv.appendChild(statDiv);
+                allStats.push(...questionStats);
+                if (allStats.length === questions.length) {
+                    showNextStat();
                 }
-
-                statsDiv.appendChild(questionStatsDiv);
             });
         });
+
+        function showNextStat() {
+            if (allStats.length === 0) return;
+
+            statsDiv.innerHTML = ''; // Clear previous stat
+            const stat = allStats[currentStatIndex];
+
+            const statDiv = document.createElement('div');
+            statDiv.classList.add('stat');
+            statDiv.innerHTML = `<h4>${stat.question}</h4><p>${stat.answer}: ${stat.count}</p>`;
+            statsDiv.appendChild(statDiv);
+
+            // Fade in
+            statDiv.style.opacity = 0;
+            setTimeout(() => {
+                statDiv.style.transition = 'opacity 1s';
+                statDiv.style.opacity = 1;
+            }, 10);
+
+            // Schedule next stat
+            currentStatIndex = (currentStatIndex + 1) % allStats.length;
+            setTimeout(showNextStat, 5000); // Change every 5 seconds
+        }
     }
 
     createQuestionnaire();
