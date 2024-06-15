@@ -1,10 +1,10 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-import { getDatabase, ref, push, onChildAdded, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+import { getDatabase, ref, push, onChildAdded, serverTimestamp, get, child } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-    apiKey: "AIzaSyB9q5EYU1TM4ujo8fN9_3f5pikop_JPpV4",
+    apiKey: "AIzaSyB9q5EYU1TM4ujo8fN9f3f5pikop_JPpV4",
     authDomain: "fuckyoudeki-im.firebaseapp.com",
     databaseURL: "https://fuckyoudeki-im-default-rtdb.firebaseio.com",
     projectId: "fuckyoudeki-im",
@@ -20,8 +20,6 @@ const db = getDatabase(app);
 const messagesRef = ref(db, 'messages');
 const deathPredictionsRef = ref(db, 'deathPredictions');
 const answersRef = ref(db, 'deathPredictionAnswers');
-
-// Existing message board functions...
 
 // Function to submit a death prediction
 export function submitDeathPrediction(username, prediction) {
@@ -52,7 +50,7 @@ export function submitAnswer(username, question, answer) {
 
 // Function to get statistics for a specific question
 export function getStatisticsForQuestion(question, callback) {
-    get(child(answersRef, 'questions')).then((snapshot) => {
+    get(answersRef).then((snapshot) => {
         if (snapshot.exists()) {
             const answers = snapshot.val();
             const filteredAnswers = Object.values(answers).filter(a => a.question === question);
