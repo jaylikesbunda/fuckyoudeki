@@ -2,10 +2,10 @@ const SnakeGame = (() => {
     let game, score, snake, food, direction, touchStartX, touchStartY, highScore;
     let canvas, ctx, box = 20;
     let directionQueue = [];
-    const initialGameSpeed = 120;
+    const initialGameSpeed = 170;
     let gameSpeed = initialGameSpeed;
     let lastFrameTime = 0;
-    const speedFactor = 4; // Adjust this value to change the game speed
+    const speedFactor = 6; // Adjust this value to change the game speed
     let animationFrameId;
 
     document.addEventListener('DOMContentLoaded', () => {
@@ -105,32 +105,37 @@ const SnakeGame = (() => {
     }
 
     function handleTouchStart(evt) {
-        const firstTouch = evt.touches[0];
-        touchStartX = firstTouch.clientX;
-        touchStartY = firstTouch.clientY;
+        if (evt.touches.length === 1) {
+            const touch = evt.touches[0];
+            evt.target.dataset.touchStartX = touch.clientX;
+            evt.target.dataset.touchStartY = touch.clientY;
+        }
     }
-
+    
     function handleTouchMove(evt) {
-        if (!touchStartX || !touchStartY) return;
-
+        const touchStartX = parseFloat(evt.target.dataset.touchStartX);
+        const touchStartY = parseFloat(evt.target.dataset.touchStartY);
+    
+        if (isNaN(touchStartX) || isNaN(touchStartY)) return;
+    
         const touchEndX = evt.touches[0].clientX;
         const touchEndY = evt.touches[0].clientY;
         const diffX = touchStartX - touchEndX;
         const diffY = touchStartY - touchEndY;
-
-        let newDirection;
+    
+        let newDirection = null;
         if (Math.abs(diffX) > Math.abs(diffY)) {
             newDirection = diffX > 0 ? 'LEFT' : 'RIGHT';
         } else {
             newDirection = diffY > 0 ? 'UP' : 'DOWN';
         }
-
-        if (isValidDirectionChange(newDirection)) {
+    
+        if (newDirection && isValidDirectionChange(newDirection)) {
             queueDirection(newDirection);
         }
-
-        touchStartX = null;
-        touchStartY = null;
+    
+        delete evt.target.dataset.touchStartX;
+        delete evt.target.dataset.touchStartY;
     }
 
     function draw() {
@@ -194,7 +199,7 @@ const SnakeGame = (() => {
         ctx.beginPath();
         ctx.arc(food.x + box / 2, food.y + box / 2, box / 2, 0, Math.PI * 2);
         ctx.fill();
-    
+
         // Draw the apple stem
         ctx.fillStyle = '#8B4513';
         ctx.beginPath();
@@ -204,7 +209,7 @@ const SnakeGame = (() => {
         ctx.lineTo(food.x + box / 2 - 2, food.y + box / 2 - box / 2 + 4);
         ctx.closePath();
         ctx.fill();
-    
+
         // Draw the apple leaf
         ctx.fillStyle = '#0f0';
         ctx.beginPath();
@@ -214,7 +219,7 @@ const SnakeGame = (() => {
         ctx.closePath();
         ctx.fill();
     }
-    
+
 
     function updateSnakePosition() {
         if (directionQueue.length) {

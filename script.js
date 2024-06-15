@@ -58,9 +58,9 @@ document.addEventListener('DOMContentLoaded', function() {
             startMenu.classList.remove('show');
         }
 
-        // Dehighlight folders when clicking outside
+        // Dehighlight icons when clicking outside
         if (!event.target.closest('.icon')) {
-            document.querySelectorAll('.icon').forEach(function(icon) {
+            document.querySelectorAll('.icon.highlighted').forEach(function(icon) {
                 icon.classList.remove('highlighted');
             });
         }
@@ -83,15 +83,20 @@ function highlightIcon(target) {
     }
 
     // Highlight the clicked icon
-    if (target && target.classList) {
+    if (target && target.classList && target.classList.contains('icon')) {
         target.classList.add('highlighted');
     }
 }
 
 function enableSingleClickHighlight(element) {
     element.addEventListener('click', function(event) {
-        // Call highlight function directly for mouse clicks
-        highlightIcon(element);
+        // Check if the clicked element is an icon
+        if (event.target.classList.contains('icon')) {
+            highlightIcon(event.target);
+        } else {
+            // Remove highlight if anything else is clicked
+            highlightIcon(null);
+        }
     });
 
     element.addEventListener('touchstart', function(event) {
@@ -99,7 +104,13 @@ function enableSingleClickHighlight(element) {
     });
 
     element.addEventListener('touchend', function(event) {
-        highlightIcon(element);
+        // Check if the touched element is an icon
+        if (event.target.classList.contains('icon')) {
+            highlightIcon(event.target);
+        } else {
+            // Remove highlight if anything else is touched
+            highlightIcon(null);
+        }
     });
 }
 

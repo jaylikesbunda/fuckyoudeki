@@ -4,8 +4,31 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>fuckyoudeki.net</title>
-    <link rel="preload" href="https://i.ibb.co/0hsC3Jn/corp-logo.webp" as="image" type="image/webp">
+    <style>
 
+
+        .overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 10000; /* Ensure it is on top of all other content */
+    background: repeating-linear-gradient(
+        135deg,
+        rgba(0, 0, 0, 0.5) 0%,
+        rgba(255, 255, 255, 0.5) 100%
+    );
+    background-size: 2px 1px; /* Adjust size for smaller or larger "pixels" */
+    mix-blend-mode: darken; /* Apply screen blending mode */
+}
+
+
+
+    </style>
+
+    <link rel="preload" href="https://i.ibb.co/0hsC3Jn/corp-logo.webp" as="image" type="image/webp">
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="responsive.css">
     <link rel="icon" href="assets/images/folder-icon.png" type="image/png">
@@ -18,9 +41,9 @@
     <script src="browserApp.js" defer></script>
     <script src="settingsApp.js" defer></script>
     <script type="module" src="firebaseInit.js" defer></script>
-
 </head>
 <body>
+    <div class="overlay"></div>
     <div id="loadingScreen">
         <div class="bootup-content">
             <img src="https://i.ibb.co/0hsC3Jn/corp-logo.webp" alt="Windows XP Logo" class="bootup-logo">
