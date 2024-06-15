@@ -42,6 +42,8 @@
     <script src="messagingApp.js" defer></script>
     <script src="browserApp.js" defer></script>
     <script src="settingsApp.js" defer></script>
+    <script src="deathPrediction.js"></script>
+
     <script type="module" src="firebaseInit.js" defer></script>
 </head>
 <body>
@@ -89,6 +91,10 @@
             <img src="assets/images/browser-icon.png" alt="Browser">
             <span>Browser</span>
         </div>                 -->
+        <div class="icon" id="icon9" ondblclick="openWindow('deathPredictionWindow')">
+            <img src="assets/images/death-prediction-icon.png" alt="Death Prediction">
+            <span>Death Prediction</span>
+        </div>
     </div>
     
     <div class="window" id="errorWindow">
@@ -280,6 +286,24 @@
             Welcome to FuckYou OS, a revolutionary operating system ingeniously powered by bio-calcium matrix composites, colloquially referred to as animal bones. Utilization of this software infrastructure may inadvertently subject users to cognitive hallucinations, systemic data entropy, and profound existential disorientation. Extended engagement may precipitate neuro-psychological anomalies, amplified paranoia, and potential cognitive degradation. Engage with prudence and discretion.
         </p>
         </div>
+</div>
+
+
+
+<!-- Death Prediction Window -->
+<div class="window" id="deathPredictionWindow" style="display: none;">
+    <div class="title-bar">
+        <div class="title-bar-text">Death Prediction App</div>
+        <div class="title-bar-controls">
+            <button aria-label="Minimize" onclick="minimizeWindow('deathPredictionWindow')">_</button>
+            <button aria-label="Close" onclick="closeWindow('deathPredictionWindow')">×</button>
+        </div>
+    </div>
+    <div class="window-body">
+        <div id="questionnaire" class="questionnaire">
+            <!-- JavaScript will populate this section -->
+        </div>
+    </div>
 </div>
 
 

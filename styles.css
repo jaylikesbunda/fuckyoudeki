@@ -573,6 +573,203 @@ main {
 
 
 
+/* Death Prediction Window specific styling */
+#deathPredictionWindow {
+    position: absolute;
+    width: 400px;
+    max-width: 400px;
+    height: 500px;
+    background: #C3C3C3;
+    border: 2px solid #000;
+    display: none;
+    box-shadow: 3px 3px 0 #808080;
+    z-index: 100;
+    resize: none;
+    overflow: auto;
+    max-height: 230px;
+    animation: slideIn 0.5s ease-out; /* Slide-in animation */
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateX(-100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+#deathPredictionWindow .window-body {
+    padding: 15px;
+    font-size: 14px;
+    color: #000;
+    background: #FFFFE0; /* Light yellow background for a playful look */
+    transition: opacity 1s ease-in-out; /* Smooth transition */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+
+/* Title bar styling for Death Prediction Window */
+#deathPredictionWindow .title-bar {
+    background: #000080;
+    color: #FFF;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 2px 5px;
+    cursor: move;
+    box-shadow: 2px 2px 0 #000;
+    height: 24px;
+    font-family: 'Comic Sans MS', 'Comic Sans', cursive; /* 90s font */
+}
+
+#deathPredictionWindow .title-bar-text {
+    font-size: 0.9em;
+    font-weight: bold;
+}
+
+#deathPredictionWindow .title-bar-controls {
+    display: flex;
+    gap: 2px;
+}
+
+#deathPredictionWindow .title-bar-controls button {
+    width: 18px;
+    height: 18px;
+    background: #C0C0C0;
+    border: 1px solid #000;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0;
+}
+
+#deathPredictionWindow .title-bar-controls button:hover {
+    background: #808080;
+}
+
+.questionnaire {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    font-family: 'Comic Sans MS', 'Comic Sans', cursive; /* 90s font */
+    color: #000080; /* Dark blue text */
+    justify-content: center;
+    align-items: center;
+}
+
+.questionnaire h3 {
+    margin: 0 0 10px 0;
+    font-size: 18px;
+    text-align: center;
+}
+
+.questionnaire p {
+    margin: 0 0 15px 0;
+    font-size: 14px;
+    text-align: center;
+}
+
+.question {
+    display: none; /* Hide questions initially */
+    flex-direction: column;
+    border: 2px dashed #000; /* Dashed border for 90s style */
+    padding: 10px;
+    background: #FFF; /* White background for questions */
+    justify-content: center;
+    align-items: center;
+}
+
+.question.active {
+    display: flex; /* Display the current question */
+}
+
+.question label {
+    margin-bottom: 5px;
+    font-size: 14px;
+    text-align: center;
+}
+
+.question input {
+    padding: 5px;
+    font-size: 14px;
+    text-align: center;
+}
+
+#submitBtn {
+    background: #C0C0C0;
+    border: 2px solid #000;
+    padding: 10px;
+    cursor: pointer;
+    font-size: 14px;
+    margin-top: 20px;
+    font-family: 'Comic Sans MS', 'Comic Sans', cursive; /* 90s font */
+    align-self: center;
+}
+
+#submitBtn:hover {
+    background: #808080;
+    color: #FFF;
+}
+
+#result {
+    display: none; /* Hide result initially */
+    flex-direction: column;
+    align-items: center;
+    margin-top: 20px;
+    font-family: 'Comic Sans MS', 'Comic Sans', cursive; /* 90s font */
+    color: #000080; /* Dark blue text */
+    animation: fadeIn 1s ease-out; /* Fade-in animation */
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+#result h3 {
+    font-size: 18px;
+    text-align: center;
+}
+
+#result p {
+    font-size: 14px;
+    text-align: center;
+}
+
+#countdown {
+    font-size: 16px;
+    font-weight: bold;
+    margin-top: 10px;
+    color: #FF0000; /* Red color for countdown */
+    animation: blink 1s step-start infinite;
+    text-align: center;
+}
+
+@keyframes blink {
+    0%, 100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.5;
+    }
+}
+
+
+
+
+
+
 /* Responsive Styles */
 @media (max-width: 768px) {
     .window {

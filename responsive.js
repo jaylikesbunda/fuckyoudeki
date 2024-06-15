@@ -22,7 +22,7 @@ function makeDraggable(titleBar) {
                 document.addEventListener('mouseup', closeDragElement);
                 document.addEventListener('mousemove', elementDrag);
             }
-        }, 0); //  ms delay for long press
+        }, 0); // 0 ms delay for long press
     }
 
     function elementDrag(e) {
@@ -36,8 +36,19 @@ function makeDraggable(titleBar) {
             offsetY = e.clientY - initialY;
         }
 
-        windowElement.style.top = offsetY + "px";
+        // Constrain within viewport
+        const minLeft = 0;
+        const minTop = 0;
+        const maxLeft = window.innerWidth - windowElement.offsetWidth;
+        const maxTop = window.innerHeight - windowElement.offsetHeight;
+
+        if (offsetX < minLeft) offsetX = minLeft;
+        if (offsetY < minTop) offsetY = minTop;
+        if (offsetX > maxLeft) offsetX = maxLeft;
+        if (offsetY > maxTop) offsetY = maxTop;
+
         windowElement.style.left = offsetX + "px";
+        windowElement.style.top = offsetY + "px";
     }
 
     function closeDragElement() {
@@ -57,6 +68,7 @@ function makeDraggable(titleBar) {
         clearTimeout(dragTimeout);
     }
 }
+
 
 function makeIconDraggable(element) {
     let offsetX = 0, offsetY = 0, initialX = 0, initialY = 0;
@@ -190,7 +202,7 @@ function handleMenuClick(action) {
             openWindow('aboutWindow');
             break;
         case 'shutdown':
-            openErrorWindow('Error: Shutdown feature is not implemented. Please close the browser window to exit.');
+            openErrorWindow('Error: Please close the browser window to exit.');
             break;
         default:
             openErrorWindow('Error: Unrecognized action. Please contact support.');
