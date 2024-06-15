@@ -18,8 +18,53 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
 const messagesRef = ref(db, 'messages');
+const deathPredictionsRef = ref(db, 'deathPredictions');
+const answersRef = ref(db, 'deathPredictionAnswers');
 
+// Existing message board functions...
 
+// Function to submit a death prediction
+export function submitDeathPrediction(username, prediction) {
+    return push(deathPredictionsRef, {
+        username: username,
+        prediction: prediction,
+        timestamp: serverTimestamp()
+    });
+}
+
+// Function to listen for new death predictions
+export function onNewDeathPrediction(callback) {
+    onChildAdded(deathPredictionsRef, (snapshot) => {
+        const predictionData = snapshot.val();
+        callback(predictionData);
+    });
+}
+
+// Function to submit answers to questions
+export function submitAnswer(username, question, answer) {
+    return push(answersRef, {
+        username: username,
+        question: question,
+        answer: answer,
+        timestamp: serverTimestamp()
+    });
+}
+
+// Function to get statistics for a specific question
+export function getStatisticsForQuestion(question, callback) {
+    get(child(answersRef, 'questions')).then((snapshot) => {
+        if (snapshot.exists()) {
+            const answers = snapshot.val();
+            const filteredAnswers = Object.values(answers).filter(a => a.question === question);
+            callback(filteredAnswers);
+        } else {
+            callback([]);
+        }
+    }).catch((error) => {
+        console.error("Error fetching statistics:", error);
+        callback([]);
+    });
+}
 function hashStringToColor(str) {
     let hash = 0;
     for (let i = 0; i < str.length; i++) {
