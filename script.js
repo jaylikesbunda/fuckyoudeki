@@ -36,6 +36,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
+    // Your existing icon event setups
     setupIconEvents('icon1', function() { openWindow('mainWindow'); });
     setupIconEvents('icon2', function() { redirectToURL('https://fuckyoufm.net'); });
     setupIconEvents('icon3', function() { redirectToURL('https://vapefacts.com.au'); });
@@ -43,7 +44,7 @@ document.addEventListener('DOMContentLoaded', function() {
     setupIconEvents('icon5', function() { openWindow('paintWindow'); });
     setupIconEvents('icon6', function() { openWindow('messagingWindow'); });
     setupIconEvents('icon7', function() { showCorruptedError(); }); // New icon for corrupted Doom executable
-    
+    setupIconEvents('icon8', function() { openBrowserWindow(); }); // New icon for the browser window
 
     updateTime();
     setInterval(updateTime, 1000); // Update time every second
@@ -248,8 +249,14 @@ function updateTime() {
     var hours = now.getHours().toString().padStart(2, '0');
     var minutes = now.getMinutes().toString().padStart(2, '0');
     var timeString = hours + ':' + minutes;
-    document.getElementById('taskbarTime').innerText = timeString;
+    document.getElementById('taskbarTime').querySelector('span').innerText = timeString;
 }
+
+// Initialize the taskbar time and set it to update every minute
+document.addEventListener('DOMContentLoaded', () => {
+    updateTime();
+    setInterval(updateTime, 60000); // Update every minute
+});
 
 function updateTaskbarIcons() {
     var taskbarIcons = document.getElementById('taskbarIcons');

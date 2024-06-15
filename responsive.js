@@ -228,6 +228,34 @@ function toggleStartMenu() {
     }
 }
 
+
+
+// Function to handle menu clicks
+function handleMenuClick(action) {
+    switch(action) {
+        case 'documents':
+            openErrorWindow('Error: Unable to access the Documents folder. The folder might be corrupted or moved.');
+            break;
+        case 'settings':
+            openWindow('settingsWindow');
+            break;
+        case 'search':
+            openErrorWindow('Error: Search functionality is currently unavailable. Please try again later.');
+            break;
+        case 'about':
+            openWindow('aboutWindow');
+            break;
+        case 'shutdown':
+            openErrorWindow('Error: Shutdown feature is not implemented. Please close the browser window to exit.');
+            break;
+        default:
+            openErrorWindow('Error: Unrecognized action. Please contact support.');
+    }
+}
+
+
+
+
 document.addEventListener('DOMContentLoaded', function() {
     initializeWindows();
     initializeIcons();

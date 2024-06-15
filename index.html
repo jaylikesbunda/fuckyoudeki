@@ -15,6 +15,8 @@
     <script src="responsive.js" defer></script>
     <script src="paint_App.js" defer></script>
     <script src="messagingApp.js" defer></script>
+    <script src="browserApp.js" defer></script>
+    <script src="settingsApp.js" defer></script>
     <script type="module" src="firebaseInit.js" defer></script>
 
 </head>
@@ -57,7 +59,11 @@
         <div class="icon" id="icon7" ondblclick="showCorruptedError()">
             <img src="assets/images/doom-icon.png" alt="Doom">
             <span>doom.exe</span>
-        </div>        
+        </div>
+        <!-- <div class="icon" id="icon8" ondblclick="openBrowserWindow()">
+            <img src="assets/images/browser-icon.png" alt="Browser">
+            <span>Browser</span>
+        </div>                 -->
     </div>
     
     <div class="window" id="errorWindow">
@@ -73,7 +79,26 @@
         </div>
     </div>
     
-
+    <!-- <div class="window" id="browserWindow">
+        <div class="title-bar">
+            <div class="title-bar-text">Web Browser</div>
+            <div class="title-bar-controls">
+                <button aria-label="Minimize" onclick="minimizeWindow('browserWindow')">_</button>
+                <button aria-label="Maximize" onclick="maximizeWindow('browserWindow')">🗖</button>
+                <button aria-label="Close" onclick="closeWindow('browserWindow')">×</button>
+            </div>
+        </div>
+        <div class="window-body">
+            <div class="browser-toolbar">
+                <input type="text" id="browserUrl" placeholder="Enter URL" onkeypress="handleUrlKeyPress(event)">
+                <input type="text" id="searchQuery" placeholder="Search with Google" onkeypress="handleSearchKeyPress(event)">
+                <button onclick="goHome()">Home</button>
+            </div>
+            <iframe id="browserFrame" src="" style="width: 100%; height: calc(100% - 30px); border: none;"></iframe>
+            <div class="error-message" style="display: none;">This content can't be displayed in an iframe. Please click <a href="#" target="_blank" id="errorLink">here</a> to open in a new window.</div>
+        </div>
+    </div> -->
+    
 
     <div class="window" id="mainWindow">
         <div class="title-bar">
@@ -197,6 +222,43 @@
         </div>
     </div>
 
+
+
+<!-- Settings Window -->
+<div class="window" id="settingsWindow" style="display: none;">
+    <div class="title-bar">
+        <div class="title-bar-text">Settings</div>
+        <div class="title-bar-controls">
+            <button aria-label="Minimize" data-action="minimize">_</button>
+            <button aria-label="Maximize" data-action="maximize">🗖</button>
+            <button aria-label="Close" data-action="close">×</button>
+        </div>
+    </div>
+    <div class="window-body" id="settingsContent">
+        <!-- Content will be populated by JavaScript -->
+    </div>
+</div>
+
+
+
+    <!-- About Window -->
+    <div class="window" id="aboutWindow" style="display: none;">
+        <div class="title-bar">
+            <div class="title-bar-text">About</div>
+            <div class="title-bar-controls">
+                <button aria-label="Minimize" onclick="minimizeWindow('aboutWindow')">_</button>
+                <button aria-label="Maximize" onclick="maximizeWindow('aboutWindow')">🗖</button>
+                <button aria-label="Close" onclick="closeWindow('aboutWindow')">×</button>
+            </div>
+        </div>
+        <div class="window-body">
+            <p>About content goes here...</p>
+        </div>
+    </div>
+
+
+
+
 <!-- Taskbar and start menu -->
 <div class="taskbar">
     <div class="start-menu">
@@ -211,11 +273,11 @@
                 </ul>
             </div>
             <li><a href="#" onclick="openWindow('terminalWindow')">Terminal</a></li>
-            <li><a href="#">Documents</a></li>
-            <li><a href="#">Settings</a></li>
-            <li><a href="#">Search</a></li>
-            <li><a href="#">About</a></li>
-            <li><a href="#">Shutdown</a></li>
+            <li><a href="#" onclick="handleMenuClick('documents')">Documents</a></li>
+            <li><a href="#" onclick="openWindow('settingsWindow')">Settings</a></li>
+            <li><a href="#" onclick="handleMenuClick('search')">Search</a></li>
+            <li><a href="#" onclick="openWindow('aboutWindow')">About</a></li>
+            <li><a href="#" onclick="handleMenuClick('shutdown')">Shutdown</a></li>
         </ul>
     </div>
     <div class="taskbar-icons" id="taskbarIcons"></div>
@@ -223,5 +285,6 @@
         <span></span>
     </div>
 </div>
+
 </body>
 </html>
