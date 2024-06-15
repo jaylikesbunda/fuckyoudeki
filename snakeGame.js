@@ -189,11 +189,32 @@ const SnakeGame = (() => {
     }
 
     function drawFood() {
+        // Draw the apple body
         ctx.fillStyle = '#f00';
         ctx.beginPath();
         ctx.arc(food.x + box / 2, food.y + box / 2, box / 2, 0, Math.PI * 2);
         ctx.fill();
+    
+        // Draw the apple stem
+        ctx.fillStyle = '#8B4513';
+        ctx.beginPath();
+        ctx.moveTo(food.x + box / 2 - 2, food.y + box / 2 - box / 2 - 2);
+        ctx.lineTo(food.x + box / 2 + 2, food.y + box / 2 - box / 2 - 2);
+        ctx.lineTo(food.x + box / 2 + 2, food.y + box / 2 - box / 2 + 4);
+        ctx.lineTo(food.x + box / 2 - 2, food.y + box / 2 - box / 2 + 4);
+        ctx.closePath();
+        ctx.fill();
+    
+        // Draw the apple leaf
+        ctx.fillStyle = '#0f0';
+        ctx.beginPath();
+        ctx.moveTo(food.x + box / 2, food.y + box / 2 - box / 2);
+        ctx.quadraticCurveTo(food.x + box / 2 + 8, food.y + box / 2 - box / 2 - 8, food.x + box / 2 + 4, food.y + box / 2 - box / 2 + 2);
+        ctx.quadraticCurveTo(food.x + box / 2, food.y + box / 2 - box / 2 + 4, food.x + box / 2, food.y + box / 2 - box / 2);
+        ctx.closePath();
+        ctx.fill();
     }
+    
 
     function updateSnakePosition() {
         if (directionQueue.length) {
