@@ -61,11 +61,19 @@ window.displayMessage = function(username, message, timestamp) {
 };
 
 
-// Override the existing submitMessage function to include Firebase submission
+// Override the existing submitMessage function to include Firebase submission and character limit
 window.submitMessage = function() {
     console.log('submitMessage called with Firebase'); // Log submitMessage calls with Firebase
     const username = document.getElementById('username').value || 'Anonymous';
     const message = document.getElementById('message').value;
+    const characterLimit = 280;
+
+    if (message.length > characterLimit) {
+        console.log('Validation failed: Message exceeds character limit');
+        openErrorWindow(`Message is too long. Maximum allowed characters are ${characterLimit}.`);
+        return;
+    }
+
     if (message) {
         console.log('Submitting message to Firebase:', { username, message }); // Log the message being submitted
         push(messagesRef, {

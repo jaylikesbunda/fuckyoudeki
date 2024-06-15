@@ -175,6 +175,7 @@ function initializeIcons() {
 }
 
 
+// Function to open error window
 function openErrorWindow(message) {
     console.log('openErrorWindow called with message:', message); // Log the message
     document.getElementById('errorMessage').innerText = message;
@@ -188,11 +189,13 @@ function openErrorWindow(message) {
     console.log('Error window brought to front:', errorWindow); // Log after bringing to front
 }
 
+// Function to close error window
 function closeErrorWindow() {
     console.log('closeErrorWindow called'); // Log the close window call
     document.getElementById('errorWindow').style.display = 'none';
 }
 
+// Function to show corrupted error (for completeness, in case it's needed elsewhere)
 function showCorruptedError() {
     console.log('showCorruptedError called'); // Log the show corrupted error call
     openErrorWindow('Error: The file is corrupted and cannot be opened.');
