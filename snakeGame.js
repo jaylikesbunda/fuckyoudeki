@@ -2,10 +2,10 @@ const SnakeGame = (() => {
     let game, score, snake, food, direction, touchStartX, touchStartY, highScore;
     let canvas, ctx, box = 20;
     let directionQueue = [];
-    const initialGameSpeed = 100;
+    const initialGameSpeed = 120;
     let gameSpeed = initialGameSpeed;
-    let frameCounter = 0;
-    const speedFactor = 6; // Adjust this value to change the game speed
+    let lastFrameTime = 0;
+    const speedFactor = 4; // Adjust this value to change the game speed
     let animationFrameId;
 
     document.addEventListener('DOMContentLoaded', () => {
@@ -40,6 +40,7 @@ const SnakeGame = (() => {
         resizeSnakeCanvas();
 
         if (animationFrameId) cancelAnimationFrame(animationFrameId);
+        lastFrameTime = performance.now();
         draw(); // Start the drawing loop
     }
 
@@ -133,8 +134,12 @@ const SnakeGame = (() => {
     }
 
     function draw() {
-        frameCounter++;
-        if (frameCounter % speedFactor === 0) {
+        const currentFrameTime = performance.now();
+        const deltaTime = currentFrameTime - lastFrameTime;
+
+        if (deltaTime > gameSpeed) {
+            lastFrameTime = currentFrameTime - (deltaTime % gameSpeed);
+
             ctx.fillStyle = '#000';
             ctx.fillRect(0, 0, canvas.width, canvas.height);
     
@@ -155,10 +160,10 @@ const SnakeGame = (() => {
                 drawScore();
             }
         }
-    
+
         animationFrameId = requestAnimationFrame(draw);
     }
-    
+
     function drawSnake() {
         if (snake.length === 0) return;
     
@@ -182,8 +187,6 @@ const SnakeGame = (() => {
         ctx.arc(snake[0].x + box / 2, snake[0].y + box / 2, box / 2.5, 0, Math.PI * 2);
         ctx.fill();
     }
-    
-    
 
     function drawFood() {
         ctx.fillStyle = '#f00';
@@ -196,21 +199,20 @@ const SnakeGame = (() => {
         if (directionQueue.length) {
             direction = directionQueue.shift();
         }
-    
+
         let snakeX = snake[0].x;
         let snakeY = snake[0].y;
-    
+
         switch (direction) {
             case 'LEFT': snakeX -= box; break;
             case 'UP': snakeY -= box; break;
             case 'RIGHT': snakeX += box; break;
             case 'DOWN': snakeY += box; break;
         }
-    
+
         const newHead = { x: snakeX, y: snakeY };
         snake.unshift(newHead);
     }
-    
 
     function hasSnakeEatenFood() {
         return snake[0].x === food.x && snake[0].y === food.y;
@@ -229,7 +231,8 @@ const SnakeGame = (() => {
             gameSpeed -= 10;
         }
 
-        const eatSound = new Audio('assets/sounds/eat.mp3');
+        const eatSound = new Audio('https://audio.jukehost.co.uk/sOzTYVOu0JLq91FEIJvyHnXhzjeInoGp');
+        eatSound.volume = 0.2; 
         eatSound.play();
     }
 
