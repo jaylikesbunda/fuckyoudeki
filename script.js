@@ -36,6 +36,53 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
+
+
+    function highlightIcon(target) {
+        // Remove highlight from any previously highlighted icon
+        var highlighted = document.querySelector('.icon.highlighted');
+        if (highlighted) {
+            highlighted.classList.remove('highlighted');
+        }
+    
+        // Highlight the clicked icon
+        if (target && target.classList && target.classList.contains('icon')) {
+            target.classList.add('highlighted');
+        }
+    }
+    
+    function enableSingleClickHighlight(element) {
+        element.addEventListener('click', function(event) {
+            // Check if the clicked element is an icon
+            if (event.target.classList.contains('icon')) {
+                highlightIcon(event.target);
+            } else {
+                // Remove highlight if anything else is clicked
+                highlightIcon(null);
+            }
+        });
+    
+        element.addEventListener('touchstart', function(event) {
+            // No action needed for touchstart in this simplified version
+        });
+    
+        element.addEventListener('touchend', function(event) {
+            // Check if the touched element is an icon
+            if (event.target.classList.contains('icon')) {
+                highlightIcon(event.target);
+            } else {
+                // Remove highlight if anything else is touched
+                highlightIcon(null);
+            }
+        });
+    }
+    
+
+
+
+
+
+
     // Your existing icon event setups
     setupIconEvents('icon1', function() { openWindow('mainWindow'); });
     setupIconEvents('icon2', function() { redirectToURL('https://fuckyoufm.net'); });
@@ -44,8 +91,9 @@ document.addEventListener('DOMContentLoaded', function() {
     setupIconEvents('icon5', function() { openWindow('paintWindow'); });
     setupIconEvents('icon6', function() { openWindow('messagingWindow'); });
     setupIconEvents('icon7', function() { showCorruptedError(); }); // New icon for corrupted Doom executable
-    setupIconEvents('icon8', function() { openBrowserWindow(); }); // New icon for the browser window
-
+    setupIconEvents('icon9', function() { openBrowserWindow(); }); // New icon for the browser window
+    setupIconEvents('icon8', function() { openWindow('deathPredictionWindow'); });
+    
     updateTime();
     setInterval(updateTime, 1000); // Update time every second
     updateTaskbarIcons();
@@ -75,44 +123,6 @@ function hideLoadingScreen() {
     loadingScreen.style.display = 'none';
 }
 
-function highlightIcon(target) {
-    // Remove highlight from any previously highlighted icon
-    var highlighted = document.querySelector('.icon.highlighted');
-    if (highlighted) {
-        highlighted.classList.remove('highlighted');
-    }
-
-    // Highlight the clicked icon
-    if (target && target.classList && target.classList.contains('icon')) {
-        target.classList.add('highlighted');
-    }
-}
-
-function enableSingleClickHighlight(element) {
-    element.addEventListener('click', function(event) {
-        // Check if the clicked element is an icon
-        if (event.target.classList.contains('icon')) {
-            highlightIcon(event.target);
-        } else {
-            // Remove highlight if anything else is clicked
-            highlightIcon(null);
-        }
-    });
-
-    element.addEventListener('touchstart', function(event) {
-        // No action needed for touchstart in this simplified version
-    });
-
-    element.addEventListener('touchend', function(event) {
-        // Check if the touched element is an icon
-        if (event.target.classList.contains('icon')) {
-            highlightIcon(event.target);
-        } else {
-            // Remove highlight if anything else is touched
-            highlightIcon(null);
-        }
-    });
-}
 
 
 
@@ -179,8 +189,9 @@ function handleMaximize(event) {
     if (event.type === 'touchend' && event.cancelable) {
         event.preventDefault();
     }
-    toggleMaximizeWindow(this.closest('.window').id);
+    MaximizeWindow(this.closest('.window').id);
 }
+
 
 function closeWindow(windowId) {
     minimizeWindow(windowId);
@@ -190,66 +201,6 @@ function minimizeWindow(windowId) {
     var windowElement = document.getElementById(windowId);
     windowElement.style.display = 'none';
     updateTaskbarIcons();
-}
-
-function toggleMaximizeWindow(windowId) {
-    var windowElement = document.getElementById(windowId);
-    console.log("Toggle maximize function called for:", windowId);
-
-    if (!windowElement) {
-        console.error("Window element not found:", windowId);
-        return;
-    }
-
-    if (windowElement.classList.contains('maximized')) {
-        console.log("Restoring window:", windowId);
-        // Restore the window to its default size and position in the center of the screen
-        windowElement.style.width = windowElement.dataset.originalWidth || '80%';
-        windowElement.style.height = windowElement.dataset.originalHeight || 'auto';
-        windowElement.style.top = '50%';
-        windowElement.style.left = '50%';
-        windowElement.style.transform = 'translate(-50%, -50%)';
-        windowElement.classList.remove('maximized');
-        console.log("Restored state:", {
-            width: windowElement.style.width,
-            height: windowElement.style.height,
-            top: windowElement.style.top,
-            left: windowElement.style.left,
-            transform: windowElement.style.transform
-        });
-    } else {
-        console.log("Maximizing window:", windowId);
-        // Store the original size and position
-        windowElement.dataset.originalWidth = windowElement.style.width;
-        windowElement.dataset.originalHeight = windowElement.style.height;
-        windowElement.dataset.originalTop = windowElement.style.top;
-        windowElement.dataset.originalLeft = windowElement.style.left;
-        windowElement.dataset.originalTransform = windowElement.style.transform;
-
-        console.log("Stored original state:", {
-            width: windowElement.dataset.originalWidth,
-            height: windowElement.dataset.originalHeight,
-            top: windowElement.dataset.originalTop,
-            left: windowElement.dataset.originalLeft,
-            transform: windowElement.dataset.originalTransform
-        });
-
-        // Maximize the window
-        windowElement.style.width = '100%';
-        windowElement.style.height = '100%';
-        windowElement.style.top = '0';
-        windowElement.style.left = '0';
-        windowElement.style.transform = 'none';
-        windowElement.classList.add('maximized');
-
-        console.log("Window maximized:", {
-            width: windowElement.style.width,
-            height: windowElement.style.height,
-            top: windowElement.style.top,
-            left: windowElement.style.left,
-            transform: windowElement.style.transform
-        });
-    }
 }
 
 
@@ -273,33 +224,36 @@ function updateTaskbarIcons() {
     var taskbarIcons = document.getElementById('taskbarIcons');
     taskbarIcons.innerHTML = '';  // Clear existing icons to refresh the list
 
-    // Select all windows that are currently being shown
-    var windows = document.querySelectorAll('.window.show');
-    windows.forEach(function(window) {
+    // Select all windows that are currently being shown or minimized
+    var windows = document.querySelectorAll('.window');
+    windows.forEach(function (window) {
         var windowId = window.id;
         // Query the desktop icon using a selector that matches the window ID in the 'ondblclick' attribute
         var desktopIcon = document.querySelector(`.icon[ondblclick*="${windowId}"] img`);
-        
+
         if (desktopIcon) {
             // Create a new image element for the taskbar icon
             var icon = document.createElement('img');
             icon.src = desktopIcon.src; // Use the same src as the desktop icon
             icon.alt = desktopIcon.alt; // Use the same alt text for accessibility
-            icon.onclick = function() {
-                restoreWindow(windowId);  // Function to restore the window when icon is clicked
+            icon.onclick = function () {
+                toggleWindowState(windowId);  // Function to toggle the window state
             };
             taskbarIcons.appendChild(icon);  // Append the new icon to the taskbar
         }
     });
 }
 
-
-
-function restoreWindow(windowId) {
+function toggleWindowState(windowId) {
     var windowElement = document.getElementById(windowId);
     if (windowElement) {
-        windowElement.classList.add('show');
-        windowElement.style.display = 'block';
+        if (windowElement.classList.contains('show')) {
+            windowElement.classList.remove('show');
+            windowElement.style.display = 'none'; // Minimize the window
+        } else {
+            windowElement.classList.add('show');
+            windowElement.style.display = 'block'; // Restore the window
+        }
+        updateTaskbarIcons();
     }
-    updateTaskbarIcons();
 }

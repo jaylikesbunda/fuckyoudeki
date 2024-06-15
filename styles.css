@@ -578,28 +578,29 @@ main {
     position: absolute;
     width: 400px;
     max-width: 400px;
-    height: 500px;
+    height: 0;
     background: #C3C3C3;
     border: 2px solid #000;
     display: none;
     box-shadow: 3px 3px 0 #808080;
     z-index: 100;
     resize: none;
-    overflow: auto;
-    max-height: 230px;
-    animation: slideIn 0.5s ease-out; /* Slide-in animation */
+    overflow: hidden; /* Hide content during the animation */
+    animation: openVertical 0.5s ease-out forwards; /* Vertical open animation */
 }
 
-@keyframes slideIn {
+/* Keyframes for the vertical open animation */
+@keyframes openVertical {
     from {
-        transform: translateX(-100%);
+        height: 0;
         opacity: 0;
     }
     to {
-        transform: translateX(0);
+        height: 300px;
         opacity: 1;
     }
 }
+
 
 #deathPredictionWindow .window-body {
     padding: 15px;

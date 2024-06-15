@@ -1,137 +1,172 @@
-(function() {
+(function () {
+    'use strict';
+
     document.addEventListener('DOMContentLoaded', () => {
         console.log('DOMContentLoaded event fired'); // Log when DOMContentLoaded event fires
 
-        window.openWindow = function(windowId) {
-            console.log(`openWindow called with windowId: ${windowId}`); // Log openWindow calls
-            const windowElement = document.getElementById(windowId);
-            console.log(`windowElement: `, windowElement); // Log the window element
-        
-            if (!windowElement) {
+        const updateAndLog = (msg, element) => {
+            console.log(msg, element);
+            updateTaskbarIcons();
+        };
+
+        const getElement = (windowId) => {
+            const element = document.getElementById(windowId);
+            if (!element) {
                 console.error(`Element with ID ${windowId} not found.`);
-                return;
+                return null;
             }
-        
+            return element;
+        };
+
+        window.openWindow = function (windowId) {
+            console.log(`openWindow called with windowId: ${windowId}`); // Log openWindow calls
+            const windowElement = getElement(windowId);
+            if (!windowElement) return;
+
             windowElement.classList.add('show');
             windowElement.style.display = 'block';
-            console.log(`windowElement after adding show class and setting display block: `, windowElement); // Log after showing window
-        
-            // Get screen dimensions
-            var screenWidth = window.innerWidth;
-            var screenHeight = window.innerHeight;
+            updateAndLog(`windowElement after adding show class and setting display block: `, windowElement);
+
+            const screenWidth = window.innerWidth;
+            const screenHeight = window.innerHeight;
             console.log(`screenWidth: ${screenWidth}, screenHeight: ${screenHeight}`); // Log screen dimensions
-        
-            // Set window size dynamically
+
             if (screenWidth <= 768) {
-                windowElement.style.width = '95%';
-                windowElement.style.height = '90%'; // Slightly less tall to account for the taskbar
-                windowElement.style.top = '1%'; // Moved up a bit
-                windowElement.style.left = '2.5%';
+                Object.assign(windowElement.style, {
+                    width: '95%',
+                    height: '90%',
+                    top: '1%',
+                    left: '2.5%'
+                });
             } else {
-                var defaultWidth = 800;
-                var defaultHeight = 500;
-        
-                var width = parseInt(windowElement.getAttribute('data-width')) || defaultWidth;
-                var height = parseInt(windowElement.getAttribute('data-height')) || defaultHeight;
-                console.log(`width: ${width}, height: ${height}`); // Log width and height
-        
-                // Ensure height does not exceed screen height
+                const defaultSize = { width: 800, height: 500 };
+                const width = parseInt(windowElement.getAttribute('data-width')) || defaultSize.width;
+                let height = parseInt(windowElement.getAttribute('data-height')) || defaultSize.height;
                 if (height > screenHeight) {
-                    height = screenHeight * 0.9; // Adjust to fit within the viewport
+                    height = screenHeight * 0.9;
                 }
-        
-                // Apply width and height
-                windowElement.style.width = width + 'px';
-                windowElement.style.height = height + 'px';
-                console.log(`Adjusted windowElement size: `, windowElement); // Log adjusted size
-        
-                // Calculate the position to center the window
-                var windowWidth = windowElement.offsetWidth;
-                var windowHeight = windowElement.offsetHeight;
-                var left = (screenWidth - windowWidth) / 2;
-                var top = (screenHeight - windowHeight) / 2;
-        
-                windowElement.style.left = left + 'px';
-                windowElement.style.top = top + 'px';
-                console.log(`Calculated position left: ${left}, top: ${top}`); // Log calculated position
+
+                Object.assign(windowElement.style, {
+                    width: `${width}px`,
+                    height: `${height}px`,
+                    left: `${(screenWidth - width) / 2}px`,
+                    top: `${(screenHeight - height) / 2}px`
+                });
+
+                console.log(`Adjusted windowElement size: `, windowElement);
             }
-        
-            windowElement.style.transform = 'none';
-            windowElement.style.position = 'absolute';
-            console.log(`Final windowElement style: `, windowElement); // Log final window element style
-        
-            // Bring the window to the front
-            console.log(`Calling bringToFront with element: `, windowElement); // Log before bringing to front
+
+            Object.assign(windowElement.style, {
+                transform: 'none',
+                position: 'absolute'
+            });
+            updateAndLog(`Final windowElement style: `, windowElement);
+
             try {
                 bringToFront(windowElement);
-                console.log(`Window brought to front: `, windowElement); // Log after bringing to front
+                console.log(`Window brought to front: `, windowElement);
             } catch (error) {
                 console.error(`Error calling bringToFront: ${error.message}`);
             }
-        
-            // Update taskbar icons after opening a window
-            console.log('Updating taskbar icons');
-            updateTaskbarIcons();
-        }
-        
+        };
 
-        window.minimizeWindow = function(windowId) {
+        window.minimizeWindow = function (windowId) {
             console.log(`minimizeWindow called with windowId: ${windowId}`); // Log minimizeWindow calls
-            const windowElement = document.getElementById(windowId);
-
-            if (!windowElement) {
-                console.error(`Element with ID ${windowId} not found.`);
-                return;
-            }
+            const windowElement = getElement(windowId);
+            if (!windowElement) return;
 
             windowElement.classList.remove('show');
             windowElement.style.display = 'none'; // Hide the window
-            updateTaskbarIcons(); // Update taskbar icons after minimizing a window
-        }
+            updateAndLog('Window minimized', windowElement);
+        };
 
-        window.maximizeWindow = function(windowId) {
+        window.maximizeWindow = function (windowId) {
             console.log(`maximizeWindow called with windowId: ${windowId}`); // Log maximizeWindow calls
-            const windowElement = document.getElementById(windowId);
-
-            if (!windowElement) {
-                console.error(`Element with ID ${windowId} not found.`);
-                return;
+        
+            function toggleMaximizeWindow(windowId) {
+                var windowElement = document.getElementById(windowId);
+                console.log("Toggle maximize function called for:", windowId);
+        
+                if (!windowElement) {
+                    console.error("Window element not found:", windowId);
+                    return;
+                }
+        
+                if (windowElement.classList.contains('maximized')) {
+                    console.log("Restoring window:", windowId);
+                    // Restore the window to its default size and position in the center of the screen
+                    windowElement.style.width = windowElement.dataset.originalWidth || '80%';
+                    windowElement.style.height = windowElement.dataset.originalHeight || 'auto';
+                    windowElement.style.top = '50%';
+                    windowElement.style.left = '50%';
+                    windowElement.style.transform = 'translate(-50%, -50%)';
+                    windowElement.classList.remove('maximized');
+                    console.log("Restored state:", {
+                        width: windowElement.style.width,
+                        height: windowElement.style.height,
+                        top: windowElement.style.top,
+                        left: windowElement.style.left,
+                        transform: windowElement.style.transform
+                    });
+                } else {
+                    console.log("Maximizing window:", windowId);
+                    // Store the original size and position
+                    windowElement.dataset.originalWidth = windowElement.style.width;
+                    windowElement.dataset.originalHeight = windowElement.style.height;
+                    windowElement.dataset.originalTop = windowElement.style.top;
+                    windowElement.dataset.originalLeft = windowElement.style.left;
+                    windowElement.dataset.originalTransform = windowElement.style.transform;
+        
+                    console.log("Stored original state:", {
+                        width: windowElement.dataset.originalWidth,
+                        height: windowElement.dataset.originalHeight,
+                        top: windowElement.dataset.originalTop,
+                        left: windowElement.dataset.originalLeft,
+                        transform: windowElement.dataset.originalTransform
+                    });
+        
+                    // Calculate the height excluding the taskbar
+                    var taskbarHeight = 50; // Height of the taskbar
+                    var availableHeight = window.innerHeight - taskbarHeight;
+        
+                    // Maximize the window
+                    windowElement.style.width = '100vw';
+                    windowElement.style.height = availableHeight + 'px';
+                    windowElement.style.top = '0';
+                    windowElement.style.left = '0';
+                    windowElement.style.transform = 'none';
+                    windowElement.classList.add('maximized');
+        
+                    console.log("Window maximized:", {
+                        width: windowElement.style.width,
+                        height: windowElement.style.height,
+                        top: windowElement.style.top,
+                        left: windowElement.style.left,
+                        transform: windowElement.style.transform
+                    });
+                }
             }
-
-            const isMaximized = windowElement.classList.toggle('maximized');
-
-            if (isMaximized) {
-                windowElement.style.width = '100vw';
-                windowElement.style.height = '100vh';
-                windowElement.style.top = '0';
-                windowElement.style.left = '0';
-                windowElement.style.transform = 'none';
-            } else {
-                openWindow(windowId); // Reset to default size and position
-            }
-            
-            updateTaskbarIcons(); // Update taskbar icons after maximizing a window
-        }
-
-        window.closeWindow = function(windowId) {
+        
+            toggleMaximizeWindow(windowId); // Use the toggleMaximizeWindow function
+        };
+        
+        
+        
+        window.closeWindow = function (windowId) {
             console.log(`closeWindow called with windowId: ${windowId}`); // Log closeWindow calls
-            const windowElement = document.getElementById(windowId);
-
-            if (!windowElement) {
-                console.error(`Element with ID ${windowId} not found.`);
-                return;
-            }
+            const windowElement = getElement(windowId);
+            if (!windowElement) return;
 
             windowElement.classList.remove('show');
             windowElement.style.display = 'none'; // Hide the window
-            updateTaskbarIcons(); // Update taskbar icons after closing a window
-        }
+            updateAndLog('Window closed', windowElement);
+        };
 
-        window.handleTouch = function(event, windowId) {
+        window.handleTouch = function (event, windowId) {
             console.log(`handleTouch called with event: ${event.type} and windowId: ${windowId}`); // Log handleTouch calls
             event.preventDefault();
             openWindow(windowId);
-        }
+        };
 
         console.log('All functions defined and exposed to global scope'); // Confirm function definitions
     });
