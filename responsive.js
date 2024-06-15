@@ -202,8 +202,32 @@ function showCorruptedError() {
 let zIndexCounter = 100; // Initial z-index value for windows
 
 function bringToFront(element) {
-    console.log('bringToFront called with element:', element); // Log when bringToFront is called
     zIndexCounter++;
     element.style.zIndex = zIndexCounter;
     console.log(`zIndex set to ${zIndexCounter} for element:`, element); // Log the zIndex setting
 }
+
+function toggleStartMenu() {
+    var startMenu = document.getElementById('startMenu');
+    var taskbar = document.querySelector('.taskbar');
+    var startButton = document.querySelector('.start-button');
+
+    startMenu.classList.toggle('show');
+
+    // Ensure start menu and taskbar are brought to the front
+    bringToFront(taskbar);
+    bringToFront(startMenu);
+    bringToFront(startButton);
+
+    // Ensure start menu is brought to the front when shown
+    if (startMenu.classList.contains('show')) {
+        bringToFront(startMenu);
+    }
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+    initializeWindows();
+    initializeIcons();
+    // Ensure the start menu is hidden when the document is loaded
+    document.getElementById('startMenu').classList.remove('show');
+});

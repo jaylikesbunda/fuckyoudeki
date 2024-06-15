@@ -317,7 +317,8 @@ main {
     align-items: center;
     padding: 5px 10px;
     box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.2);
-    z-index: 20;
+    position: relative; /* Ensure z-index works */
+    z-index: 200; /* Higher than windows */
 }
 
 .start-menu .start-button {
@@ -344,18 +345,19 @@ main {
 
 .start-menu-dropdown {
     display: none;
-    position: absolute;
+    position: absolute; /* Ensure z-index works */
     bottom: 40px;
     left: 10px;
     background: #C0C0C0;
     border: 2px solid #000;
     padding: 0;
-    z-index: 30;
+    z-index: 210; /* Higher than taskbar */
     box-shadow: 2px 2px 0 #000;
 }
 
 .start-menu-dropdown.show {
     display: block;
+    z-index: 210; /* Ensure z-index is set when shown */
 }
 
 .start-menu-dropdown ul {
@@ -402,7 +404,7 @@ main {
     position: absolute;
     background-color: #C0C0C0; /* Match start menu gray color */
     box-shadow: 1px 1px 0 #FFF, -1px -1px #808080;
-    z-index: 1;
+    z-index: 211; /* Higher than taskbar */
     left: 100%; /* Expand to the left */
     width: 200px; /* Slightly wider */
     border: 2px solid #000;
@@ -431,6 +433,13 @@ main {
     background-color: #000080;
     color: #FFF;
 }
+
+/* Ensure other windows have a lower z-index */
+.window {
+    position: absolute; /* Ensure z-index works */
+    z-index: 100; /* Default z-index for windows */
+}
+
 
 .taskbar-icons {
     display: flex;

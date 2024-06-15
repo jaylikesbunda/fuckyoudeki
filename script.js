@@ -243,14 +243,6 @@ function toggleMaximizeWindow(windowId) {
 
 
 
-
-
-
-function toggleStartMenu() {
-    var startMenu = document.getElementById('startMenu');
-    startMenu.classList.toggle('show');
-}
-
 function updateTime() {
     var now = new Date();
     var hours = now.getHours().toString().padStart(2, '0');
