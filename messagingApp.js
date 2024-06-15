@@ -25,7 +25,7 @@
             if (screenWidth <= 768) {
                 windowElement.style.width = '95%';
                 windowElement.style.height = '90%'; // Slightly less tall to account for the taskbar
-                windowElement.style.top = '10%'; // Moved up a bit
+                windowElement.style.top = '1%'; // Moved up a bit
                 windowElement.style.left = '2.5%';
             } else {
                 var defaultWidth = 800;
