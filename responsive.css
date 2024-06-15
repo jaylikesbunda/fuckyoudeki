@@ -354,28 +354,28 @@
     text-decoration: none;
 }
 
-
-
-
 /* Settings window specific styling */
 #settingsWindow {
     position: absolute;
     width: 600px;
-    max-width: 90%;
+    max-width: 800px;
+    height: 330px; /* Set default height */
     background: #C3C3C3;
     border: 2px solid #000;
     display: none;
     box-shadow: 3px 3px 0 #808080;
     z-index: 100;
     resize: both;
-    overflow: hidden;
-
+    overflow: auto;
 }
-
 #settingsWindow .window-body {
     padding: 15px;
     font-size: 14px;
     color: #000;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    margin-top: 0%;
 }
 
 /* Title bar styling for settings window */
@@ -420,7 +420,6 @@
 /* Grid Layout for settings window content */
 .settings-container {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
     gap: 10px;
 }
 
@@ -436,7 +435,6 @@
     min-height: 70px;
     max-height: 70px;
 }
-
 
 .settings-section h3 {
     color: #000;
@@ -478,9 +476,18 @@
     cursor: pointer;
 }
 
+/* Responsive behavior for smaller widths */
+@media (max-width: 900px) {
+    #settingsWindow .window-body {
+        grid-template-columns: repeat(2, 1fr); /* Wrap after 2 sections */
+    }
+}
 
-
-
+@media (max-width: 600px) {
+    #settingsWindow .window-body {
+        grid-template-columns: 1fr; /* Wrap into a single column */
+    }
+}
 
 /* Responsive Styles */
 @media (max-width: 768px) {

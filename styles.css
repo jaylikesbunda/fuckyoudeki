@@ -482,7 +482,7 @@ main {
     background: rgba(0, 0, 0, 0.7);
     color: white;
     width: 100%;
-    height: 95%;
+    height: 100%;
     left: 0;
     text-align: center;
 }
@@ -493,6 +493,85 @@ main {
     font-size: 20px;
     cursor: pointer;
 }
+
+
+
+
+
+
+
+
+
+
+
+#aboutWindow {
+    max-width: 478px;
+    background: #C3C3C3;
+    border: 2px solid #000;
+    box-shadow: 3px 3px 0 #808080;
+    z-index: 100;
+    overflow: hidden;
+    max-height: 268px;
+    /* Ensure the window is not resizable */
+    resize: none;
+}
+
+#aboutWindow .title-bar {
+    background: #000080;
+    color: #FFF;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 2px 5px;
+    cursor: move;
+    box-shadow: 2px 2px 0 #000;
+    height: 24px;
+}
+
+#aboutWindow .title-bar-text {
+    font-size: 0.9em;
+    font-weight: bold;
+}
+
+#aboutWindow .title-bar-controls {
+    display: flex;
+    gap: 2px;
+}
+
+#aboutWindow .title-bar-controls button {
+    width: 18px;
+    height: 18px;
+    background: #C0C0C0;
+    border: 1px solid #000;
+    font-family: 'win95-font', sans-serif;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0;
+}
+
+#aboutWindow .title-bar-controls button:hover {
+    background: #808080;
+}
+
+#aboutWindow .window-body {
+    padding: 15px;
+    font-size: 14px;
+    color: #000;
+    background: url('path/to/image.png') repeat; /* Add this line to apply the background */
+    font-family: 'Courier New', Courier, monospace; /* Match the font style */
+    line-height: 1.1; /* Adjust line height for readability */
+}
+
+.about-text {
+    margin: 0;
+    font-size: 16px;
+    color: #000;
+    text-align: center;
+  }
+
+
 
 /* Responsive Styles */
 @media (max-width: 768px) {

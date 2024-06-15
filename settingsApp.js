@@ -42,12 +42,18 @@ document.addEventListener('DOMContentLoaded', () => {
         const highContrastCheckbox = accessibilitySection.querySelector('input');
         highContrastCheckbox.checked = localStorage.getItem('highContrast') === 'true';
 
+        // Create and append pixelated overlay setting
+        const overlaySection = createSettingSection('Disable Pixelated Overlay', 'checkbox', 'pixelatedOverlay', togglePixelatedOverlay);
+        const overlayCheckbox = overlaySection.querySelector('input');
+        overlayCheckbox.checked = localStorage.getItem('pixelatedOverlay') === 'false';
+
         // Append sections to settings content
         settingsContent.appendChild(bgColorSection);
         settingsContent.appendChild(timeZoneSection);
         settingsContent.appendChild(timeFormatSection);
         settingsContent.appendChild(mouseSettingsSection);
         settingsContent.appendChild(accessibilitySection);
+        settingsContent.appendChild(overlaySection);
 
         // Load settings from localStorage
         loadSettings();
@@ -103,6 +109,13 @@ document.addEventListener('DOMContentLoaded', () => {
         document.body.classList.toggle('high-contrast', highContrast);
     }
 
+    // Function to toggle pixelated overlay
+    function togglePixelatedOverlay(event) {
+        const overlayEnabled = !event.target.checked;
+        localStorage.setItem('pixelatedOverlay', overlayEnabled);
+        document.querySelector('.overlay').classList.toggle('hidden-overlay', !overlayEnabled);
+    }
+
     // Function to update the taskbar time based on the selected time zone and format
     function updateTime() {
         const timeZone = localStorage.getItem('timeZone') || 'UTC';
@@ -145,6 +158,10 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('highContrast').checked = savedHighContrast;
         document.body.classList.toggle('high-contrast', savedHighContrast);
 
+        const savedOverlayEnabled = localStorage.getItem('pixelatedOverlay') !== 'false';
+        document.getElementById('pixelatedOverlay').checked = !savedOverlayEnabled;
+        document.querySelector('.overlay').classList.toggle('hidden-overlay', !savedOverlayEnabled);
+
         updateTime();
     }
 
@@ -168,5 +185,5 @@ document.addEventListener('DOMContentLoaded', () => {
     // Initialize the settings, handle window actions, and set the taskbar time to update every minute
     createSettingsContent();
     handleWindowActions();
-    setInterval(updateTime, 60000); // Update every minute
+    setInterval(updateTime, 1000); // Update every minute
 });
