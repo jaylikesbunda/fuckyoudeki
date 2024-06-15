@@ -38,47 +38,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 
-    function highlightIcon(target) {
-        // Remove highlight from any previously highlighted icon
-        var highlighted = document.querySelector('.icon.highlighted');
-        if (highlighted) {
-            highlighted.classList.remove('highlighted');
-        }
-    
-        // Highlight the clicked icon
-        if (target && target.classList && target.classList.contains('icon')) {
-            target.classList.add('highlighted');
-        }
-    }
-    
-    function enableSingleClickHighlight(element) {
-        element.addEventListener('click', function(event) {
-            // Check if the clicked element is an icon
-            if (event.target.classList.contains('icon')) {
-                highlightIcon(event.target);
-            } else {
-                // Remove highlight if anything else is clicked
-                highlightIcon(null);
-            }
-        });
-    
-        element.addEventListener('touchstart', function(event) {
-            // No action needed for touchstart in this simplified version
-        });
-    
-        element.addEventListener('touchend', function(event) {
-            // Check if the touched element is an icon
-            if (event.target.classList.contains('icon')) {
-                highlightIcon(event.target);
-            } else {
-                // Remove highlight if anything else is touched
-                highlightIcon(null);
-            }
-        });
-    }
-    
-
-
 
 
 
@@ -91,7 +50,6 @@ document.addEventListener('DOMContentLoaded', function() {
     setupIconEvents('icon5', function() { openWindow('paintWindow'); });
     setupIconEvents('icon6', function() { openWindow('messagingWindow'); });
     setupIconEvents('icon7', function() { showCorruptedError(); }); // New icon for corrupted Doom executable
-    setupIconEvents('icon9', function() { openBrowserWindow(); }); // New icon for the browser window
     setupIconEvents('icon8', function() { openWindow('deathPredictionWindow'); });
     
     updateTime();
@@ -122,6 +80,47 @@ function hideLoadingScreen() {
     var loadingScreen = document.getElementById('loadingScreen');
     loadingScreen.style.display = 'none';
 }
+
+
+function highlightIcon(target) {
+    // Remove highlight from any previously highlighted icon
+    var highlighted = document.querySelector('.icon.highlighted');
+    if (highlighted) {
+        highlighted.classList.remove('highlighted');
+    }
+
+    // Highlight the clicked icon
+    if (target && target.classList && target.classList.contains('icon')) {
+        target.classList.add('highlighted');
+    }
+}
+
+function enableSingleClickHighlight(element) {
+    element.addEventListener('click', function(event) {
+        // Check if the clicked element is an icon
+        if (event.target.classList.contains('icon')) {
+            highlightIcon(event.target);
+        } else {
+            // Remove highlight if anything else is clicked
+            highlightIcon(null);
+        }
+    });
+
+    element.addEventListener('touchstart', function(event) {
+        // No action needed for touchstart in this simplified version
+    });
+
+    element.addEventListener('touchend', function(event) {
+        // Check if the touched element is an icon
+        if (event.target.classList.contains('icon')) {
+            highlightIcon(event.target);
+        } else {
+            // Remove highlight if anything else is touched
+            highlightIcon(null);
+        }
+    });
+}
+
 
 
 
