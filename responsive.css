@@ -273,6 +273,7 @@
     border: 1px solid #000;
     font-family: 'win95-font', sans-serif;
     cursor: pointer;
+    margin-bottom: 10px;
 }
 
 #errorWindow button:hover {
