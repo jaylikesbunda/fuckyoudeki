@@ -10,6 +10,7 @@ function makeDraggable(titleBar) {
         e.preventDefault();
 
         dragTimeout = setTimeout(() => {
+            bringToFront(windowElement); // Bring window to front when dragging starts
             if (e.type === 'touchstart') {
                 initialX = e.touches[0].clientX - windowElement.offsetLeft;
                 initialY = e.touches[0].clientY - windowElement.offsetTop;
@@ -17,11 +18,11 @@ function makeDraggable(titleBar) {
                 document.addEventListener('touchmove', elementDrag, { passive: false });
             } else {
                 initialX = e.clientX - windowElement.offsetLeft;
-                initialY = e.clientX - windowElement.offsetTop;
+                initialY = e.clientY - windowElement.offsetTop;
                 document.addEventListener('mouseup', closeDragElement);
                 document.addEventListener('mousemove', elementDrag);
             }
-        }, 150); // 150ms delay for long press
+        }, 0); //  ms delay for long press
     }
 
     function elementDrag(e) {
@@ -80,7 +81,7 @@ function makeIconDraggable(element) {
                 document.addEventListener('mouseup', closeDragElement);
                 document.addEventListener('mousemove', elementDrag);
             }
-        }, 150); // 150ms delay for long press
+        }, 140); // 150ms delay for long press
     }
 
     function elementDrag(e) {
@@ -174,16 +175,35 @@ function initializeIcons() {
 }
 
 
-
 function openErrorWindow(message) {
+    console.log('openErrorWindow called with message:', message); // Log the message
     document.getElementById('errorMessage').innerText = message;
-    document.getElementById('errorWindow').style.display = 'block';
+    const errorWindow = document.getElementById('errorWindow');
+    errorWindow.style.display = 'block';
+    console.log('Error window displayed:', errorWindow); // Log after displaying the window
+
+    // Bring the error window to the front
+    console.log('Calling bringToFront for errorWindow'); // Log before bringing to front
+    bringToFront(errorWindow);
+    console.log('Error window brought to front:', errorWindow); // Log after bringing to front
 }
 
 function closeErrorWindow() {
+    console.log('closeErrorWindow called'); // Log the close window call
     document.getElementById('errorWindow').style.display = 'none';
 }
 
 function showCorruptedError() {
+    console.log('showCorruptedError called'); // Log the show corrupted error call
     openErrorWindow('Error: The file is corrupted and cannot be opened.');
+}
+
+
+let zIndexCounter = 100; // Initial z-index value for windows
+
+function bringToFront(element) {
+    console.log('bringToFront called with element:', element); // Log when bringToFront is called
+    zIndexCounter++;
+    element.style.zIndex = zIndexCounter;
+    console.log(`zIndex set to ${zIndexCounter} for element:`, element); // Log the zIndex setting
 }
