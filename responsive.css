@@ -196,8 +196,8 @@
 
 /* Error Window Styles */
 #errorWindow {
-    width: 300px;
-    height: 120px;
+    max-width: 311px;
+    max-height: 145px;
     display: none;
     background: #fff;
     border: 2px solid #000;
