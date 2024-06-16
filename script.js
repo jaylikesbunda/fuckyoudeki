@@ -1,86 +1,135 @@
 document.addEventListener('DOMContentLoaded', function() {
-    setTimeout(hideLoadingScreen, 3000); // Show loading screen for 3 seconds
+    console.log("Document fully loaded");
 
-    initializeWindows();
-    initializeIcons();
+    var bootupTextElement = document.getElementById('bootupText');
+    var loadingScreen = document.getElementById('loadingScreen');
+    var bootupSequence = document.getElementById('bootupSequence');
+    var bootupText = `
+FuckYouOS v1.0.0
 
-    // Set up double-click and touch events for icons
-    function setupIconEvents(iconId, openFunction) {
-        var icon = document.getElementById(iconId);
+Initializing boot sequence...
+Checking system status... OK
+Loading drivers... OK
+Configuring network... OK
+Starting services... OK
 
-        icon.ondblclick = function() {
-            openFunction();
-        };
+System boot complete.
+`;
 
-        enableSingleClickHighlight(icon);
+    var index = 0;
 
-        let lastTouchTime = 0;
-        const doubleTapThreshold = 300;
-
-        icon.addEventListener('touchend', function(event) {
-            var currentTime = new Date().getTime();
-            var timeDiff = currentTime - lastTouchTime;
-
-            if (timeDiff < doubleTapThreshold && timeDiff > 0) {
-                openFunction();
-            } else {
-                highlightIcon(icon);
-            }
-
-            lastTouchTime = currentTime;
-        });
-
-        icon.addEventListener('click', function(event) {
-            // Call highlight function directly for mouse clicks
-            highlightIcon(icon);
-        });
+    function typeWriter() {
+        if (index < bootupText.length) {
+            bootupTextElement.textContent += bootupText.charAt(index);
+            index++;
+            setTimeout(typeWriter, 18); // Adjust typing speed here
+        } else {
+            setTimeout(() => {
+                bootupSequence.style.display = 'none';
+                loadingScreen.style.display = 'flex'; // Show loading screen
+                initializeApp(); // Initialize the rest of the app
+            }, 500); // Delay before showing the loading screen
+        }
     }
 
+    typeWriter();
 
+    function initializeApp() {
+        setTimeout(hideLoadingScreen, 2500); // Show loading screen for 3 seconds
 
+        initializeWindows();
+        initializeIcons();
+        console.log("Windows and icons initialized");
 
+        // Set up double-click and touch events for icons
+        function setupIconEvents(iconId, openFunction) {
+            var icon = document.getElementById(iconId);
+            if (!icon) {
+                console.log(`Icon with ID ${iconId} not found`);
+                return;
+            }
 
+            icon.ondblclick = function() {
+                console.log(`Double-click detected on ${iconId}`);
+                openFunction();
+            };
 
+            enableSingleClickHighlight(icon);
 
-    // Your existing icon event setups
-    setupIconEvents('icon1', function() { openWindow('mainWindow'); });
-    setupIconEvents('icon2', function() { redirectToURL('https://fuckyoufm.net'); });
-    setupIconEvents('icon3', function() { redirectToURL('https://vapefacts.com.au'); });
-    setupIconEvents('icon4', function() { openWindow('snakeWindow'); });
-    setupIconEvents('icon5', function() { openWindow('paintWindow'); });
-    setupIconEvents('icon6', function() { openWindow('messagingWindow'); });
-    setupIconEvents('icon7', function() { showCorruptedError(); }); // New icon for corrupted Doom executable
-    setupIconEvents('icon8', function() { openWindow('deathPredictionWindow'); });
-    setupIconEvents('icon9', function() { openWindow('minesweeperWindow'); });
-    
-    updateTime();
-    setInterval(updateTime, 1000); // Update time every second
-    updateTaskbarIcons();
+            let lastTouchTime = 0;
+            const doubleTapThreshold = 300;
 
-    // Hide Start Menu on outside click
-    document.addEventListener('click', function(event) {
-        var startMenu = document.getElementById('startMenu');
-        var startButton = document.querySelector('.start-button');
-        if (!startMenu.contains(event.target) && !startButton.contains(event.target)) {
-            startMenu.classList.remove('show');
-        }
+            icon.addEventListener('touchend', function(event) {
+                var currentTime = new Date().getTime();
+                var timeDiff = currentTime - lastTouchTime;
 
-        // Dehighlight icons when clicking outside
-        if (!event.target.closest('.icon')) {
-            document.querySelectorAll('.icon.highlighted').forEach(function(icon) {
-                icon.classList.remove('highlighted');
+                if (timeDiff < doubleTapThreshold && timeDiff > 0) {
+                    console.log(`Double-tap detected on ${iconId}`);
+                    openFunction();
+                } else {
+                    highlightIcon(icon);
+                }
+
+                lastTouchTime = currentTime;
+            });
+
+            icon.addEventListener('click', function(event) {
+                console.log(`Click detected on ${iconId}`);
+                highlightIcon(icon);
             });
         }
-    });
 
-    // Position icons to prevent overlap initially
-    positionIcons();
+        // Your existing icon event setups
+        setupIconEvents('icon1', function() { openWindow('mainWindow'); });
+        setupIconEvents('icon2', function() { redirectToURL('https://fuckyoufm.net'); });
+        setupIconEvents('icon3', function() { redirectToURL('https://vapefacts.com.au'); });
+        setupIconEvents('icon4', function() { openWindow('snakeWindow'); });
+        setupIconEvents('icon5', function() { openWindow('paintWindow'); });
+        setupIconEvents('icon6', function() { openWindow('messagingWindow'); });
+        setupIconEvents('icon7', function() { showCorruptedError(); }); // New icon for corrupted Doom executable
+        setupIconEvents('icon8', function() { openWindow('deathPredictionWindow'); });
+        setupIconEvents('icon9', function() { openWindow('minesweeperWindow'); });
+
+        console.log("Icon events set up");
+
+        updateTime();
+        setInterval(updateTime, 1000); // Update time every second
+        console.log("Time and taskbar icons updated");
+
+        updateTaskbarIcons();
+
+        // Hide Start Menu on outside click
+        document.addEventListener('click', function(event) {
+            var startMenu = document.getElementById('startMenu');
+            var startButton = document.querySelector('.start-button');
+            if (startMenu && startButton && !startMenu.contains(event.target) && !startButton.contains(event.target)) {
+                startMenu.classList.remove('show');
+            }
+
+            // Dehighlight icons when clicking outside
+            if (!event.target.closest('.icon')) {
+                document.querySelectorAll('.icon.highlighted').forEach(function(icon) {
+                    icon.classList.remove('highlighted');
+                });
+            }
+        });
+        console.log("Outside click event set up");
+
+        // Position icons to prevent overlap initially
+        positionIcons();
+        console.log("Icons positioned to prevent overlap");
+    }
+
+    function hideLoadingScreen() {
+        var loadingScreen = document.getElementById('loadingScreen');
+        if (loadingScreen) {
+            loadingScreen.style.display = 'none';
+            console.log("Loading screen hidden");
+        } else {
+            console.log("Loading screen element not found");
+        }
+    }
 });
-
-function hideLoadingScreen() {
-    var loadingScreen = document.getElementById('loadingScreen');
-    loadingScreen.style.display = 'none';
-}
 
 
 function highlightIcon(target) {
