@@ -263,43 +263,61 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
 
-    // Show programs list on hover or touch
-    window.showPrograms = function() {
-        const programsDropdown = document.getElementById('programsDropdown');
-        const programs = document.getElementById('programs');
-        programs.innerHTML = ''; // Clear existing items
-        const icons = document.querySelectorAll('#desktop .icon');
-        icons.forEach(icon => {
-            const listItem = document.createElement('li');
-            const img = icon.querySelector('img').cloneNode();
-            const text = document.createElement('span');
-            text.textContent = icon.querySelector('span').textContent;
-            listItem.appendChild(img);
-            listItem.appendChild(text);
+// Show programs list on hover or touch
+window.showPrograms = function() {
+    const programsDropdown = document.getElementById('programsDropdown');
+    const programs = document.getElementById('programs');
+    programs.innerHTML = ''; // Clear existing items
+    const icons = document.querySelectorAll('#desktop .icon');
+    icons.forEach(icon => {
+        const listItem = document.createElement('li');
+        const img = icon.querySelector('img').cloneNode();
+        const text = document.createElement('span');
+        text.textContent = icon.querySelector('span').textContent;
+        listItem.appendChild(img);
+        listItem.appendChild(text);
 
-            listItem.onclick = () => {
-                const iconId = icon.id;
-                if (iconId === 'icon1') {
+        listItem.onclick = () => {
+            const iconId = icon.id;
+            switch(iconId) {
+                case 'icon1':
                     openWindow('mainWindow');
-                } else if (iconId === 'icon2') {
+                    break;
+                case 'icon2':
                     redirectToURL('https://fuckyoufm.net');
-                } else if (iconId === 'icon3') {
+                    break;
+                case 'icon3':
                     redirectToURL('https://vapefacts.com.au');
-                } else if (iconId === 'icon4') {
+                    break;
+                case 'icon4':
                     openWindow('snakeWindow');
-                } else if (iconId === 'icon5') {
+                    break;
+                case 'icon5':
                     openWindow('paintWindow');
-                } else if (iconId === 'icon6') {
+                    break;
+                case 'icon6':
                     openWindow('messagingWindow');
-                } else if (iconId === 'icon7') {
-                    openWindow('terminalWindow');
-                }
-            };
+                    break;
+                case 'icon7':
+                    showCorruptedError();
+                    break;
+                case 'icon8':
+                    openWindow('deathPredictionWindow');
+                    break;
+                case 'icon9':
+                    openWindow('minesweeperWindow');
+                    break;
+                default:
+                    console.error(`Unknown icon id: ${iconId}`);
+                    break;
+            }
+        };
 
-            programs.appendChild(listItem);
-        });
-        programsDropdown.style.display = 'block';
-    }
+        programs.appendChild(listItem);
+    });
+    programsDropdown.style.display = 'block';
+}
+
 
     // Hide programs list when not hovering or touching
     document.addEventListener('click', (event) => {

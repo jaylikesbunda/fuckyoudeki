@@ -51,6 +51,7 @@ document.addEventListener('DOMContentLoaded', function() {
     setupIconEvents('icon6', function() { openWindow('messagingWindow'); });
     setupIconEvents('icon7', function() { showCorruptedError(); }); // New icon for corrupted Doom executable
     setupIconEvents('icon8', function() { openWindow('deathPredictionWindow'); });
+    setupIconEvents('icon9', function() { openWindow('minesweeperWindow'); });
     
     updateTime();
     setInterval(updateTime, 1000); // Update time every second
@@ -244,6 +245,7 @@ function toggleWindowState(windowId) {
         } else {
             windowElement.classList.add('show');
             windowElement.style.display = 'block'; // Restore the window
+            bringToFront(windowElement); // Bring the window to the front when restoring
         }
         updateTaskbarIcons();
     }

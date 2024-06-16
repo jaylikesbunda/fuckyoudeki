@@ -48,7 +48,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function toggleCalendarPopup() {
         const calendarPopup = document.getElementById('calendarPopup');
-        calendarPopup.style.display = calendarPopup.style.display === 'block' ? 'none' : 'block';
+        if (calendarPopup.style.display === 'block') {
+            calendarPopup.style.display = 'none';
+        } else {
+            calendarPopup.style.display = 'block';
+            console.log(`Calendar popup opened. Bringing to front.`);
+            bringToFront(calendarPopup); // Bring the calendar popup to the front when opening
+        }
     }
 
     function hideCalendarPopup(event) {
@@ -62,8 +68,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     document.addEventListener('click', hideCalendarPopup);
     document.addEventListener('touchstart', hideCalendarPopup);
-
-
 
     updateTime();
     setInterval(updateTime, 1000);

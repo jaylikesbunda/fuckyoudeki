@@ -127,11 +127,12 @@ window.submitMessage = function() {
             console.log('Message submitted to Firebase:', { username, message }); // Log Firebase submission success
         }).catch((error) => {
             console.error('Error submitting message to Firebase:', error); // Log Firebase submission error
+            openErrorWindow('There was an error submitting your message. Please try again.');
         });
         document.getElementById('message').value = ''; // Clear the textarea
     } else {
         console.log('Validation failed: Message is required');
-        alert("Please enter a message.");
+        openErrorWindow("Please enter a message.");
     }
 };
 

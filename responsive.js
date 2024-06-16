@@ -1,6 +1,7 @@
 function makeDraggable(titleBar) {
     const windowElement = titleBar.parentElement;
     let offsetX = 0, offsetY = 0, initialX = 0, initialY = 0;
+    let isDragging = false;
     let dragTimeout;
 
     titleBar.addEventListener('mousedown', dragMouseDown);
@@ -11,6 +12,8 @@ function makeDraggable(titleBar) {
 
         dragTimeout = setTimeout(() => {
             bringToFront(windowElement); // Bring window to front when dragging starts
+            isDragging = true;
+
             if (e.type === 'touchstart') {
                 initialX = e.touches[0].clientX - windowElement.offsetLeft;
                 initialY = e.touches[0].clientY - windowElement.offsetTop;
@@ -22,10 +25,12 @@ function makeDraggable(titleBar) {
                 document.addEventListener('mouseup', closeDragElement);
                 document.addEventListener('mousemove', elementDrag);
             }
-        }, 0); // 0 ms delay for long press
+        }, 0); // 0 ms delay for immediate dragging
     }
 
     function elementDrag(e) {
+        if (!isDragging) return;
+
         e.preventDefault();
 
         if (e.type === 'touchmove') {
@@ -52,6 +57,7 @@ function makeDraggable(titleBar) {
     }
 
     function closeDragElement() {
+        isDragging = false;
         clearTimeout(dragTimeout);
         document.removeEventListener('mouseup', closeDragElement);
         document.removeEventListener('mousemove', elementDrag);
@@ -243,7 +249,6 @@ function bringToFront(element) {
     element.style.zIndex = zIndexCounter;
     console.log(`zIndex set to ${zIndexCounter} for element:`, element); // Log the zIndex setting
 }
-
 function toggleStartMenu() {
     var startMenu = document.getElementById('startMenu');
     var taskbar = document.querySelector('.taskbar');

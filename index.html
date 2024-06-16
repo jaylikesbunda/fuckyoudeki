@@ -43,6 +43,7 @@
     <script src="browserApp.js" defer></script>
     <script src="settingsApp.js" defer></script>
     <script src="calendar.js" defer></script>
+    <script src="minesweeper.js"></script>
     <script type="module" src="firebaseInit.js" defer></script>
     <script type="module"  src="deathPrediction.js"></script>
     <!-- Firebase App (the core Firebase SDK) -->
@@ -97,6 +98,10 @@
             <img src="assets/images/death-prediction-icon.png" alt="Death Prediction">
             <span>Death Prediction</span>
         </div>
+        <div class="icon" id="icon9" ondblclick="openWindow('minesweeperWindow')">
+            <img src="assets/images/minesweeper-icon.png" alt="Minesweeper">
+            <span>Minesweeper</span>
+        </div>        
     </div>
     
     <div class="window" id="errorWindow">
@@ -307,6 +312,25 @@
         </div>
     </div>
 </div>
+
+
+
+<div id="minesweeperWindow" class="window">
+    <div class="title-bar">
+        <div class="title-bar-text">Minesweeper</div>
+        <div class="title-bar-controls">
+            <button aria-label="Close" onclick="closeWindow()">×</button>
+        </div>
+    </div>
+    <div class="window-body">
+        <div id="gameBoard" class="game-board"></div>
+        <div id="gameStatus" class="status"></div>
+        <button id="resetButton" onclick="initializeGame()">Reset</button>
+    </div>
+</div>
+
+
+
 
 
 

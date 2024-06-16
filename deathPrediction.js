@@ -17,9 +17,20 @@ document.addEventListener('DOMContentLoaded', () => {
     function showQuestion(index) {
         const questionElements = document.querySelectorAll('.question');
         questionElements.forEach((element, idx) => {
-            element.classList.toggle('active', idx === index);
+            const isActive = idx === index;
+            element.classList.toggle('active', isActive);
+            if (isActive) {
+                const input = element.querySelector('input');
+                input.focus();
+                input.addEventListener('keypress', function(event) {
+                    if (event.key === 'Enter') {
+                        nextQuestion();
+                    }
+                });
+            }
         });
     }
+    
 
     function createQuestionnaire() {
         const questionnaire = document.querySelector('.questionnaire');
@@ -62,21 +73,20 @@ document.addEventListener('DOMContentLoaded', () => {
         `;
         questionnaire.appendChild(resultDiv);
     }
-
     function nextQuestion() {
         const questionInputs = document.querySelectorAll('.question input');
         const answer = questionInputs[currentQuestionIndex].value.trim();
         if (answer === '') {
-            alert("Please answer the question before proceeding.");
+            openErrorWindow("Please answer the question before proceeding.");
             return;
         }
-
+    
         const username = document.getElementById('username') ? document.getElementById('username').value : 'Anonymous';
         const question = questions[currentQuestionIndex];
         submitAnswer(username, question, answer)
             .then(() => {
                 answers.push({ question, answer });
-
+    
                 currentQuestionIndex++;
                 if (currentQuestionIndex >= questions.length) {
                     displayResult();
@@ -86,9 +96,10 @@ document.addEventListener('DOMContentLoaded', () => {
             })
             .catch((error) => {
                 console.error('Error submitting answer:', error);
-                alert('There was an error submitting your answer. Please try again.');
+                openErrorWindow('There was an error submitting your answer. Please try again.');
             });
     }
+    
 
     function displayResult() {
         document.getElementById('submitBtn').style.display = 'none';
