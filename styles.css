@@ -719,14 +719,14 @@ main {
 }
 
 #result {
-    display: none; /* Hide result initially */
+    display: none;
     flex-direction: column;
     align-items: center;
-    margin-top: 20px;
-    font-family: 'Comic Sans MS', 'Comic Sans', cursive; /* 90s font */
-    color: #000080; /* Dark blue text */
-    animation: fadeIn 1s ease-out; /* Fade-in animation */
-}
+    margin-top: 67px;
+    font-family: 'Comic Sans MS', 'Comic Sans', cursive;
+    color: #000080;
+    animation: fadeIn 1s ease-out;
+  }
 
 @keyframes fadeIn {
     from {
