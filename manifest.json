@@ -1,0 +1,72 @@
+{
+    "name": "fuckyoudeki.net",
+    "short_name": "FYD",
+    "start_url": "/index.html",
+    "display": "standalone",
+    "background_color": "#008080",
+    "theme_color": "#008080",
+    "description": "A Windows 95 themed desktop site.",
+    "icons": [
+      {
+        "src": "assets/images/corp-logo.png",
+        "sizes": "200x200",
+        "type": "image/png"
+      },
+      {
+        "src": "assets/images/corp-logo.webp",
+        "sizes": "200x200",
+        "type": "image/webp"
+      },
+      {
+        "src": "assets/images/death-prediction-icon.png",
+        "sizes": "200x200",
+        "type": "image/png"
+      },
+      {
+        "src": "assets/images/doom-icon.png",
+        "sizes": "200x200",
+        "type": "image/png"
+      },
+      {
+        "src": "assets/images/file-1.png",
+        "sizes": "64x64",
+        "type": "image/png"
+      },
+      {
+        "src": "assets/images/folder-icon.png",
+        "sizes": "64x64",
+        "type": "image/png"
+      },
+      {
+        "src": "assets/images/glitch-folder.gif",
+        "sizes": "64x64",
+        "type": "image/gif"
+      },
+      {
+        "src": "assets/images/messaging-icon.png",
+        "sizes": "64x64",
+        "type": "image/png"
+      },
+      {
+        "src": "assets/images/minesweeper-icon.png",
+        "sizes": "64x64",
+        "type": "image/png"
+      },
+      {
+        "src": "assets/images/my-computer.png",
+        "sizes": "64x64",
+        "type": "image/png"
+      },
+      {
+        "src": "assets/images/paint-icon.png",
+        "sizes": "64x64",
+        "type": "image/png"
+      },
+      {
+        "src": "assets/images/snake-icon.png",
+        "sizes": "64x64",
+        "type": "image/png"
+      }
+    ]
+  }
+  

@@ -205,7 +205,17 @@ function minimizeWindow(windowId) {
 
 
 
-
+if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('/service-worker.js')
+        .then((registration) => {
+          console.log('ServiceWorker registration successful with scope: ', registration.scope);
+        }, (error) => {
+          console.log('ServiceWorker registration failed: ', error);
+        });
+    });
+  }
+  
 // Initialize the taskbar time and set it to update every minute
 document.addEventListener('DOMContentLoaded', () => {
     updateTime();
