@@ -571,8 +571,6 @@ main {
     text-align: center;
   }
 
-
-
 /* Death Prediction Window specific styling */
 #deathPredictionWindow {
     position: absolute;
@@ -757,9 +755,14 @@ main {
     animation: blink 1s step-start infinite;
     text-align: center;
 }
+
 .stat {
     opacity: 0;
-    transition: opacity 1s;
+    transition: opacity 1s ease-in-out;
+    font-family: 'Comic Sans MS', 'Comic Sans', cursive; /* 90s font */
+    color: #000080; /* Dark blue text */
+    text-align: center;
+    margin-top: 10px;
 }
 
 @keyframes blink {
