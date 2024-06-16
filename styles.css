@@ -663,6 +663,7 @@ main {
     color: #000080; /* Dark blue text */
     justify-content: center;
     align-items: center;
+    margin-top: -94px;
 }
 
 .questionnaire h3 {
@@ -755,6 +756,10 @@ main {
     color: #FF0000; /* Red color for countdown */
     animation: blink 1s step-start infinite;
     text-align: center;
+}
+.stat {
+    opacity: 0;
+    transition: opacity 1s;
 }
 
 @keyframes blink {

@@ -203,7 +203,12 @@ document.addEventListener('DOMContentLoaded', () => {
     
             // Schedule next stat
             currentStatIndex = (currentStatIndex + 1) % allStats.length;
-            setTimeout(showNextStat, 5000); // Change every 5 seconds
+            setTimeout(() => {
+                // Fade out before showing the next stat
+                statDiv.style.transition = 'opacity 1s';
+                statDiv.style.opacity = 0;
+                setTimeout(showNextStat, 1000); // Wait for fade-out to complete
+            }, 5000); // Change every 5 seconds
         }
     }
 
