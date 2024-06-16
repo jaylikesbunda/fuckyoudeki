@@ -205,14 +205,6 @@ function minimizeWindow(windowId) {
 
 
 
-function updateTime() {
-    var now = new Date();
-    var hours = now.getHours().toString().padStart(2, '0');
-    var minutes = now.getMinutes().toString().padStart(2, '0');
-    var timeString = hours + ':' + minutes;
-    document.getElementById('taskbarTime').querySelector('span').innerText = timeString;
-}
-
 // Initialize the taskbar time and set it to update every minute
 document.addEventListener('DOMContentLoaded', () => {
     updateTime();

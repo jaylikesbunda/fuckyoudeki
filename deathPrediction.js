@@ -137,48 +137,70 @@ document.addEventListener('DOMContentLoaded', () => {
     function displayStatistics() {
         const statsDiv = document.getElementById('stats');
         statsDiv.innerHTML = ''; // Clear previous stats
-
+    
         let currentStatIndex = 0;
         const allStats = [];
-
+    
         questions.forEach(question => {
             getStatisticsForQuestion(question, (answers) => {
                 const stats = answers.reduce((acc, answer) => {
                     acc[answer.answer] = (acc[answer.answer] || 0) + 1;
                     return acc;
                 }, {});
-
+    
                 const questionStats = Object.entries(stats).map(([answer, count]) => ({
                     question,
                     answer,
                     count
                 }));
-
+    
                 allStats.push(...questionStats);
                 if (allStats.length === questions.length) {
+                    shuffleArray(allStats);
                     showNextStat();
                 }
             });
         });
-
+    
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+        }
+    
+        function getRandomTemplate(stat) {
+            const templates = [
+                `<h4>Question: ${stat.question}</h4><p>Most common answer: ${stat.answer} (${stat.count} people)</p>`,
+                `<h4>${stat.question}</h4><p>${stat.answer} was the top answer with ${stat.count} votes.</p>`,
+                `<h4>${stat.question}</h4><p>${stat.count} people chose ${stat.answer} as their answer.</p>`,
+                `<h4>${stat.question}</h4><p>${stat.answer} was picked by ${stat.count} respondents.</p>`,
+                `<h4>For the question "${stat.question}"</h4><p>${stat.answer} was the most popular choice with ${stat.count} votes.</p>`,
+                `<h4>Survey question: ${stat.question}</h4><p>${stat.answer} was the leading answer, selected by ${stat.count} people.</p>`,
+                `<h4>Asked: "${stat.question}"</h4><p>${stat.answer} was the favorite answer with ${stat.count} votes.</p>`,
+                `<h4>On the question "${stat.question}"</h4><p>${stat.answer} emerged as the most common answer (${stat.count} votes).</p>`
+            ];
+            return templates[Math.floor(Math.random() * templates.length)];
+        }
+    
         function showNextStat() {
             if (allStats.length === 0) return;
-
+    
             statsDiv.innerHTML = ''; // Clear previous stat
             const stat = allStats[currentStatIndex];
-
+    
             const statDiv = document.createElement('div');
             statDiv.classList.add('stat');
-            statDiv.innerHTML = `<h4>${stat.question}</h4><p>${stat.answer}: ${stat.count}</p>`;
+            statDiv.innerHTML = getRandomTemplate(stat);
             statsDiv.appendChild(statDiv);
-
+    
             // Fade in
             statDiv.style.opacity = 0;
             setTimeout(() => {
                 statDiv.style.transition = 'opacity 1s';
                 statDiv.style.opacity = 1;
             }, 10);
-
+    
             // Schedule next stat
             currentStatIndex = (currentStatIndex + 1) % allStats.length;
             setTimeout(showNextStat, 5000); // Change every 5 seconds
