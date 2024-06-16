@@ -21,8 +21,29 @@
             background-size: 2px 1px; /* Adjust size for smaller or larger "pixels" */
             mix-blend-mode: darken; /* Apply screen blending mode */
         }
+
         .hidden-overlay {
             display: none;
+        }
+
+        .bootup-sequence {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: black;
+            color: green;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999; /* On top of everything else */
+        }
+
+        #bootupText {
+            white-space: pre-wrap;
         }
     </style>
 
@@ -74,7 +95,12 @@
 </head>
 <body>
     <div class="overlay"></div>
-    <div id="loadingScreen">
+    
+    <div id="bootupSequence" class="bootup-sequence">
+        <pre id="bootupText"></pre>
+    </div>
+
+    <div id="loadingScreen" style="display: none;">
         <div class="bootup-content">
             <img src="https://i.ibb.co/0hsC3Jn/corp-logo.webp" alt="Windows XP Logo" class="bootup-logo">
             <div class="progress-bar">
