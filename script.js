@@ -5,13 +5,14 @@ document.addEventListener('DOMContentLoaded', function() {
     var loadingScreen = document.getElementById('loadingScreen');
     var bootupSequence = document.getElementById('bootupSequence');
     var bootupText = `
-FuckYouOS v1.0.0
+FuckYouOS v1.0.2
 
-Initializing boot sequence...
-Checking system status... OK
-Loading drivers... OK
-Configuring network... OK
-Starting services... OK
+Booting...
+Kernel panic... OK
+Mounting /dev/null... OK
+Linking HAL... OK
+Pinging 255.255.255.0... OK
+Executing order 66... OK
 
 System boot complete.
 `;
@@ -22,7 +23,7 @@ System boot complete.
         if (index < bootupText.length) {
             bootupTextElement.textContent += bootupText.charAt(index);
             index++;
-            setTimeout(typeWriter, 18); // Adjust typing speed here
+            setTimeout(typeWriter, .2); // Adjust typing speed here
         } else {
             setTimeout(() => {
                 bootupSequence.style.display = 'none';
