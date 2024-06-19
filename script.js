@@ -257,11 +257,7 @@ function minimizeWindow(windowId) {
 
 
   
-// Initialize the taskbar time and set it to update every minute
-document.addEventListener('DOMContentLoaded', () => {
-    updateTime();
-    setInterval(updateTime, 60000); // Update every minute
-});
+
 
 function updateTaskbarIcons() {
     var taskbarIcons = document.getElementById('taskbarIcons');
