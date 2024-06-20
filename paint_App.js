@@ -126,6 +126,9 @@ const PaintApp = (() => {
         const colorPickerButton = document.createElement('button');
         colorPickerButton.className = 'toolbar-button';
         colorPickerButton.innerHTML = `<span class="toolbar-icon">🎨</span>`; // Paint palette icon
+        colorPickerButton.addEventListener('click', () => {
+            colorPicker.click();
+        });
         colorPickerWrapper.appendChild(colorPickerButton);
     
         const colorPicker = document.createElement('input');
@@ -134,8 +137,6 @@ const PaintApp = (() => {
         colorPicker.className = 'hidden-color-picker';
         colorPicker.addEventListener('input', (e) => changePaintColor(e.target.value));
         colorPickerWrapper.appendChild(colorPicker);
-    
-        colorPickerButton.addEventListener('click', () => colorPicker.click());
     
         toolbar.appendChild(colorPickerWrapper);
     
