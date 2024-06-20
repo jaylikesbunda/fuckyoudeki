@@ -413,17 +413,17 @@ main {
     border: 1px solid #000;
 }
 
-/* Programs Dropdown */
 #programsDropdown {
     display: none;
     position: absolute;
-    background-color: #C0C0C0; /* Match start menu gray color */
+    background-color: #C0C0C0;
     box-shadow: 1px 1px 0 #FFF, -1px -1px #808080;
-    z-index: 211; /* Higher than taskbar */
-    left: 100%; /* Expand to the left */
-    width: 200px; /* Slightly wider */
+    z-index: 211;
+    left: 106%;
+    width: 200px;
     border: 2px solid #000;
-}
+    bottom: -8%;
+  }
 
 #programsDropdown ul {
     list-style-type: none;

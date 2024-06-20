@@ -78,8 +78,8 @@
     <script src="script.js" defer></script>
     <script src="terminalApp.js" defer></script>
     <script src="snakeGame.js" defer></script>
-    <script src="responsive.js" defer></script>
     <script src="paint_App.js" defer></script>
+    <script src="responsive.js" defer></script>
     <script src="messagingApp.js" defer></script>
     <script src="browserApp.js" defer></script>
     <script src="settingsApp.js" defer></script>
@@ -278,9 +278,12 @@
         </div>
         <div class="window-body">
             <div class="toolbar" id="toolbar"></div>
-            <canvas id="paintCanvas" width="400" height="400" style="border:1px solid #000; background: white;"></canvas>
+            <div class="canvas-container">
+                <canvas id="paintCanvas"></canvas>
+            </div>
         </div>
     </div>
+    
     
     <div class="window" id="messagingWindow">
         <div class="title-bar">
