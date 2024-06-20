@@ -34,7 +34,7 @@
 }
 
 .taskbar-time {
-    font-family: 'MS Sans Serif', sans-serif;
+    font-family: 'Win95';
     font-size: 0.9em;
     margin-right: 19px;
 }
@@ -79,7 +79,7 @@
     background: #C0C0C0;
     border: 2px solid #FFF;
     box-shadow: inset 1px 1px 0 #FFF, inset -1px -1px 0 #000;
-    font-family: 'MS Sans Serif', sans-serif;
+    font-family: 'Win95';
     margin: 2px;
     cursor: pointer;
     display: flex;
@@ -193,7 +193,7 @@
 .messaging-toolbar textarea {
     width: 100%;
     padding: 8px;
-    font-family: 'MS Sans Serif', sans-serif;
+    font-family: 'Win95';
     border: 1px solid #000;
     background: #FFF;
     box-sizing: border-box; /* Ensure padding is included in the element's width and height */
@@ -206,7 +206,7 @@
     padding: 8px 12px;
     background: #FFF;
     cursor: pointer;
-    font-family: 'MS Sans Serif', sans-serif;
+    font-family: 'Win95';
     transition: background 0.3s, color 0.3s; /* Smooth transitions */
 }
 
@@ -339,7 +339,7 @@
     height: 18px;
     background: #C0C0C0;
     border: 1px solid #000;
-    font-family: 'win95-font', sans-serif;
+    font-family: 'Win95';
     cursor: pointer;
     display: flex;
     justify-content: center;
@@ -369,7 +369,7 @@
     padding: 2px 10px;
     background: #C0C0C0;
     border: 1px solid #000;
-    font-family: 'win95-font', sans-serif;
+    font-family: 'Win95';
     cursor: pointer;
     margin-bottom: 10px;
 }

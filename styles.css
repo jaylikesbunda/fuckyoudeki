@@ -10,7 +10,12 @@ body {
     height: 100vh;
     overflow: hidden;
 }
-
+@font-face {
+    font-family: 'Win95';
+    src: url('/assets/fonts/win95-font.otf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
 
 /* Desktop Icon Styles */
 #desktop {
@@ -156,6 +161,7 @@ body {
     resize: both;
     overflow: hidden;
     top: 50%;
+    font-family: 'Win95';
     left: 50%;
 }
 
@@ -330,6 +336,7 @@ main {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    font-family: 'Win95';
     padding: 5px 10px;
     box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.2);
     position: relative; /* Ensure z-index works */
@@ -363,6 +370,7 @@ main {
     position: absolute; /* Ensure z-index works */
     bottom: 40px;
     left: 10px;
+    font-family: 'Win95';
     background: #C0C0C0;
     border: 2px solid #000;
     padding: 0;
@@ -416,6 +424,7 @@ main {
 #programsDropdown {
     display: none;
     position: absolute;
+    font-family: 'Win95';
     background-color: #C0C0C0;
     box-shadow: 1px 1px 0 #FFF, -1px -1px #808080;
     z-index: 211;
@@ -472,13 +481,13 @@ main {
 }
 
 .taskbar-time {
-    font-family: 'MS Sans Serif', sans-serif;
     font-size: 0.9em;
 }
 
 /* Snake Game and Paint App Screens */
 #startScreen, #gameOverScreen {
     display: flex;
+    font-family: 'Win95';
     flex-direction: column;
     justify-content: center;
     align-items: center;
@@ -564,7 +573,6 @@ main {
     font-size: 14px;
     color: #000;
     background: url('path/to/image.png') repeat; /* Add this line to apply the background */
-    font-family: 'Courier New', Courier, monospace; /* Match the font style */
     line-height: 1.1; /* Adjust line height for readability */
 }
 
@@ -574,6 +582,19 @@ main {
     color: #000;
     text-align: center;
   }
+
+
+
+
+
+
+
+@font-face {
+    font-family: 'Comic Sans MS';
+    src: url('/assets/fonts/comic-sans.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}  
 
 /* Death Prediction Window specific styling */
 #deathPredictionWindow {
@@ -818,7 +839,6 @@ main {
 }
 
 .taskbar-time {
-    font-family: 'MS Sans Serif', sans-serif;
     font-size: 0.9em;
     padding: 2px 5px;
     background: #C0C0C0;
@@ -863,7 +883,6 @@ main {
     cursor: move;
     box-shadow: 2px 2px 0 #000, -1px -1px 0 #FFF;
     height: 24px;
-    font-family: 'MS Sans Serif', Arial, sans-serif; /* Windows 95 font */
 }
 
 #minesweeperWindow .title-bar-text {
@@ -942,15 +961,12 @@ main {
     margin-bottom: 10px;
     font-size: 1em;
     text-align: center;
-    font-family: 'MS Sans Serif', Arial, sans-serif;
 }
 
 #minesweeperWindow button {
     padding: 5px 10px;
     font-size: 1em;
     cursor: pointer;
-    font-family: 'MS Sans Serif', Arial, sans-serif;
-    background: #C0C0C0;
     border: 2px solid #000;
     box-shadow: 1px 1px 0 #FFF, -1px -1px 0 #808080;
 }
