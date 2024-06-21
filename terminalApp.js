@@ -41,6 +41,16 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
+    // Call the loadAdventureData function and handle the result
+    loadAdventureData(url).then(success => {
+        if (success) {
+            console.log('Adventure data loaded and parsed successfully.');
+            // Proceed with using the adventureData
+        } else {
+            console.log('Failed to load and parse adventure data.');
+        }
+    });
+
     // Function to attempt partial parsing of the JSON data
     function tryPartialParse(data) {
         let sanitizedData = data;
