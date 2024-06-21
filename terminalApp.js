@@ -4,42 +4,42 @@ document.addEventListener('DOMContentLoaded', () => {
     let adventureData = null;
     let currentState = 'start';
     const url = 'https://jaylikesbunda.github.io/fuckyoudeki/adventure.json';
-// Function to load the adventure game JSON data from a specified URL
-async function loadAdventureData(url) {
-    try {
-        const response = await fetch(url);
-        if (!response.ok) {
-            throw new Error(`HTTP error! Status: ${response.status}`);
-        }
-        const data = await response.text(); // Get the raw text
+
+    // Function to load the adventure game JSON data from a specified URL
+    async function loadAdventureData(url) {
         try {
-            adventureData = JSON.parse(data); // Attempt to parse the JSON data
-            console.log('Adventure game data loaded successfully as JSON.');
-            return true;
-        } catch (jsonError) {
-            console.error('Error parsing adventure game data as JSON:', jsonError);
-            adventureData = tryPartialParse(data); // Attempt partial parsing
-            if (adventureData) {
-                console.log('Partially loaded adventure game data.');
+            const response = await fetch(url);
+            if (!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+            const data = await response.text(); // Get the raw text
+            try {
+                adventureData = JSON.parse(data); // Attempt to parse the JSON data
+                console.log('Adventure game data loaded successfully as JSON.');
                 return true;
-            } else {
-                console.log('Attempting plain text parsing as a final backup.');
-                adventureData = parseAsPlainText(data);
+            } catch (jsonError) {
+                console.error('Error parsing adventure game data as JSON:', jsonError);
+                adventureData = tryPartialParse(data); // Attempt partial parsing
                 if (adventureData) {
-                    console.log('Plain text parsing successful.');
+                    console.log('Partially loaded adventure game data.');
                     return true;
                 } else {
-                    console.error('Plain text parsing failed.');
-                    return false;
+                    console.log('Attempting plain text parsing as a final backup.');
+                    adventureData = parseAsPlainText(data);
+                    if (adventureData) {
+                        console.log('Plain text parsing successful.');
+                        return true;
+                    } else {
+                        console.error('Plain text parsing failed.');
+                        return false;
+                    }
                 }
             }
+        } catch (networkError) {
+            console.error('Error loading adventure game data:', networkError);
+            return false;
         }
-    } catch (networkError) {
-        console.error('Error loading adventure game data:', networkError);
-        return false;
     }
-}
-
 
     // Function to attempt partial parsing of the JSON data
     function tryPartialParse(data) {
