@@ -589,6 +589,24 @@
     cursor: pointer;
 }
 
+
+
+
+
+
+.social-links {
+    margin-top: 20px;
+}
+
+.social-links a {
+    display: block;
+    margin-bottom: 5px;
+    color: blue;
+    text-decoration: underline;
+}
+
+
+
 /* Responsive behavior for smaller widths */
 @media (max-width: 900px) {
     #settingsWindow .window-body {

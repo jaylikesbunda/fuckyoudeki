@@ -254,14 +254,35 @@ function handleMenuClick(action) {
 
 function openErrorWindow(message) {
     console.log('openErrorWindow called with message:', message); // Log the message
-    document.getElementById('errorMessage').innerText = message;
+    const errorMessage = document.getElementById('errorMessage');
     const errorWindow = document.getElementById('errorWindow');
 
-    // Always update the position to center the window, regardless of previous state
-    errorWindow.style.left = `${(window.innerWidth - errorWindow.offsetWidth) / 2}px`;
-    errorWindow.style.top = `${(window.innerHeight - errorWindow.offsetHeight) / 2}px`;
+    // Set the error message
+    errorMessage.innerText = message;
 
+    // Display the error window (to calculate its dimensions)
     errorWindow.style.display = 'block';
+
+    // Function to center the error window
+    function centerErrorWindow() {
+        const viewportHeight = window.innerHeight;
+        const viewportWidth = window.innerWidth;
+        const errorWindowHeight = errorWindow.offsetHeight;
+        const errorWindowWidth = errorWindow.offsetWidth;
+
+        // Calculate the center position
+        const top = Math.max(0, (viewportHeight - errorWindowHeight) / 2);
+        const left = Math.max(0, (viewportWidth - errorWindowWidth) / 2);
+
+        // Apply the calculated position
+        errorWindow.style.left = `${left}px`;
+        errorWindow.style.top = `${top}px`;
+    }
+
+    // Ensure the window is centered initially and when the window size changes
+    centerErrorWindow();
+    window.addEventListener('resize', centerErrorWindow);
+
     console.log('Error window displayed:', errorWindow); // Log after displaying the window
 
     // Ensure the error window is brought to the front

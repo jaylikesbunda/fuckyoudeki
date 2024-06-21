@@ -1,3 +1,24 @@
+// Ensure the height is correctly set for mobile browsers
+window.addEventListener('resize', () => {
+    const vh = window.innerHeight * 0.01;
+    document.documentElement.style.setProperty('--vh', `${vh}px`);
+});
+
+// Initial setting of vh on page load
+document.addEventListener('DOMContentLoaded', () => {
+    const vh = window.innerHeight * 0.01;
+    document.documentElement.style.setProperty('--vh', `${vh}px`);
+});
+
+
+
+
+
+
+
+
+
+
 document.addEventListener('DOMContentLoaded', function() {
     console.log("Document fully loaded");
 
@@ -5,7 +26,7 @@ document.addEventListener('DOMContentLoaded', function() {
     var loadingScreen = document.getElementById('loadingScreen');
     var bootupSequence = document.getElementById('bootupSequence');
     var bootupText = `
-FuckYouOS v1.0.3
+FuckYouOS v1.0.4
 
 Booting...
 Kernel panic... OK
@@ -23,7 +44,7 @@ System boot complete.
         if (index < bootupText.length) {
             bootupTextElement.textContent += bootupText.charAt(index);
             index++;
-            setTimeout(typeWriter, .2); // Adjust typing speed here
+            setTimeout(typeWriter, 2); // Adjust typing speed here
         } else {
             setTimeout(() => {
                 bootupSequence.style.display = 'none';
@@ -36,7 +57,7 @@ System boot complete.
     typeWriter();
 
     function initializeApp() {
-        setTimeout(hideLoadingScreen, 2500); // Show loading screen for 3 seconds
+        setTimeout(hideLoadingScreen, 2100); // Show loading screen time
 
         initializeWindows();
         initializeIcons();
