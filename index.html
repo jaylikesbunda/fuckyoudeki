@@ -22,11 +22,13 @@
             );
             background-size: 2px 1px; /* Adjust size for smaller or larger "pixels" */
             mix-blend-mode: darken; /* Apply screen blending mode */
+            transform-origin: top left; /* Ensure scaling works from the top-left corner */
         }
 
         .hidden-overlay {
             display: none;
         }
+
 
         .bootup-sequence {
             position: fixed;
