@@ -119,24 +119,23 @@ const PaintApp = (() => {
             toolbar.appendChild(button);
         });
     
-        // Custom color picker button
+        // Color picker button
         const colorPickerWrapper = document.createElement('div');
         colorPickerWrapper.className = 'color-picker-wrapper';
     
         const colorPickerButton = document.createElement('button');
-        colorPickerButton.className = 'toolbar-button';
+        colorPickerButton.className = 'toolbar-button color-picker-button';
         colorPickerButton.innerHTML = `<span class="toolbar-icon">🎨</span>`; // Paint palette icon
-        colorPickerButton.addEventListener('click', () => {
-            colorPicker.click();
-        });
-        colorPickerWrapper.appendChild(colorPickerButton);
     
         const colorPicker = document.createElement('input');
         colorPicker.type = 'color';
         colorPicker.id = 'colorPicker';
         colorPicker.className = 'hidden-color-picker';
         colorPicker.addEventListener('input', (e) => changePaintColor(e.target.value));
-        colorPickerWrapper.appendChild(colorPicker);
+    
+        colorPickerButton.appendChild(colorPicker);
+        colorPickerButton.addEventListener('click', () => colorPicker.click());
+        colorPickerWrapper.appendChild(colorPickerButton);
     
         toolbar.appendChild(colorPickerWrapper);
     
@@ -158,6 +157,8 @@ const PaintApp = (() => {
     
         toolbar.appendChild(brushSizeWrapper);
     }
+    
+    
     
     function changeBrushSize(size) {
         tools.brush.lineWidth = size;
