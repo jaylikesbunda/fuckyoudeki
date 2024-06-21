@@ -16,6 +16,7 @@ function initializeGame() {
     const mineCount = 10;
     let cells = [];
     let minePositions = [];
+    let revealedCellsCount = 0;
 
     // Initialize cells
     for (let row = 0; row < boardSize; row++) {
@@ -44,9 +45,10 @@ function initializeGame() {
 
     function revealCell(row, col) {
         const cell = cells[row][col];
-        if (cell.classList.contains('revealed')) return;
+        if (cell.classList.contains('revealed') || cell.classList.contains('marked')) return;
 
         cell.classList.add('revealed');
+        revealedCellsCount++;
 
         if (cell.dataset.mine === 'true') {
             cell.classList.add('mine');
@@ -61,6 +63,9 @@ function initializeGame() {
         } else {
             revealAdjacentCells(row, col);
         }
+
+        autoMarkBombs();
+        checkWin();
     }
 
     function countAdjacentMines(row, col) {
@@ -103,5 +108,58 @@ function initializeGame() {
                 cell.classList.add('revealed');
             });
         });
+    }
+
+    function autoMarkBombs() {
+        for (let row = 0; row < boardSize; row++) {
+            for (let col = 0; col < boardSize; col++) {
+                const cell = cells[row][col];
+                if (cell.classList.contains('revealed') && cell.innerText) {
+                    const mineCount = parseInt(cell.innerText, 10);
+                    const directions = [
+                        [-1, -1], [-1, 0], [-1, 1],
+                        [0, -1],           [0, 1],
+                        [1, -1], [1, 0], [1, 1]
+                    ];
+
+                    let unrevealedCells = 0;
+                    let markedBombs = 0;
+                    let adjacentCells = [];
+
+                    directions.forEach(([dx, dy]) => {
+                        const newRow = row + dx;
+                        const newCol = col + dy;
+                        if (newRow >= 0 && newRow < boardSize && newCol >= 0 && newCol < boardSize) {
+                            const adjacentCell = cells[newRow][newCol];
+                            if (!adjacentCell.classList.contains('revealed')) {
+                                adjacentCells.push(adjacentCell);
+                                unrevealedCells++;
+                                if (adjacentCell.classList.contains('marked')) {
+                                    markedBombs++;
+                                }
+                            }
+                        }
+                    });
+
+                    // Only mark cells when the player would logically deduce it's a bomb
+                    if (mineCount === unrevealedCells + markedBombs) {
+                        adjacentCells.forEach(adjacentCell => {
+                            if (!adjacentCell.classList.contains('revealed') && !adjacentCell.classList.contains('marked')) {
+                                adjacentCell.classList.add('marked');
+                            }
+                        });
+                    }
+                }
+            }
+        }
+    }
+
+    function checkWin() {
+        const totalCells = boardSize * boardSize;
+        const nonMineCells = totalCells - mineCount;
+        if (revealedCellsCount === nonMineCells) {
+            gameStatus.innerHTML = 'You Win!';
+            revealMines();
+        }
     }
 }

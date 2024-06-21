@@ -133,11 +133,15 @@ const PaintApp = (() => {
         colorPicker.className = 'hidden-color-picker';
         colorPicker.addEventListener('input', (e) => changePaintColor(e.target.value));
     
-        colorPickerButton.appendChild(colorPicker);
-        colorPickerButton.addEventListener('click', () => colorPicker.click());
+        // Append color picker directly to the toolbar to ensure iOS handles it correctly
         colorPickerWrapper.appendChild(colorPickerButton);
-    
+        toolbar.appendChild(colorPicker);
         toolbar.appendChild(colorPickerWrapper);
+    
+        colorPickerButton.addEventListener('click', () => {
+            colorPicker.focus(); // Ensure input is focused for iOS
+            colorPicker.click();
+        });
     
         // Brush size selector
         const brushSizeWrapper = document.createElement('div');

@@ -956,6 +956,13 @@ main {
     cursor: default;
 }
 
+
+
+#minesweeperWindow .cell.marked {
+    background-color: red; 
+    cursor: default;
+}
+
 #minesweeperWindow .cell.mine {
     background-color: red;
     border-color: #000;
