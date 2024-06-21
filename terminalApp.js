@@ -3,12 +3,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
     let adventureData = null;
     let currentState = 'start';
-    const url = 'https://jaylikesbunda.github.io/fuckyoudeki/adventure.json';
 
-    // Function to load the adventure game JSON data from a specified URL
-    async function loadAdventureData(url) {
+    // Function to load the adventure game JSON data
+    async function loadAdventureData() {
         try {
-            const response = await fetch(url);
+            const response = await fetch('./adventure.json');
             if (!response.ok) {
                 throw new Error(`HTTP error! Status: ${response.status}`);
             }
@@ -40,16 +39,6 @@ document.addEventListener('DOMContentLoaded', () => {
             return false;
         }
     }
-
-    // Call the loadAdventureData function and handle the result
-    loadAdventureData(url).then(success => {
-        if (success) {
-            console.log('Adventure data loaded and parsed successfully.');
-            // Proceed with using the adventureData
-        } else {
-            console.log('Failed to load and parse adventure data.');
-        }
-    });
 
     // Function to attempt partial parsing of the JSON data
     function tryPartialParse(data) {
