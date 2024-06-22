@@ -62,6 +62,24 @@ body {
     border-radius: 2px;
 }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 /* Loading Screen Styles */
 #loadingScreen {
     position: fixed;
@@ -992,10 +1010,6 @@ main {
 #minesweeperWindow button:active {
     box-shadow: inset 2px 2px 5px #000;
 }
-
-
-
-
 
 
 

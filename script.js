@@ -15,10 +15,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 
-
-
-
-
 document.addEventListener('DOMContentLoaded', function() {
     console.log("Document fully loaded");
 
@@ -275,9 +271,80 @@ function minimizeWindow(windowId) {
 }
 
 
+// Function to show the ad popup
+function showAdPopup() {
+    console.log('Preparing to show ad...');
 
+    // Ad content data
+    const ads = [
+        { image: 'https://i.ibb.co/878Sczg/newplayer3-crackedscreen.png' },
+        { image: 'https://i.ibb.co/Wx8CwwB/PHOTOSHOPPEDDALL-E-2024-05-21-08-35-jpg.png' },
+        { image: 'https://i.ibb.co/CBxC323/armyadfinalss.png' }
+    ];
 
-  
+    // Select a random ad
+    const randomAd = ads[Math.floor(Math.random() * ads.length)];
+
+    // Populate ad content dynamically
+    const adImage = document.getElementById('adImage');
+    if (adImage) {
+        adImage.src = randomAd.image;
+        console.log('Ad image source set to:', randomAd.image);
+    } else {
+        console.error('Ad image element not found!');
+    }
+
+    const adPopup = document.getElementById('adPopup');
+    if (adPopup) {
+        adPopup.style.display = 'block';
+        adPopup.style.opacity = 0;
+        fadeIn(adPopup);
+        console.log('Ad popup displayed.');
+    } else {
+        console.error('Ad popup element not found!');
+    }
+}
+
+// Function to close the ad popup
+function closeAdPopup() {
+    const adPopup = document.getElementById('adPopup');
+    if (adPopup) {
+        adPopup.style.display = 'none';
+        console.log('Ad popup closed.');
+    } else {
+        console.error('Ad popup element not found!');
+    }
+}
+
+// Function to fade in an element
+function fadeIn(element) {
+    let opacity = 0;
+    element.style.display = 'block';
+    const interval = setInterval(function () {
+        if (opacity >= 1) {
+            clearInterval(interval);
+        }
+        element.style.opacity = opacity;
+        opacity += 0.1;
+    }, 50);
+}
+
+// Add event listeners for DOM content loaded and window load
+document.addEventListener('DOMContentLoaded', function () {
+    console.log('DOM fully loaded and parsed.');
+    const closeButton = document.querySelector('.ad-close-button');
+    if (closeButton) {
+        closeButton.addEventListener('click', closeAdPopup);
+        console.log('Close button event listener added.');
+    } else {
+        console.error('Close button element not found!');
+    }
+});
+
+window.addEventListener('load', function () {
+    console.log('Window fully loaded. Setting timeout to show ad popup...');
+    setTimeout(showAdPopup, Math.random() * 5000); // Adjust the delay as needed and randomize it
+});
 
 
 function updateTaskbarIcons() {

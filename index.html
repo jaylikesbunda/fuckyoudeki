@@ -7,6 +7,7 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <title>fuckyoudeki.net</title>
     <style>
+        /* Overlay styles */
         .overlay {
             position: fixed;
             top: 0;
@@ -23,12 +24,12 @@
             background-size: 2px 1px; /* Adjust size for smaller or larger "pixels" */
             mix-blend-mode: darken; /* Apply screen blending mode */
             transform-origin: top left; /* Ensure scaling works from the top-left corner */
+            transform: scale(1); /* Prevent scaling */
         }
 
         .hidden-overlay {
             display: none;
         }
-
 
         .bootup-sequence {
             position: fixed;
@@ -77,25 +78,6 @@
 
     <!-- Theme Color -->
     <meta name="theme-color" content="#008080">
-
-    <!-- Scripts -->
-    <script src="script.js" defer></script>
-    <script src="terminalApp.js" defer></script>
-    <script src="snakeGame.js" defer></script>
-    <script src="paint_App.js" defer></script>
-    <script src="responsive.js" defer></script>
-    <script src="messagingApp.js" defer></script>
-    <script src="browserApp.js" defer></script>
-    <script src="settingsApp.js" defer></script>
-    <script src="calendar.js" defer></script>
-    <script src="minesweeper.js"></script>
-    <script type="module" src="firebaseInit.js" defer></script>
-    <script type="module" src="deathPrediction.js"></script>
-    
-    <!-- Firebase App (the core Firebase SDK) -->
-    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js"></script>
-    <!-- Firebase Database -->
-    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js"></script>
 </head>
 
 <!-- Google tag (gtag.js) -->
@@ -109,13 +91,12 @@
 </script>
 
 <body>
-    <div class="overlay"></div>
+    <div class="overlay" id="overlay"></div>
     
     <div id="bootupSequence" class="bootup-sequence">
         <pre id="bootupText"></pre>
     </div>
-
-    <div id="loadingScreen" style="display: none;">
+    <div id="loadingScreen">
         <div class="bootup-content">
             <img src="https://i.ibb.co/0hsC3Jn/corp-logo.webp" alt="Windows XP Logo" class="bootup-logo">
             <div class="progress-bar">
@@ -125,6 +106,32 @@
             </div>
         </div>
     </div>
+    <!-- Scripts -->
+    <script defer src="overlay.js"></script>
+    <script defer src="calendar.js"></script>
+    <script defer src="script.js"></script>
+    <script defer src="terminalApp.js"></script>
+    <script defer src="snakeGame.js"></script>
+    <script defer src="paint_App.js"></script>
+    <script defer src="responsive.js"></script>
+    <script defer src="messagingApp.js"></script>
+    <script defer src="browserApp.js"></script>
+    <script defer src="settingsApp.js"></script>
+    <script defer src="minesweeper.js"></script>
+    <script type="module" defer src="firebaseInit.js"></script>
+    <script type="module" defer src="deathPrediction.js"></script>
+    
+    <!-- Firebase App (the core Firebase SDK) -->
+    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js"></script>
+    <!-- Firebase Database -->
+    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js"></script>
+
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        console.log('Inline DOMContentLoaded event fired.');
+        initOverlay();
+      });
+    </script>
     <div id="desktop">
         <div class="icon" id="icon1" ondblclick="openWindow('mainWindow')">
             <img src="assets/images/my-computer.png" alt="Folder">
@@ -396,8 +403,17 @@
 
 
 
-
-
+<div id="adPopup" class="ad-popup window">
+    <div class="title-bar">
+        <div class="title-bar-text">Advertisement</div>
+        <div class="title-bar-controls">
+            <button aria-label="Close" onclick="closeAdPopup()">×</button>
+        </div>
+    </div>
+    <div class="window-body ad-popup-content">
+        <img id="adImage" src="" alt="Ad Image">
+    </div>
+</div>
 
 <!-- Taskbar and start menu -->
 <div class="taskbar">

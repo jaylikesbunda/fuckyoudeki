@@ -116,21 +116,7 @@ document.addEventListener('DOMContentLoaded', () => {
         document.querySelector('.overlay').classList.toggle('hidden-overlay', !overlayEnabled);
     }
 
-    // Function to update the taskbar time based on the selected time zone and format
-    function updateTime() {
-        const timeZone = localStorage.getItem('timeZone') || 'UTC';
-        const timeFormat = localStorage.getItem('timeFormat') || '12-hour';
-        const now = new Date();
-        const options = {
-            timeZone: timeZone,
-            hour: '2-digit',
-            minute: '2-digit',
-            second: '2-digit',
-            hour12: timeFormat === '12-hour'
-        };
-        const formattedTime = new Intl.DateTimeFormat('en-US', options).format(now);
-        document.getElementById('taskbarTime').querySelector('span').innerText = formattedTime;
-    }
+
 
     // Function to load settings from localStorage
     function loadSettings() {
@@ -185,5 +171,4 @@ document.addEventListener('DOMContentLoaded', () => {
     // Initialize the settings, handle window actions, and set the taskbar time to update every minute
     createSettingsContent();
     handleWindowActions();
-    setInterval(updateTime, 1000); // Update every minute
 });

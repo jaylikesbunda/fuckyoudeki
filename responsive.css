@@ -1,3 +1,51 @@
+/* Ad Popup styles */
+.ad-popup {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    width: 200px; /* Adjusted to scale with the viewport */
+    height: 200px; /* Adjusted to scale with the viewport */
+    background: #C3C3C3;
+    border: 2px solid #000;
+    box-shadow: 3px 3px 0 #808080;
+    z-index: 1000;
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 0;
+    resize: none;
+    overflow: hidden; /* Ensure no scrolling */
+}
+
+.ad-popup .window-body {
+    background: #FFF;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden; /* Prevent scrolling inside the popup */
+}
+
+.ad-popup-content img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Ensures the image covers the container without stretching */
+}
+
+@media (max-width: 768px) {
+    .ad-popup {
+        width: 200px; /* Adjust to be more responsive on smaller screens */
+        height: 200px; /* Adjust to be more responsive on smaller screens */
+    }
+}
+
+/* Prevent scrolling on the entire page when the popup is displayed */
+body.ad-popup-active {
+    overflow: hidden;
+}
+
 
 
 
@@ -101,30 +149,25 @@
     color: #FFF;
 }
 
-/* Hidden color picker input */
-.hidden-color-picker {
-    display: none;
-}
-
-/* Color picker wrapper */
-.color-picker-wrapper {
-    position: relative;
-}
-
-.color-picker-button {
-    position: relative;
-}
-
-.color-picker-button .hidden-color-picker {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    opacity: 0;
+.color-picker {
+    appearance: none;
+    border: none;
+    padding: 0;
+    margin: 2px;
     cursor: pointer;
+    width: 30px;  /* Match width and height of toolbar buttons */
+    height: 30px;
 }
 
+.color-picker::-webkit-color-swatch {
+    border: none;
+    border-radius: 0;
+    padding: 0;
+}
+
+.color-picker::-webkit-color-swatch-wrapper {
+    padding: 0;
+}
 
 /* Brush size selector styles */
 .brush-size-wrapper {
@@ -139,8 +182,7 @@
 }
 
 .brush-size-input {
-    width: 50px;
-    padding: 3px;
+    width: 36PX;
     text-align: center;
 }
 
@@ -622,13 +664,6 @@
 
 /* Responsive Styles */
 @media (max-width: 768px) {
-    .window {
-        width: 95%;
-        height: 95%;
-        top: 2.5%;
-        left: 2.5%;
-        transform: none;
-    }
     .window-body {
         flex-direction: column;
         overflow: auto;

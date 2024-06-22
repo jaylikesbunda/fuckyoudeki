@@ -119,29 +119,14 @@ const PaintApp = (() => {
             toolbar.appendChild(button);
         });
     
-        // Color picker button
-        const colorPickerWrapper = document.createElement('div');
-        colorPickerWrapper.className = 'color-picker-wrapper';
-    
-        const colorPickerButton = document.createElement('button');
-        colorPickerButton.className = 'toolbar-button color-picker-button';
-        colorPickerButton.innerHTML = `<span class="toolbar-icon">🎨</span>`; // Paint palette icon
-    
+        // Color picker input
         const colorPicker = document.createElement('input');
         colorPicker.type = 'color';
         colorPicker.id = 'colorPicker';
-        colorPicker.className = 'hidden-color-picker';
+        colorPicker.className = 'toolbar-button color-picker';
         colorPicker.addEventListener('input', (e) => changePaintColor(e.target.value));
     
-        // Append color picker directly to the toolbar to ensure iOS handles it correctly
-        colorPickerWrapper.appendChild(colorPickerButton);
         toolbar.appendChild(colorPicker);
-        toolbar.appendChild(colorPickerWrapper);
-    
-        colorPickerButton.addEventListener('click', () => {
-            colorPicker.focus(); // Ensure input is focused for iOS
-            colorPicker.click();
-        });
     
         // Brush size selector
         const brushSizeWrapper = document.createElement('div');
@@ -161,6 +146,7 @@ const PaintApp = (() => {
     
         toolbar.appendChild(brushSizeWrapper);
     }
+    
     
     
     
