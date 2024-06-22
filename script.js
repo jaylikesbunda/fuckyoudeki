@@ -272,47 +272,47 @@ function minimizeWindow(windowId) {
 
 
 // Function to show the ad popup
-function showAdPopup() {
+function showddPopup() {
     console.log('Preparing to show ad...');
 
     // Ad content data
-    const ads = [
+    const dds = [
         { image: 'https://i.ibb.co/878Sczg/newplayer3-crackedscreen.png' },
         { image: 'https://i.ibb.co/Wx8CwwB/PHOTOSHOPPEDDALL-E-2024-05-21-08-35-jpg.png' },
         { image: 'https://i.ibb.co/CBxC323/armyadfinalss.png' }
     ];
 
     // Select a random ad
-    const randomAd = ads[Math.floor(Math.random() * ads.length)];
+    const randomdd = dds[Math.floor(Math.random() * dds.length)];
 
     // Populate ad content dynamically
-    const adImage = document.getElementById('adImage');
-    if (adImage) {
-        adImage.src = randomAd.image;
-        console.log('Ad image source set to:', randomAd.image);
+    const ddImage = document.getElementById('ddImage');
+    if (ddImage) {
+        ddImage.src = randomdd.image;
+        console.log('dd image source set to:', randomdd.image);
     } else {
-        console.error('Ad image element not found!');
+        console.error('dd image element not found!');
     }
 
-    const adPopup = document.getElementById('adPopup');
-    if (adPopup) {
-        adPopup.style.display = 'block';
-        adPopup.style.opacity = 0;
-        fadeIn(adPopup);
-        console.log('Ad popup displayed.');
+    const ddPopup = document.getElementById('ddPopup');
+    if (ddPopup) {
+        ddPopup.style.display = 'block';
+        ddPopup.style.opacity = 0;
+        fadeIn(ddPopup);
+        console.log('dd popup displayed.');
     } else {
-        console.error('Ad popup element not found!');
+        console.error('dd popup element not found!');
     }
 }
 
-// Function to close the ad popup
-function closeAdPopup() {
-    const adPopup = document.getElementById('adPopup');
-    if (adPopup) {
-        adPopup.style.display = 'none';
-        console.log('Ad popup closed.');
+// Function to close the dd popup
+function closeddPopup() {
+    const ddPopup = document.getElementById('ddPopup');
+    if (ddPopup) {
+        ddPopup.style.display = 'none';
+        console.log('dd popup closed.');
     } else {
-        console.error('Ad popup element not found!');
+        console.error('dd popup element not found!');
     }
 }
 
@@ -334,7 +334,7 @@ document.addEventListener('DOMContentLoaded', function () {
     console.log('DOM fully loaded and parsed.');
     const closeButton = document.querySelector('.ad-close-button');
     if (closeButton) {
-        closeButton.addEventListener('click', closeAdPopup);
+        closeButton.addEventListener('click', closeddPopup);
         console.log('Close button event listener added.');
     } else {
         console.error('Close button element not found!');
@@ -343,9 +343,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
 window.addEventListener('load', function () {
     console.log('Window fully loaded. Setting timeout to show ad popup...');
-    setTimeout(showAdPopup, Math.random() * 5000); // Adjust the delay as needed and randomize it
+    setTimeout(showddPopup, Math.random() * 5000); // Adjust the delay as needed and randomize it
 });
-
 
 function updateTaskbarIcons() {
     var taskbarIcons = document.getElementById('taskbarIcons');
@@ -370,7 +369,6 @@ function updateTaskbarIcons() {
         }
     });
 }
-
 function toggleWindowState(windowId) {
     var windowElement = document.getElementById(windowId);
     if (windowElement) {
@@ -378,9 +376,7 @@ function toggleWindowState(windowId) {
             windowElement.classList.remove('show');
             windowElement.style.display = 'none'; // Minimize the window
         } else {
-            windowElement.classList.add('show');
-            windowElement.style.display = 'block'; // Restore the window
-            bringToFront(windowElement); // Bring the window to the front when restoring
+            openWindow(windowId); // Use the openWindow function to restore the window
         }
         updateTaskbarIcons();
     }
