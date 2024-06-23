@@ -8,7 +8,7 @@ const SnakeGame = (() => {
     const speedFactor = 6; // Adjust this value to change the game speed
     let animationFrameId;
     let targetX, targetY;
-
+    const swipeThreshold = 10; // Adjust this value to change sensitivity (lower is more sensitive, higher is less sensitive)
 
     document.addEventListener('DOMContentLoaded', () => {
         highScore = localStorage.getItem('highScore') || 0;
@@ -109,48 +109,44 @@ const SnakeGame = (() => {
     function handleTouchStart(evt) {
         if (evt.touches.length === 1) {
             const touch = evt.touches[0];
-            evt.target.dataset.touchStartX = touch.clientX;
-            evt.target.dataset.touchStartY = touch.clientY;
+            touchStartX = touch.clientX;
+            touchStartY = touch.clientY;
         }
     }
     
+    let lastTouchTime = 0;
+
     function handleTouchMove(evt) {
-        if (evt.touches.length !== 1) return; // Ensure single touch handling only.
+        const currentTime = performance.now();
+        if (currentTime - lastTouchTime < 50) return; // Throttle to every 50ms
     
-        const touchStartX = parseFloat(evt.target.dataset.touchStartX);
-        const touchStartY = parseFloat(evt.target.dataset.touchStartY);
+        lastTouchTime = currentTime;
+        if (evt.touches.length === 1) {
+            const touch = evt.touches[0];
+            const touchEndX = touch.clientX;
+            const touchEndY = touch.clientY;
+            const diffX = touchEndX - touchStartX;
+            const diffY = touchEndY - touchStartY;
     
-        // Early return if start positions were never set or if touch is invalid.
-        if (isNaN(touchStartX) || isNaN(touchStartY)) return;
-    
-        const touchEndX = evt.touches[0].clientX;
-        const touchEndY = evt.touches[0].clientY;
-    
-        const diffX = touchStartX - touchEndX;
-        const diffY = touchStartY - touchEndY;
-        
-        // Introduce a minimum swipe distance to differentiate between swipe and tap.
-        const swipeThreshold = 3; // Adjust swipe threshold sensitivity here.
-    
-        let newDirection = null;
-        if (Math.abs(diffX) > Math.abs(diffY)) {
-            if (Math.abs(diffX) > swipeThreshold) { // Check if swipe is long enough.
-                newDirection = diffX > 0 ? 'LEFT' : 'RIGHT';
+            let newDirection = null;
+            if (Math.abs(diffX) > Math.abs(diffY)) {
+                if (Math.abs(diffX) > swipeThreshold) {
+                    newDirection = diffX > 0 ? 'RIGHT' : 'LEFT';
+                }
+            } else {
+                if (Math.abs(diffY) > swipeThreshold) {
+                    newDirection = diffY > 0 ? 'DOWN' : 'UP';
+                }
             }
-        } else {
-            if (Math.abs(diffY) > swipeThreshold) { // Check if swipe is long enough.
-                newDirection = diffY > 0 ? 'UP' : 'DOWN';
+    
+            if (newDirection && isValidDirectionChange(newDirection)) {
+                queueDirection(newDirection);
+                touchStartX = touchEndX;
+                touchStartY = touchEndY;
             }
         }
-    
-        if (newDirection && isValidDirectionChange(newDirection)) {
-            queueDirection(newDirection);
-        }
-    
-        // Prevent storing outdated touch coordinates.
-        delete evt.target.dataset.touchStartX;
-        delete evt.target.dataset.touchStartY;
     }
+    
     
 
     function draw() {
@@ -161,10 +157,11 @@ const SnakeGame = (() => {
             lastFrameTime = currentFrameTime - (deltaTime % gameSpeed);
     
             updateSnakePosition(); // Ensure the update function is called with correct timing
-            
+    
             // Clear the canvas and set the background to black
+            ctx.clearRect(0, 0, canvas.width, canvas.height); // Clear only the necessary area
             ctx.fillStyle = '#000'; // Black background color
-            ctx.fillRect(0, 0, canvas.width, canvas.height); // Clear and fill the canvas with black
+            ctx.fillRect(0, 0, canvas.width, canvas.height); // Fill the canvas with black
     
             drawSnake(); // Draw the entire snake
             drawFood(); // Draw the food
@@ -179,7 +176,6 @@ const SnakeGame = (() => {
         requestAnimationFrame(draw); // Continue the animation loop
     }
     
-
     function drawSnake() {
         if (snake.length === 0) return;
     
@@ -229,7 +225,6 @@ const SnakeGame = (() => {
         ctx.arc(headX + eyeOffsetX, headY - eyeOffsetY, eyeSize, 0, Math.PI * 2);
         ctx.fill();
     }
-    
     
 
     function drawFood() {
