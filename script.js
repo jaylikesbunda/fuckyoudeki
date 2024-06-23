@@ -22,7 +22,7 @@ document.addEventListener('DOMContentLoaded', function() {
     var loadingScreen = document.getElementById('loadingScreen');
     var bootupSequence = document.getElementById('bootupSequence');
     var bootupText = `
-FuckYouOS v1.0.5
+FuckYouOS v1.0.6
 
 Booting...
 Kernel panic... OK
@@ -270,64 +270,64 @@ function minimizeWindow(windowId) {
     updateTaskbarIcons();
 }
 
-
-// Function to show the ad popup
 function showddPopup() {
-    console.log('Preparing to show ad...');
-
-    // Ad content data
     const dds = [
-        { image: 'https://i.ibb.co/878Sczg/newplayer3-crackedscreen.png' },
-        { image: 'https://i.ibb.co/Wx8CwwB/PHOTOSHOPPEDDALL-E-2024-05-21-08-35-jpg.png' },
-        { image: 'https://i.ibb.co/CBxC323/armyadfinalss.png' }
+        'https://i.ibb.co/878Sczg/newplayer3-crackedscreen.png',
+        'https://i.ibb.co/Wx8CwwB/PHOTOSHOPPEDDALL-E-2024-05-21-08-35-jpg.png',
+        'https://i.ibb.co/CBxC323/armyadfinalss.png',
+        'https://i.ibb.co/wwjC84j/image.png'
     ];
 
-    // Select a random ad
-    const randomdd = dds[Math.floor(Math.random() * dds.length)];
+    let currentIndex = 0;
+    const ddImage1 = document.getElementById('ddImage1');
+    const ddImage2 = document.getElementById('ddImage2');
+    ddImage1.src = dds[currentIndex];
+    ddImage2.src = dds[1]; // Start with second image preloaded
+    ddImage1.style.opacity = 1;
+    ddImage2.style.opacity = 0;
 
-    // Populate ad content dynamically
-    const ddImage = document.getElementById('ddImage');
-    if (ddImage) {
-        ddImage.src = randomdd.image;
-        console.log('dd image source set to:', randomdd.image);
-    } else {
-        console.error('dd image element not found!');
+    ddImage1.addEventListener('transitionend', updateSource);
+    ddImage2.addEventListener('transitionend', updateSource);
+
+    function updateSource() {
+        if (this.style.opacity === "0") {
+            currentIndex = (currentIndex + 1) % dds.length;
+            this.src = dds[currentIndex];
+        }
     }
+
+    function toggleImages() {
+        if (ddImage1.style.opacity == '1') {
+            ddImage1.style.opacity = 0;
+            ddImage2.style.opacity = 1;
+        } else {
+            ddImage1.style.opacity = 1;
+            ddImage2.style.opacity = 0;
+        }
+    }
+
+    setInterval(toggleImages, 3000); // Change images every 3 seconds
 
     const ddPopup = document.getElementById('ddPopup');
-    if (ddPopup) {
-        ddPopup.style.display = 'block';
-        ddPopup.style.opacity = 0;
-        fadeIn(ddPopup);
-        console.log('dd popup displayed.');
-    } else {
-        console.error('dd popup element not found!');
+    if (!ddPopup) {
+        console.error('ddPopup element not found!');
+        return;
     }
+    ddPopup.style.display = 'block';
+    console.log('ddPopup displayed.');
 }
 
-// Function to close the dd popup
 function closeddPopup() {
     const ddPopup = document.getElementById('ddPopup');
-    if (ddPopup) {
-        ddPopup.style.display = 'none';
-        console.log('dd popup closed.');
-    } else {
-        console.error('dd popup element not found!');
+    if (!ddPopup) {
+        console.error('Failed to find ddPopup for closure.');
+        return;
     }
+    ddPopup.style.display = 'none';
+    console.log('ddPopup closed.');
 }
 
-// Function to fade in an element
-function fadeIn(element) {
-    let opacity = 0;
-    element.style.display = 'block';
-    const interval = setInterval(function () {
-        if (opacity >= 1) {
-            clearInterval(interval);
-        }
-        element.style.opacity = opacity;
-        opacity += 0.1;
-    }, 50);
-}
+
 
 // Add event listeners for DOM content loaded and window load
 document.addEventListener('DOMContentLoaded', function () {

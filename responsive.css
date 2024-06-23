@@ -1,10 +1,9 @@
-/* Ad Popup styles */
 .dd-popup {
     position: fixed;
     top: 50%;
     left: 50%;
-    width: 200px; /* Adjusted to scale with the viewport */
-    height: 200px; /* Adjusted to scale with the viewport */
+    width: 200px;
+    height: 200px;
     background: #C3C3C3;
     border: 2px solid #000;
     box-shadow: 3px 3px 0 #808080;
@@ -14,42 +13,39 @@
     align-items: center;
     text-align: center;
     padding: 0;
+    overflow: hidden;
     resize: none;
-    overflow: hidden; /* Ensure no scrolling */
 }
 
 .dd-popup .window-body {
+    position: relative;
     background: #FFF;
     width: 100%;
     height: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
-    overflow: hidden; /* Prevent scrolling inside the popup */
+    overflow: hidden;
 }
 
 .dd-popup-content img {
+    position: absolute; /* Make sure images stack on top of each other */
     width: 100%;
     height: 100%;
-    object-fit: cover; /* Ensures the image covers the container without stretching */
+    object-fit: unset; /* Adjust this to contain if stretching is an issue */
+    opacity: 0; /* Start images as invisible */
 }
 
 @media (max-width: 768px) {
     .dd-popup {
-        width: 200px; /* Adjust to be more responsive on smaller screens */
-        height: 200px; /* Adjust to be more responsive on smaller screens */
+        width: 100%; /* Adjust this if necessary */
+        height: 100%; /* Adjust this if necessary */
     }
 }
 
-/* Prevent scrolling on the entire page when the popup is displayed */
 body.dd-popup-active {
     overflow: hidden;
 }
-
-
-
-
-
 
 /* Taskbar styles */
 .taskbar {
