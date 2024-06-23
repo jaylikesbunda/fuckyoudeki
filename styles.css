@@ -507,8 +507,8 @@ main {
     font-size: 0.9em;
 }
 
-/* Snake Game and Paint App Screens */
-#startScreen, #gameOverScreen {
+/* Snake Game Start Screen */
+#startScreen {
     display: flex;
     font-family: 'Win95';
     flex-direction: column;
@@ -523,12 +523,41 @@ main {
     text-align: center;
 }
 
-#startScreen button, #gameOverScreen button {
+#startScreen button {
     padding: 10px 20px;
     margin-top: 20px;
     font-size: 20px;
     cursor: pointer;
 }
+
+
+
+
+
+
+/* Snake Game Over Screen */
+#gameOverScreen {
+    display: flex;
+    font-family: 'Win95';
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    background: rgba(0, 0, 0, 0.7);
+    color: white;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    text-align: center;
+}
+
+#gameOverScreen button {
+    padding: 10px 20px;
+    margin-top: 20px;
+    font-size: 20px;
+    cursor: pointer;
+}
+
 
 
 

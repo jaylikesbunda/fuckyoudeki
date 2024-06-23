@@ -47,6 +47,20 @@ body.dd-popup-active {
     overflow: hidden;
 }
 
+
+
+
+#gameOverScreen input, #gameOverScreen button {
+    padding: 10px;
+    margin-top: 10px;
+    font-size: 16px;
+}
+
+
+
+
+
+
 /* Taskbar styles */
 .taskbar {
     position: fixed;

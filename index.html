@@ -59,6 +59,7 @@
     <link rel="preload" href="https://i.ibb.co/0hsC3Jn/corp-logo.webp" as="image" type="image/webp">
 
     <!-- Stylesheets -->
+     
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="responsive.css">
 
@@ -106,21 +107,7 @@
             </div>
         </div>
     </div>
-    <!-- Scripts -->
-    <script defer src="overlay.js"></script>
-    <script defer src="calendar.js"></script>
-    <script defer src="script.js"></script>
-    <script defer src="terminalApp.js"></script>
-    <script defer src="snakeGame.js"></script>
-    <script defer src="paint_App.js"></script>
-    <script defer src="responsive.js"></script>
-    <script defer src="messagingApp.js"></script>
-    <script defer src="browserApp.js"></script>
-    <script defer src="settingsApp.js"></script>
-    <script defer src="minesweeper.js"></script>
-    <script type="module" defer src="firebaseInit.js"></script>
-    <script type="module" defer src="deathPrediction.js"></script>
-    
+
     <!-- Firebase App (the core Firebase SDK) -->
     <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js"></script>
     <!-- Firebase Database -->
@@ -269,12 +256,14 @@
         <div class="window-body">
             <div id="startScreen">
                 <h1>Snake Game</h1>
-                <button id="startButton" onclick="startGame()">Start Game</button>
+                <button id="startButton" onclick="SnakeGame.startGame()">Start Game</button>
             </div>
             <div id="gameOverScreen" style="display:none;">
                 <h1>Game Over</h1>
                 <p>Your score: <span id="finalScore"></span></p>
-                <button id="restartButton" onclick="restartGame()">Restart</button>
+                <input type="text" id="usernameInput" maxlength="4" placeholder="Enter 4-letter name">
+                <button id="submitScoreButton">Submit Score</button>
+                <button id="restartButton" onclick="SnakeGame.restartGame()">Restart</button>
             </div>
             <canvas id="snakeCanvas"></canvas>
         </div>
@@ -465,5 +454,30 @@
     }
   </script>
 
+    <!-- Scripts at the bottom -->
+    <script defer src="snakeGame.js"></script>
+    <script defer src="overlay.js"></script>
+    <script defer src="calendar.js"></script>
+    <script defer src="script.js"></script>
+    <script defer src="terminalApp.js"></script>
+    <script type="module" defer src="firebaseInit.js"></script>
+    <script type="module" defer src="deathPrediction.js"></script>
+    <script defer src="paint_App.js"></script>
+    <script defer src="responsive.js"></script>
+    <script defer src="messagingApp.js"></script>
+    <script defer src="browserApp.js"></script>
+    <script defer src="settingsApp.js"></script>
+    <script defer src="minesweeper.js"></script>
+
+    <script>
+        window.onload = function() {
+            console.log('All scripts loaded and window fully loaded');
+            if (typeof SnakeGame !== 'undefined') {
+                console.log('SnakeGame is defined:', SnakeGame);
+            } else {
+                console.error('SnakeGame is not defined');
+            }
+        };
+    </script>
 </body>
 </html>

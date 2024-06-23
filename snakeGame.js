@@ -1,3 +1,6 @@
+import { submitSnakeScore } from './firebaseInit.js';
+console.log('Initializing SnakeGame...');
+
 const SnakeGame = (() => {
     let game, score, snake, food, direction, touchStartX, touchStartY, highScore;
     let canvas, ctx, box = 20;
@@ -5,13 +8,15 @@ const SnakeGame = (() => {
     const initialGameSpeed = 170;
     let gameSpeed = initialGameSpeed;
     let lastFrameTime = 0;
-    const speedFactor = 6; // Adjust this value to change the game speed
+    const speedFactor = 6;
     let animationFrameId;
     let targetX, targetY;
-    const swipeThreshold = 10; // Adjust this value to change sensitivity (lower is more sensitive, higher is less sensitive)
+    const swipeThreshold = 10;
 
     document.addEventListener('DOMContentLoaded', () => {
+        console.log('DOMContentLoaded event fired in snakeGame.js');
         highScore = localStorage.getItem('highScore') || 0;
+        console.log('High score loaded:', highScore);
         canvas = document.getElementById('snakeCanvas');
         if (!canvas) {
             console.error("Canvas element not found!");
@@ -20,9 +25,11 @@ const SnakeGame = (() => {
         ctx = canvas.getContext('2d');
         setupEventListeners();
         showStartScreen();
+        console.log('SnakeGame initialized:', window.SnakeGame);
     });
 
     function setupEventListeners() {
+        console.log('Setting up event listeners');
         document.addEventListener('keydown', handleKeydown);
         canvas.addEventListener('touchstart', handleTouchStart, false);
         canvas.addEventListener('touchmove', handleTouchMove, false);
@@ -32,6 +39,7 @@ const SnakeGame = (() => {
     }
 
     function initSnakeGame() {
+        console.log('Initializing SnakeGame');
         snake = [{ x: 10 * box, y: 10 * box }];
         food = generateFood();
         score = 0;
@@ -43,20 +51,23 @@ const SnakeGame = (() => {
 
         if (animationFrameId) cancelAnimationFrame(animationFrameId);
         lastFrameTime = performance.now();
-        draw(); // Start the drawing loop
+        draw();
     }
 
     function startGame() {
+        console.log('Starting game');
         hideStartScreen();
         initSnakeGame();
     }
 
     function restartGame() {
+        console.log('Restarting game');
         hideGameOverScreen();
         initSnakeGame();
     }
 
     function resizeSnakeCanvas() {
+        console.log('Resizing snake canvas');
         const windowElement = document.getElementById('snakeWindow');
         if (!windowElement) {
             console.error("Snake window element not found!");
@@ -65,6 +76,7 @@ const SnakeGame = (() => {
 
         const width = windowElement.clientWidth;
         const height = windowElement.clientHeight - windowElement.querySelector('.title-bar').offsetHeight;
+        console.log(`Resized canvas to: ${width}x${height}`);
 
         canvas.width = width;
         canvas.height = height;
@@ -78,6 +90,7 @@ const SnakeGame = (() => {
     }
 
     function handleKeydown(event) {
+        console.log('Keydown event:', event.keyCode);
         const keyDirection = {
             37: 'LEFT',
             38: 'UP',
@@ -86,6 +99,7 @@ const SnakeGame = (() => {
         };
 
         if (keyDirection[event.keyCode] && isValidDirectionChange(keyDirection[event.keyCode])) {
+            console.log('Valid direction change:', keyDirection[event.keyCode]);
             queueDirection(keyDirection[event.keyCode]);
         }
     }
@@ -102,6 +116,7 @@ const SnakeGame = (() => {
 
     function queueDirection(newDirection) {
         if (directionQueue.length < 2) {
+            console.log('Queuing direction:', newDirection);
             directionQueue.push(newDirection);
         }
     }
@@ -111,15 +126,16 @@ const SnakeGame = (() => {
             const touch = evt.touches[0];
             touchStartX = touch.clientX;
             touchStartY = touch.clientY;
+            console.log('Touch start:', touchStartX, touchStartY);
         }
     }
-    
+
     let lastTouchTime = 0;
 
     function handleTouchMove(evt) {
         const currentTime = performance.now();
-        if (currentTime - lastTouchTime < 50) return; // Throttle to every 50ms
-    
+        if (currentTime - lastTouchTime < 50) return;
+
         lastTouchTime = currentTime;
         if (evt.touches.length === 1) {
             const touch = evt.touches[0];
@@ -127,7 +143,8 @@ const SnakeGame = (() => {
             const touchEndY = touch.clientY;
             const diffX = touchEndX - touchStartX;
             const diffY = touchEndY - touchStartY;
-    
+            console.log('Touch move:', diffX, diffY);
+
             let newDirection = null;
             if (Math.abs(diffX) > Math.abs(diffY)) {
                 if (Math.abs(diffX) > swipeThreshold) {
@@ -138,85 +155,78 @@ const SnakeGame = (() => {
                     newDirection = diffY > 0 ? 'DOWN' : 'UP';
                 }
             }
-    
+
             if (newDirection && isValidDirectionChange(newDirection)) {
+                console.log('Valid swipe direction:', newDirection);
                 queueDirection(newDirection);
                 touchStartX = touchEndX;
                 touchStartY = touchEndY;
             }
         }
     }
-    
-    
 
     function draw() {
         const currentFrameTime = performance.now();
         const deltaTime = currentFrameTime - lastFrameTime;
-    
+
         if (deltaTime > gameSpeed) {
             lastFrameTime = currentFrameTime - (deltaTime % gameSpeed);
-    
-            updateSnakePosition(); // Ensure the update function is called with correct timing
-    
-            // Clear the canvas and set the background to black
-            ctx.clearRect(0, 0, canvas.width, canvas.height); // Clear only the necessary area
-            ctx.fillStyle = '#000'; // Black background color
-            ctx.fillRect(0, 0, canvas.width, canvas.height); // Fill the canvas with black
-    
-            drawSnake(); // Draw the entire snake
-            drawFood(); // Draw the food
-            drawScore(); // Draw the score
-    
+
+            updateSnakePosition();
+
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.fillStyle = '#000';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            drawSnake();
+            drawFood();
+            drawScore();
+
             if (isGameOver()) {
-                handleGameOver(); // Handle game over logic
+                handleGameOver();
                 return;
             }
         }
-    
-        requestAnimationFrame(draw); // Continue the animation loop
+
+        requestAnimationFrame(draw);
     }
-    
+
     function drawSnake() {
         if (snake.length === 0) return;
-    
+
         ctx.strokeStyle = '#0f0';
         ctx.lineWidth = box;
-        ctx.lineCap = 'round'; // Rounded ends for the snake
-        ctx.lineJoin = 'round'; // Rounded joints for the snake
-    
-        // Draw the snake body
+        ctx.lineCap = 'round';
+        ctx.lineJoin = 'round';
+
         ctx.beginPath();
         ctx.moveTo(snake[0].x + box / 2, snake[0].y + box / 2);
         for (let i = 1; i < snake.length; i++) {
             ctx.lineTo(snake[i].x + box / 2, snake[i].y + box / 2);
         }
         ctx.stroke();
-    
-        // Draw the head with some detail
+
         drawSnakeHead(snake[0]);
     }
-    
+
     function drawSnakeHead(head) {
-        const headSize = box; // Head size matches the body
+        const headSize = box;
         const headX = head.x + box / 2;
         const headY = head.y + box / 2;
-    
-        // Draw head as a circle
+
         ctx.fillStyle = '#0f0';
         ctx.beginPath();
         ctx.arc(headX, headY, headSize / 2, 0, Math.PI * 2);
         ctx.fill();
-    
-        // Draw eyes
+
         drawSnakeHeadDetails(headX, headY, headSize);
     }
-    
+
     function drawSnakeHeadDetails(headX, headY, headSize) {
         const eyeSize = headSize / 10;
         const eyeOffsetX = headSize / 5;
         const eyeOffsetY = headSize / 6;
-    
-        // Draw eyes
+
         ctx.fillStyle = '#000';
         ctx.beginPath();
         ctx.arc(headX - eyeOffsetX, headY - eyeOffsetY, eyeSize, 0, Math.PI * 2);
@@ -225,16 +235,13 @@ const SnakeGame = (() => {
         ctx.arc(headX + eyeOffsetX, headY - eyeOffsetY, eyeSize, 0, Math.PI * 2);
         ctx.fill();
     }
-    
 
     function drawFood() {
-        // Draw the apple body
         ctx.fillStyle = '#f00';
         ctx.beginPath();
         ctx.arc(food.x + box / 2, food.y + box / 2, box / 2, 0, Math.PI * 2);
         ctx.fill();
 
-        // Draw the apple stem
         ctx.fillStyle = '#8B4513';
         ctx.beginPath();
         ctx.moveTo(food.x + box / 2 - 2, food.y + box / 2 - box / 2 - 2);
@@ -244,7 +251,6 @@ const SnakeGame = (() => {
         ctx.closePath();
         ctx.fill();
 
-        // Draw the apple leaf
         ctx.fillStyle = '#0f0';
         ctx.beginPath();
         ctx.moveTo(food.x + box / 2, food.y + box / 2 - box / 2);
@@ -254,29 +260,28 @@ const SnakeGame = (() => {
         ctx.fill();
     }
 
-
     function updateSnakePosition() {
         if (directionQueue.length) {
             direction = directionQueue.shift();
         }
-    
+
         let newHeadX = snake[0].x;
         let newHeadY = snake[0].y;
-    
+
         switch (direction) {
             case 'LEFT': newHeadX -= box; break;
             case 'UP': newHeadY -= box; break;
             case 'RIGHT': newHeadX += box; break;
             case 'DOWN': newHeadY += box; break;
         }
-    
+
         const newHead = { x: newHeadX, y: newHeadY };
-        snake.unshift(newHead); // Add new head based on direction
-    
+        snake.unshift(newHead);
+
         if (!hasSnakeEatenFood()) {
-            snake.pop(); // Remove the tail only if no food has been eaten
+            snake.pop();
         } else {
-            handleFoodConsumption(); // Handle food consumption if the food is eaten
+            handleFoodConsumption();
         }
     }
 
@@ -296,10 +301,6 @@ const SnakeGame = (() => {
         if (score % 5 === 0 && gameSpeed > 50) {
             gameSpeed -= 10;
         }
-
-        // const eatSound = new Audio('https://audio.jukehost.co.uk/sOzTYVOu0JLq91FEIJvyHnXhzjeInoGp');
-        // eatSound.volume = 0.2; 
-        // eatSound.play();
     }
 
     function isGameOver() {
@@ -321,31 +322,25 @@ const SnakeGame = (() => {
     }
 
     function drawScore() {
-        // Set text properties
-        ctx.font = 'bold 20px Arial'; // Bold font for better visibility
+        ctx.font = 'bold 20px Arial';
         ctx.fillStyle = '#fff';
-        ctx.textAlign = 'left'; // Align text to the left
-        ctx.textBaseline = 'top'; // Align text vertically to the top
-    
-        // Adding shadow for better visibility
-        ctx.shadowColor = 'rgba(0, 0, 0, 0.7)'; // Black shadow with some transparency
-        ctx.shadowOffsetX = 2; // Horizontal shadow offset
-        ctx.shadowOffsetY = 2; // Vertical shadow offset
-        ctx.shadowBlur = 3; // Shadow blur amount
-    
-        // Drawing current score
+        ctx.textAlign = 'left';
+        ctx.textBaseline = 'top';
+
+        ctx.shadowColor = 'rgba(0, 0, 0, 0.7)';
+        ctx.shadowOffsetX = 2;
+        ctx.shadowOffsetY = 2;
+        ctx.shadowBlur = 3;
+
         ctx.fillText(`Score: ${score}`, 2 * box, 1.6 * box);
-    
-        // Drawing high score
         ctx.fillText(`High: ${highScore}`, 8 * box, 1.6 * box);
-    
-        // Clearing shadow for other elements not to get affected
+
         ctx.shadowColor = 'transparent';
         ctx.shadowOffsetX = 0;
         ctx.shadowOffsetY = 0;
         ctx.shadowBlur = 0;
     }
-    
+
     function generateFood() {
         let foodPosition;
         do {
@@ -358,7 +353,6 @@ const SnakeGame = (() => {
         } while (snake.some(segment => segment.x === foodPosition.x && segment.y === foodPosition.y));
         return foodPosition;
     }
-    
 
     function showStartScreen() {
         document.getElementById('startScreen').style.display = 'flex';
@@ -371,6 +365,21 @@ const SnakeGame = (() => {
     function showGameOverScreen() {
         document.getElementById('finalScore').innerText = score;
         document.getElementById('gameOverScreen').style.display = 'flex';
+
+        const submitButton = document.getElementById('submitScoreButton');
+        submitButton.onclick = () => {
+            const usernameInput = document.getElementById('usernameInput');
+            const username = usernameInput.value.trim().substring(0, 4);
+            if (username && score) {
+                submitSnakeScore(username, score).then(() => {
+                    alert('Score submitted successfully!');
+                }).catch((error) => {
+                    alert('Error submitting score: ' + error);
+                });
+            } else {
+                alert('Please enter a valid username (4 letters max).');
+            }
+        };
     }
 
     function hideGameOverScreen() {
@@ -384,4 +393,5 @@ const SnakeGame = (() => {
     };
 })();
 
-document.addEventListener('DOMContentLoaded', SnakeGame.startGame);
+window.SnakeGame = SnakeGame;
+console.log('SnakeGame defined:', window.SnakeGame);

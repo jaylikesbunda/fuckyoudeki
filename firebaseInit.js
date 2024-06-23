@@ -20,6 +20,25 @@ const db = getDatabase(app);
 const messagesRef = ref(db, 'messages');
 const deathPredictionsRef = ref(db, 'deathPredictions');
 const answersRef = ref(db, 'deathPredictionAnswers');
+const snakeScoresRef = ref(db, 'snakeScores');
+
+
+// Function to submit a high score
+export function submitSnakeScore(username, score) {
+    return push(snakeScoresRef, {
+        username: username,
+        score: score,
+        timestamp: serverTimestamp()
+    });
+}
+
+// Function to listen for new high scores
+export function onNewSnakeScore(callback) {
+    onChildAdded(snakeScoresRef, (snapshot) => {
+        const scoreData = snapshot.val();
+        callback(scoreData);
+    });
+}
 
 // Function to submit a death prediction
 export function submitDeathPrediction(username, prediction) {
