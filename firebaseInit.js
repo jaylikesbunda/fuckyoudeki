@@ -1,10 +1,10 @@
-// Import the functions you need from the SDKs you need
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-import { getDatabase, ref, push, onChildAdded, serverTimestamp, get, child } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+import { getDatabase, ref } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+import { getAuth, onAuthStateChanged, signInAnonymously } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-    apiKey: "AIzaSyB9q5EYU1TM4ujo8fN9f3f5pikop_JPpV4",
+    apiKey: "AIzaSyB9q5EYU1TM4ujo8f3f5pikop_JPpV4",
     authDomain: "fuckyoudeki-im.firebaseapp.com",
     databaseURL: "https://fuckyoudeki-im-default-rtdb.firebaseio.com",
     projectId: "fuckyoudeki-im",
@@ -17,11 +17,31 @@ const firebaseConfig = {
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
+const auth = getAuth(app);
+
+// Firebase Realtime Database references
 const messagesRef = ref(db, 'messages');
 const deathPredictionsRef = ref(db, 'deathPredictions');
 const answersRef = ref(db, 'deathPredictionAnswers');
 const snakeScoresRef = ref(db, 'snakeScores');
 
+// Check the authentication state at startup
+onAuthStateChanged(auth, user => {
+    if (user) {
+        console.log("User is signed in:", user);
+        // User is signed in
+        // You can now safely perform read/write operations
+    } else {
+        console.log("No user is signed in. Attempting to sign in anonymously.");
+        signInAnonymously(auth)
+            .then(() => {
+                console.log("Signed in as an anonymous user.");
+            })
+            .catch((error) => {
+                console.error(`Error signing in anonymously: ${error.message}`);
+            });
+    }
+});
 
 // Function to submit a high score
 export function submitSnakeScore(username, score) {
