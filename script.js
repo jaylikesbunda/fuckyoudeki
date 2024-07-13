@@ -22,7 +22,7 @@ document.addEventListener('DOMContentLoaded', function() {
     var loadingScreen = document.getElementById('loadingScreen');
     var bootupSequence = document.getElementById('bootupSequence');
     var bootupText = `
-FuckYouOS v1.0.7
+FuckYouOS v1.0.6
 
 Booting...
 Kernel panic... OK

@@ -1,4 +1,3 @@
-// Function to make elements draggable
 function makeDraggable(titleBar) {
     const windowElement = titleBar.parentElement;
     let startX = 0, startY = 0, initialX = 0, initialY = 0;
@@ -79,7 +78,6 @@ function makeDraggable(titleBar) {
     }
 }
 
-// Function to make icons draggable
 function makeIconDraggable(element) {
     let startX = 0, startY = 0, initialX = 0, initialY = 0;
     let isDragging = false;
@@ -174,83 +172,62 @@ function makeIconDraggable(element) {
     }
 }
 
-// Function to update main section height based on title bar height
-function updateMainSection(windowElement) {
-    console.log(`Updating main section for: ${windowElement.id}`);
-    const mainSection = windowElement.querySelector('.window-body');
-    if (mainSection) {
-        mainSection.style.height = `calc(100% - ${windowElement.querySelector('.title-bar').offsetHeight}px)`;
-    } else {
-        console.error(`Main section not found for: ${windowElement.id}`);
-    }
-}
+document.addEventListener('DOMContentLoaded', function() {
+    initializeWindows();
+    initializeIcons();
+    console.log("Initialization complete");
+});
 
-// Function to make windows resizable
-function makeResizable(windowElement) {
-    console.log(`makeResizable initialized for: ${windowElement.id}`);
-    const resizeObserver = new ResizeObserver(() => {
-        console.log(`ResizeObserver callback triggered for: ${windowElement.id}`);
-        updateMainSection(windowElement);
-        if (windowElement.id === 'snakeWindow') {
-            console.log('Calling SnakeGame.resizeSnakeCanvas');
-            if (typeof SnakeGame !== 'undefined') {
-                SnakeGame.resizeSnakeCanvas();  // Call the updated resize function for Snake game
-            } else {
-                console.error('SnakeGame is not defined');
-            }
-        } else if (windowElement.id === 'paintWindow') {
-            console.log('Calling PaintApp.resizePaintCanvas');
-            if (typeof PaintApp !== 'undefined') {
-                PaintApp.resizePaintCanvas();  // Call the updated resize function for Paint app
-            } else {
-                console.error('PaintApp is not defined');
-            }
-        }
-    });
 
-    resizeObserver.observe(windowElement);
-}
-
-// Function to initialize windows
-// Function to initialize windows
 function initializeWindows() {
-    console.log('initializeWindows called');
     // Make windows draggable by their title bars
     document.querySelectorAll('.window .title-bar').forEach(titleBar => {
-        console.log(`Making window draggable and resizable: ${titleBar.parentElement.id}`);
         makeDraggable(titleBar);
         makeResizable(titleBar.parentElement);
     });
 
     // Set up window buttons
     document.querySelectorAll('.window .title-bar-controls button[aria-label="Minimize"]').forEach(button => {
-        console.log(`Setting up minimize button for: ${button.parentElement.parentElement.id}`);
         button.addEventListener('click', handleMinimize);
         button.addEventListener('touchend', handleMinimize, { passive: false });
     });
 
     document.querySelectorAll('.window .title-bar-controls button[aria-label="Close"]').forEach(button => {
-        console.log(`Setting up close button for: ${button.parentElement.parentElement.id}`);
         button.addEventListener('click', handleClose);
         button.addEventListener('touchend', handleClose, { passive: false });
     });
 
     document.querySelectorAll('.window .title-bar-controls button[aria-label="Maximize"]').forEach(button => {
-        console.log(`Setting up maximize button for: ${button.parentElement.parentElement.id}`);
         button.addEventListener('click', handleMaximize);
         button.addEventListener('touchend', handleMaximize, { passive: false });
     });
 }
 
-// Function to initialize icons
+function updateMainSection(windowElement) {
+    const mainSection = windowElement.querySelector('.window-body');
+    mainSection.style.height = `calc(100% - ${windowElement.querySelector('.title-bar').offsetHeight}px)`;
+}
+
+function makeResizable(windowElement) {
+    const resizeObserver = new ResizeObserver(() => {
+        updateMainSection(windowElement);
+        if (windowElement.id === 'snakeWindow') {
+            SnakeGame.resizeSnakeCanvas();  // Call the updated resize function for Snake game
+        } else if (windowElement.id === 'paintWindow') {
+            PaintApp.resizePaintCanvas();  // Call the updated resize function for Paint app
+        }
+    });
+
+    resizeObserver.observe(windowElement);
+}
+
+
+
 function initializeIcons() {
-    console.log('initializeIcons called');
     document.querySelectorAll('.icon').forEach(icon => {
-        console.log(`Making icon draggable: ${icon.id}`);
         makeIconDraggable(icon);
     });
 }
-
 
 // Function to handle menu clicks
 function handleMenuClick(action) {
@@ -275,7 +252,6 @@ function handleMenuClick(action) {
     }
 }
 
-// Function to open error window
 function openErrorWindow(message) {
     console.log('openErrorWindow called with message:', message); // Log the message
     const errorMessage = document.getElementById('errorMessage');
@@ -314,14 +290,13 @@ function openErrorWindow(message) {
     bringToFront(errorWindow);
     console.log('Error window brought to front:', errorWindow); // Log after bringing to front
 }
-
 // Function to close error window
 function closeErrorWindow() {
     console.log('closeErrorWindow called'); // Log the close window call
     document.getElementById('errorWindow').style.display = 'none';
 }
 
-// Function to show corrupted error
+// Function to show corrupted error (for completeness, in case it's needed elsewhere)
 function showCorruptedError() {
     console.log('showCorruptedError called'); // Log the show corrupted error call
     openErrorWindow('Error: The file is corrupted and cannot be opened.');
@@ -334,7 +309,6 @@ function bringToFront(element) {
     element.style.zIndex = zIndexCounter;
     console.log(`zIndex set to ${zIndexCounter} for element:`, element); // Log the zIndex setting
 }
-
 function toggleStartMenu() {
     var startMenu = document.getElementById('startMenu');
     var taskbar = document.querySelector('.taskbar');
@@ -353,17 +327,11 @@ function toggleStartMenu() {
     }
 }
 
+
+
 document.addEventListener('DOMContentLoaded', function() {
-    console.log('DOMContentLoaded event fired in responsive.js');
-    console.log('Checking SnakeGame definition at DOMContentLoaded:');
-    console.log('SnakeGame:', window.SnakeGame);
-
-    if (typeof window.SnakeGame === 'undefined') {
-        console.error('SnakeGame is not defined at DOMContentLoaded.');
-    } else {
-        console.log('SnakeGame is defined at DOMContentLoaded:', window.SnakeGame);
-    }
-
     initializeWindows();
     initializeIcons();
+    // Ensure the start menu is hidden when the document is loaded
+    document.getElementById('startMenu').classList.remove('show');
 });
