@@ -233,7 +233,12 @@ body {
 }
 
 
-
+/* Hide .bottom-bar-right on mobile */
+@media (max-width: 767px) {
+    .bottom-bar-right {
+        display: none;
+    }
+}
 
 
 /* Loading Screen Styles */
