@@ -100,7 +100,10 @@ window.displayMessage = function(username, message, timestamp) {
 
     messageContainer.appendChild(messageText);
     messageContainer.appendChild(timestampSpan);
-    document.getElementById('messages').appendChild(messageContainer);
+    
+    // Insert the new message at the top
+    const messagesContainer = document.getElementById('messages');
+    messagesContainer.insertBefore(messageContainer, messagesContainer.firstChild);
 };
 
 
