@@ -106,6 +106,37 @@
             </div>
         </div>
     </div>
+    <!-- Login Screen -->
+    <div id="loginScreen" class="login-screen">
+        <div class="top-bar">
+            <span>FuckYouOS Professional</span>
+        </div>
+        <div class="login-window show">
+            <div class="login-title-bar">
+                <div class="login-title-bar-text">Login</div>
+                <div class="login-title-bar-controls">
+                    <button aria-label="Close" onclick="closeLoginWindow()">×</button>
+                </div>
+            </div>
+            <div class="login-window-body">
+                <form id="loginForm">
+                    <label for="username">Username:</label>
+                    <input type="text" id="username" name="username" value="deki" readonly>
+                    <label for="password">Password:</label>
+                    <input type="password" id="password" name="password">
+                    <button type="submit">Login</button>
+                </form>
+            </div>
+        </div>
+        <div class="bottom-bar">
+            <span class="bottom-bar-left">Do not remove implant.</span>
+            <span class="bottom-bar-right">To add or change accounts, go to Control Panel</span>
+        </div>
+    </div>
+
+
+
+
     <!-- Scripts -->
     <script defer src="overlay.js"></script>
     <script defer src="calendar.js"></script>

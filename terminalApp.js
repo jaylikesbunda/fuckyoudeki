@@ -400,6 +400,8 @@ document.addEventListener('DOMContentLoaded', () => {
     };
     
 
+
+
     function displayState(outputElement) {
         try {
             if (!adventureData || !adventureData[currentState]) {
@@ -425,38 +427,52 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     
 
-    // Terminal input handling
-    window.handleTerminalInput = function(event) {
-        if (event.key === 'Enter') {
-            const inputElement = document.getElementById('terminalInput');
-            const outputElement = document.getElementById('terminalOutput');
-            const input = inputElement.value.trim();
-            
-            outputElement.value += `\n$ ${input}\n`;
-            inputElement.value = ''; // Clear input
-
-            if (input) {
-                const [command, ...args] = input.split(' ');
-                executeCommand(command, args, outputElement);
-            }
-        }
-    }
-
-    function executeCommand(command, args, outputElement) {
-        try {
-            if (commands[command]) {
-                commands[command](outputElement, args);
-            } else {
-                outputElement.value += `Command not found: ${command}\n`;
-            }
-        } catch (error) {
-            outputElement.value += `An error occurred while executing the command: ${error.message}\n`;
-        } finally {
+// Function to add typewriter effect to terminal output
+function addTypewriterEffect(text, outputElement) {
+    let i = 0;
+    function type() {
+        if (i < text.length) {
+            outputElement.value += text.charAt(i);
+            i++;
             outputElement.scrollTop = outputElement.scrollHeight; // Scroll to the bottom
+            setTimeout(type, 50); // Adjust speed as needed
         }
     }
+    type();
+}
 
+// Update executeCommand function to use addTypewriterEffect
+function executeCommand(command, args, outputElement) {
+    try {
+        if (commands[command]) {
+            commands[command](outputElement, args);
+        } else {
+            addTypewriterEffect(`Command not found: ${command}\n`, outputElement);
+        }
+    } catch (error) {
+        addTypewriterEffect(`An error occurred while executing the command: ${error.message}\n`, outputElement);
+    } finally {
+        outputElement.scrollTop = outputElement.scrollHeight; // Scroll to the bottom
+    }
+}
 
+// Terminal input handling
+window.handleTerminalInput = function(event) {
+    if (event.key === 'Enter') {
+        const inputElement = document.getElementById('terminalInput');
+        const outputElement = document.getElementById('terminalOutput');
+        const input = inputElement.value.trim();
+        
+        // Add user command to output
+        outputElement.value += `\n$ ${input}\n`;
+        inputElement.value = ''; // Clear input
+
+        if (input) {
+            const [command, ...args] = input.split(' ');
+            executeCommand(command, args, outputElement);
+        }
+    }
+}
 // Show programs list on hover or touch
 window.showPrograms = function() {
     const programsDropdown = document.getElementById('programsDropdown');
