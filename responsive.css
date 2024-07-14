@@ -6,7 +6,6 @@
     height: 200px;
     background: #C3C3C3;
     border: 2px solid #000;
-    box-shadow: 3px 3px 0 #808080;
     z-index: 1000;
     display: none;
     flex-direction: column;

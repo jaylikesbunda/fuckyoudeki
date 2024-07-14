@@ -326,8 +326,13 @@ body {
     display: none;
 }
 
-
-
+#gifWindow {
+    width: 400px;
+    height: 300px;
+    resize: none; /* Disable resizing */
+    overflow: hidden; /* Hide overflow */
+    display: none; /* Initially hidden */
+}
 
 
 
@@ -341,7 +346,6 @@ body {
     border: 2px solid #000;
     display: none;
     z-index: 10;
-    box-shadow: 3px 3px 0 #808080;
     resize: both;
     overflow: hidden;
     top: 50%;
@@ -393,23 +397,34 @@ body {
     gap: 3px;
 }
 
+
+
+
+
+
+
+
+
+
+
+
 .title-bar-controls button {
     width: 18px;
     height: 18px;
-    background: #C0C0C0;
+    background: #808080;
     border: 1px solid #000;
     cursor: pointer;
     display: flex;
     justify-content: center;
     align-items: center;
     padding: 0;
-    box-shadow: 1px 1px 0 #FFF, -1px -1px 0 #808080; /* Creates a raised effect */
+    box-shadow: inset 1px 1px 0 #FFF, inset -1px -1px 0 #404040; /* Creates a pressed effect */
     appearance: none;  /* Disables default styling */
     -webkit-appearance: none;  /* Specifically for WebKit browsers like Safari */
 }
 
 .title-bar-controls button:hover {
-    background: #808080;
+    background: #4b4b4b;
     box-shadow: inset 1px 1px 0 #FFF, inset -1px -1px 0 #404040; /* Creates a pressed effect */
 }
 
@@ -1201,6 +1216,42 @@ main {
     box-shadow: inset 2px 2px 5px #000;
 }
 
+/* Add these styles to the end of styles.css */
+
+/* Custom Context Menu Styles */
+.context-menu {
+    display: none;
+    position: absolute;
+    background: #C0C0C0;
+    border: 1px solid #000;
+    z-index: 1004;
+    list-style: none;
+    padding: 5px;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.context-menu li {
+    padding: 5px 10px;
+    cursor: pointer;
+}
+
+.context-menu li:hover {
+    background: #808080;
+    color: #FFF;
+}
+
+/* Highlight Dragging Styles */
+#desktop {
+    position: relative;
+}
+
+.selection-box {
+    border: 2px dashed #000;
+    background: rgba(0, 0, 0, 0.1);
+    position: absolute;
+    display: none;
+    z-index: 1001;
+}
 
 
 

@@ -10,7 +10,13 @@ document.addEventListener('DOMContentLoaded', () => {
     document.documentElement.style.setProperty('--vh', `${vh}px`);
 });
 
-
+// // Ensure the SnakeGame starts correctly
+// document.addEventListener('DOMContentLoaded', function() {
+//     if (document.getElementById('snakeWindow') && window.SnakeGame) {
+//         // Add logic to initialize or show the correct screen
+//         SnakeGame.start();
+//     }
+// });
 
 document.addEventListener('DOMContentLoaded', function() {
     // Simulate bootup sequence completion
@@ -49,7 +55,7 @@ document.addEventListener('DOMContentLoaded', function() {
     var loadingScreen = document.getElementById('loadingScreen');
     var bootupSequence = document.getElementById('bootupSequence');
     var bootupText = `
-FuckYouOS v1.1.0
+FuckYouOS v1.1.2
 
 Booting...
 Kernel panic... OK
@@ -123,7 +129,6 @@ System boot complete.
                 highlightIcon(icon);
             });
         }
-
         // Your existing icon event setups
         setupIconEvents('icon1', function() { openWindow('mainWindow'); });
         setupIconEvents('icon2', function() { redirectToURL('https://fuckyoufm.net'); });
@@ -134,6 +139,7 @@ System boot complete.
         setupIconEvents('icon7', function() { showCorruptedError(); }); // New icon for corrupted Doom executable
         setupIconEvents('icon8', function() { openWindow('deathPredictionWindow'); });
         setupIconEvents('icon9', function() { openWindow('minesweeperWindow'); });
+        setupIconEvents('icon10', function() { openGifWindow(); }); // New icon for GIF Viewer
 
         console.log("Icon events set up");
 
@@ -175,6 +181,14 @@ System boot complete.
         }
     }
 });
+
+function openGifWindow() {
+    const gifWindow = document.getElementById('gifWindow');
+    gifWindow.style.display = 'block';
+    centerWindow(gifWindow); // Center the window on the screen
+}
+
+
 
 
 function highlightIcon(target) {
