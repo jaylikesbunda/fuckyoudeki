@@ -153,6 +153,10 @@
     <script type="module" defer src="firebaseInit.js"></script>
     <script type="module" defer src="deathPrediction.js"></script>
     
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
     <!-- Firebase App (the core Firebase SDK) -->
     <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js"></script>
     <!-- Firebase Database -->
@@ -205,6 +209,15 @@
             <img src="assets/images/gif.png" alt="GIF Icon">
             <span>cig.gif</span>
         </div>
+        <!-- <div class="icon" id="icon11" ondblclick="showLSDWindow()">
+            <img src="assets/images/lsd-icon.png" alt="LSD">
+            <span>Visuals</span>
+        </div> -->
+        <div class="icon" id="icon12" ondblclick="redirectToURL('https://collectflix.net')">
+            <img src="assets/images/collectflix.png" alt="Folder">
+            <span>Collectflix</span>
+        </div>
+    </div>
                 
     </div>
     
@@ -248,7 +261,19 @@
         </div>
     </div> -->
     
-
+    <div class="window" id="lsdWindow">
+        <div class="title-bar">
+            <div class="title-bar-text">Visuals</div>
+            <div class="title-bar-controls">
+                <button aria-label="Minimize" onclick="minimizeWindow('lsdWindow')">_</button>
+                <button aria-label="Close" onclick="closeWindow('lsdWindow')">×</button>
+            </div>
+        </div>
+        <div class="window-body">
+            <div id="lsdContent"></div>
+        </div>
+    </div>
+    
     <div class="window" id="mainWindow">
         <div class="title-bar">
             <div class="title-bar-text">Windows Explorer</div>

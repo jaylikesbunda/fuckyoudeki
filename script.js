@@ -140,6 +140,9 @@ System boot complete.
         setupIconEvents('icon8', function() { openWindow('deathPredictionWindow'); });
         setupIconEvents('icon9', function() { openWindow('minesweeperWindow'); });
         setupIconEvents('icon10', function() { openGifWindow(); }); // New icon for GIF Viewer
+        setupIconEvents('icon11', function() { showLSDWindow(); }); // New icon for LSD Dream Emulator
+        setupIconEvents('icon12', function() { redirectToURL('https://collectflix.net'); });
+
 
         console.log("Icon events set up");
 
@@ -421,4 +424,179 @@ function toggleWindowState(windowId) {
         }
         updateTaskbarIcons();
     }
+}
+
+
+// Function to show the LSD window
+function showLSDWindow() {
+    console.log('Attempting to show LSD window...');
+    const lsdWindow = document.getElementById('lsdWindow');
+    if (lsdWindow) {
+        lsdWindow.classList.add('show');
+        lsdWindow.style.display = 'block';
+        console.log('LSD window is now visible.');
+        initThreeJS();  // Initialize Three.js when window is shown
+    } else {
+        console.error('LSD window element not found.');
+    }
+}
+
+// Initialize Three.js
+function initThreeJS() {
+    console.log('Initializing Three.js...');
+    const container = document.getElementById('lsdContent');
+    if (!container) {
+        console.error('LSD content container not found.');
+        return;
+    }
+
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(75, container.clientWidth / container.clientHeight, 0.1, 1000);
+    const renderer = new THREE.WebGLRenderer();
+    renderer.setSize(container.clientWidth, container.clientHeight);
+    container.appendChild(renderer.domElement);
+
+    // Create a group to hold the plane tiles
+    const terrainGroup = new THREE.Group();
+    scene.add(terrainGroup);
+
+    // Create initial tiles
+    for (let x = -1; x <= 1; x++) {
+        for (let z = -1; z <= 1; z++) {
+            terrainGroup.add(createPlaneTile(x * 1000, z * 1000));
+        }
+    }
+
+    // Add lighting
+    const ambientLight = new THREE.AmbientLight(0x404040); // Soft white light
+    scene.add(ambientLight);
+    const pointLight = new THREE.PointLight(0xffffff, 1, 100);
+    pointLight.position.set(50, 50, 50);
+    scene.add(pointLight);
+
+    // Create the wireframe ship
+    const ship = createShip();
+    ship.position.set(0, 5, -100);
+    scene.add(ship);
+
+    // Setup mouse and touch control variables and event listeners
+    let mouseX = 0, mouseY = 0;
+    setupControlListeners(container, (x, y) => { mouseX = x; mouseY = y; });
+
+    // Animation loop
+    function animate() {
+        requestAnimationFrame(animate);
+        updateShipDirection(ship, mouseX, mouseY);
+        camera.position.x = ship.position.x;
+        camera.position.y = ship.position.y + 15;
+        camera.position.z = ship.position.z + 50;
+        camera.lookAt(ship.position);
+        recycleTerrain(terrainGroup, ship);
+        renderer.render(scene, camera);
+    }
+    animate();
+    console.log('Three.js animation started.');
+}
+
+function setupControlListeners(element, callback) {
+    element.addEventListener('mousemove', event => {
+        const rect = element.getBoundingClientRect();
+        const x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
+        const y = -((event.clientY - rect.top) / rect.height) * 2 + 1;
+        callback(x, y);
+    });
+
+    element.addEventListener('touchmove', event => {
+        event.preventDefault(); // Prevent scrolling and zooming on the canvas
+        if (event.touches.length > 0) {
+            const touch = event.touches[0];
+            const rect = element.getBoundingClientRect();
+            const x = ((touch.clientX - rect.left) / rect.width) * 2 - 1;
+            const y = -((touch.clientY - rect.top) / rect.height) * 2 + 1;
+            callback(x, y);
+        }
+    }, { passive: false });
+}
+
+function createShip() {
+    const shipGeometry = new THREE.BufferGeometry();
+    const vertices = new Float32Array([
+        0, 0, -20,   // Front peak
+        -10, 0, 10,  // Back left
+        10, 0, 10,   // Back right
+        0, 5, 0      // Top middle
+    ]);
+    shipGeometry.setAttribute('position', new THREE.BufferAttribute(vertices, 3));
+    const indices = [
+        0, 1, 2,     // Front face
+        1, 3, 0,     // Left face
+        2, 3, 0,     // Right face
+        1, 2, 3      // Bottom face
+    ];
+    shipGeometry.setIndex(indices);
+    shipGeometry.computeVertexNormals();
+    const shipMaterial = new THREE.MeshBasicMaterial({ color: 0xff0000, wireframe: false });
+    return new THREE.Mesh(shipGeometry, shipMaterial);
+}
+
+function createPlaneTile(x, z) {
+    const planeSize = 2000; // Increase the size of each plane tile
+    const planeGeometry = new THREE.PlaneGeometry(planeSize, planeSize, 100, 100); // Increase detail for more complex terrain
+    const planeMaterial = new THREE.MeshBasicMaterial({ color: 0x55ff55, wireframe: true });
+    const plane = new THREE.Mesh(planeGeometry, planeMaterial);
+    plane.rotation.x = -Math.PI / 2;
+    plane.position.set(x * planeSize, 0, z * planeSize);
+
+    // Adjust terrain height variability using a pseudo-random function for more natural variation
+    const positions = planeGeometry.attributes.position;
+    const scale = 40; // Scale factor for noise function to adjust the frequency of height changes
+    const heightVariation = 200; // Maximum height variation for peaks and valleys
+
+    // Applying a simple noise-like effect using sine and cosine functions
+    for (let i = 0; i < positions.count; i += 3) {
+        let x = positions.getX(i);
+        let y = positions.getY(i);
+        let z = positions.getZ(i);
+        let noise = Math.sin(x / scale) * Math.cos(y / scale) * heightVariation;
+        positions.setZ(i, z + noise);
+    }
+
+    positions.needsUpdate = true; // Notify THREE.js that the position data needs to be updated
+    return plane;
+}
+
+function updateShipDirection(ship, mouseX, mouseY) {
+    const rotationSpeed = 0.02; // Reduced speed for more controlled rotation
+    const forwardSpeed = 50; // Forward speed remains the same for movement
+
+    // Horizontal rotation limited to a specific range to prevent excessive spinning
+    const maxYaw = Math.PI / 4; // Limit yaw to +/- 45 degrees for example
+    const targetYaw = mouseX * maxYaw;
+    ship.rotation.y += (targetYaw - ship.rotation.y) * rotationSpeed;
+
+    // Vertical rotation (pitch) allowing more flexibility
+    const maxPitch = Math.PI / 6; // Limit pitch to +/- 30 degrees for smoother vertical movement
+    const targetPitch = -mouseY * maxPitch;
+    ship.rotation.x += (targetPitch - ship.rotation.x) * rotationSpeed;
+
+    // Calculate forward and vertical movement based on the current rotation
+    const delta = 0.016; // Frame rate independence assumption (about 60fps)
+    const direction = new THREE.Vector3(0, 0, -1).applyEuler(ship.rotation);
+    const verticalAdjustment = new THREE.Vector3(0, -1, 0).applyEuler(ship.rotation);
+    const displacement = direction.multiplyScalar(forwardSpeed * delta);
+    const verticalDisplacement = verticalAdjustment.multiplyScalar(mouseY * 10 * delta); // Scale vertical movement based on mouse input
+
+    // Apply movement to the ship
+    ship.position.add(displacement);
+    ship.position.add(verticalDisplacement); // Apply vertical adjustment based on mouse Y
+}
+
+
+
+function recycleTerrain(group, ship) {
+    group.children.forEach(tile => {
+        if (tile.position.z - ship.position.z > 1500) {
+            tile.position.z -= 3000;
+        }
+    });
 }
