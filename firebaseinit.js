@@ -79,6 +79,7 @@ function hashStringToColor(str) {
 window.displayMessage = function(username, message, timestamp) {
     const messageContainer = document.createElement('div');
     messageContainer.classList.add('message');
+    
     const formattedDateTime = new Date(timestamp).toLocaleString(); // Includes date and time
 
     const messageText = document.createElement('div');
@@ -104,6 +105,9 @@ window.displayMessage = function(username, message, timestamp) {
     // Insert the new message at the top
     const messagesContainer = document.getElementById('messages');
     messagesContainer.insertBefore(messageContainer, messagesContainer.firstChild);
+    
+    // Auto-scroll to the top to show the latest message
+    messagesContainer.scrollTop = 0;
 };
 
 
