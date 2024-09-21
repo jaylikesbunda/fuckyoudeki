@@ -51,7 +51,7 @@ document.addEventListener('DOMContentLoaded', function() {
     var loadingScreen = document.getElementById('loadingScreen');
     var bootupSequence = document.getElementById('bootupSequence');
     var bootupText = `
-FuckYouOS v1.1.4
+FuckYouOS v1.1.5
 
 Booting...
 Kernel panic... OK
@@ -138,6 +138,7 @@ System boot complete.
         setupIconEvents('icon10', function() { openGifWindow(); }); // New icon for GIF Viewer
         setupIconEvents('icon11', function() { showLSDWindow(); }); // New icon for LSD Dream Emulator
         setupIconEvents('icon12', function() { redirectToURL('https://collectflix.net'); });
+        setupIconEvents('icon13', function() { redirectToURL('https://flippertools.net'); });
 
 
         console.log("Icon events set up");
