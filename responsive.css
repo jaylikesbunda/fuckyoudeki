@@ -287,7 +287,7 @@ body.dd-popup-active {
     padding: 10px;
     margin-bottom: 10px;
     border: 1px solid #000;
-    background: #E0E0E0;
+    background: #CBC2CC;
     word-wrap: break-word; /* Ensure long words break correctly */
     border-radius: 4px; /* Rounded corners */
     position: relative; /* Ensure positioning of timestamp */
