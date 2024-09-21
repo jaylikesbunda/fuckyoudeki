@@ -18,29 +18,25 @@ document.addEventListener('DOMContentLoaded', () => {
 //     }
 // });
 
-document.addEventListener('DOMContentLoaded', function() {
-    // Simulate bootup sequence completion
-    setTimeout(function() {
-        document.getElementById('bootupSequence').style.display = 'none';
-        document.getElementById('loginScreen').style.display = 'flex';
-    }, 5000); // Adjust the timing as needed
+// Handle login form submission
+document.getElementById('loginForm').addEventListener('submit', function(event) {
+    event.preventDefault();
+    // Perform login validation here
+    var username = document.getElementById('loginUsername').value;
+    var password = document.getElementById('password').value;
 
-    // Handle login form submission
-    document.getElementById('loginForm').addEventListener('submit', function(event) {
-        event.preventDefault();
-        // Perform login validation here
-        var username = document.getElementById('username').value;
-        var password = document.getElementById('password').value;
+    // For demonstration, let's assume any username/password is valid
+    if (username && password) {
+        // Optionally, store the username in a global variable or session storage
+        window.currentUsername = username; // Example: Using a global variable
 
-        // For demonstration, let's assume any username/password is valid
-        if (username && password) {
-            document.getElementById('loginScreen').style.display = 'none';
-            document.getElementById('desktop').style.display = 'block';
-        } else {
-            alert('Please enter both username and password.');
-        }
-    });
+        document.getElementById('loginScreen').style.display = 'none';
+        document.getElementById('desktop').style.display = 'block';
+    } else {
+        alert('Please enter both username and password.');
+    }
 });
+
 
 function closeLoginWindow() {
     document.getElementById('loginScreen').style.display = 'none';
