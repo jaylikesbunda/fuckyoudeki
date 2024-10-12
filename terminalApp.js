@@ -6,6 +6,27 @@ document.addEventListener('DOMContentLoaded', () => {
 
     let hackerModeActive = false;
 
+    // Function to add typewriter effect to any output element
+    function addTypewriterEffect(text, outputElement) {
+        let i = 0;
+        function type() {
+            if (i < text.length) {
+                outputElement.value += text.charAt(i);
+                i++;
+                setTimeout(type, 50); // Adjust typing speed as needed
+            }
+        }
+        type();
+    }
+
+    // Global usage of the typewriter effect for any text output
+    function outputText(text, outputElement) {
+        outputElement.value = ''; // Clear existing content
+        addTypewriterEffect(text, outputElement);
+    }
+
+
+
     // Function to load the adventure game JSON data
     async function loadAdventureData() {
         try {
@@ -427,19 +448,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     
 
-// Function to add typewriter effect to terminal output
-function addTypewriterEffect(text, outputElement) {
-    let i = 0;
-    function type() {
-        if (i < text.length) {
-            outputElement.value += text.charAt(i);
-            i++;
-            outputElement.scrollTop = outputElement.scrollHeight; // Scroll to the bottom
-            setTimeout(type, 50); // Adjust speed as needed
-        }
-    }
-    type();
-}
+
 
 // Update executeCommand function to use addTypewriterEffect
 function executeCommand(command, args, outputElement) {
