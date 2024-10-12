@@ -80,7 +80,7 @@ window.displayMessage = function(username, message, timestamp) {
     const messageContainer = document.createElement('div');
     messageContainer.classList.add('message');
     
-    const formattedDateTime = new Date(timestamp).toLocaleString(); // Includes date and time
+    const formattedDateTime = new Date(timestamp).toLocaleString();
 
     const messageText = document.createElement('div');
     messageText.classList.add('message-text');
@@ -89,8 +89,26 @@ window.displayMessage = function(username, message, timestamp) {
     usernameSpan.style.color = hashStringToColor(username);
     usernameSpan.innerHTML = `<strong>${username}</strong>: `;
 
+    const slurPatterns = [
+        // N-word variations
+        /\b(n+[i1l!]+[g6q]{1,2}[e3a@]?r*|n+[i1l!]?[g6q]{1,2}[a@4]h?|n+[i1l!]?[g6q]+)\b/gi,
+        // Other racial slurs
+        /\b(k+[i1l!]+k+[e3]+|w+[e3]+t+b+[a@4]+c*k*|c+h+[i1l!]+n+k+|g+[o0]+[o0]+k+|s+p+[i1l!]+c+)\b/gi,
+        // Homophobic slurs
+        /\b(f+[a@4]+g+([o0]+t+)?|d+[y1i!]+k+[e3]+|q+u+[e3]+[e3]+r+)\b/gi,
+    ];
+
+    // Function to censor a matched slur
+    const censorSlur = (match) => '*'.repeat(match.length);
+
+    // Apply censoring for each slur pattern
+    let censoredMessage = message;
+    slurPatterns.forEach(pattern => {
+        censoredMessage = censoredMessage.replace(pattern, censorSlur);
+    });
+
     const messageContent = document.createElement('span');
-    messageContent.textContent = message;
+    messageContent.textContent = censoredMessage;
 
     const timestampSpan = document.createElement('span');
     timestampSpan.classList.add('timestamp');
@@ -102,14 +120,11 @@ window.displayMessage = function(username, message, timestamp) {
     messageContainer.appendChild(messageText);
     messageContainer.appendChild(timestampSpan);
     
-    // Insert the new message at the top
     const messagesContainer = document.getElementById('messages');
     messagesContainer.insertBefore(messageContainer, messagesContainer.firstChild);
     
-    // Auto-scroll to the top to show the latest message
     messagesContainer.scrollTop = 0;
 };
-
 
 // Override the existing submitMessage function to include Firebase submission and character limit
 window.submitMessage = function() {
