@@ -20,6 +20,13 @@ const db = getDatabase(app);
 const messagesRef = ref(db, 'messages');
 const deathPredictionsRef = ref(db, 'deathPredictions');
 const answersRef = ref(db, 'deathPredictionAnswers');
+const messageHistory = [];
+const MAX_MESSAGES = 5; // Number of messages to track
+const BASE_COOLDOWN = 1000; // 1 second
+const MAX_COOLDOWN = 300000; // 5 minutes
+let currentCooldown = BASE_COOLDOWN;
+let spamStrikes = 0;
+const MAX_SPAM_STRIKES = 3;
 
 // Function to submit a death prediction
 export function submitDeathPrediction(username, prediction) {
@@ -36,6 +43,35 @@ export function onNewDeathPrediction(callback) {
         const predictionData = snapshot.val();
         callback(predictionData);
     });
+}
+
+function calculateCooldown() {
+    const now = Date.now();
+    // Remove old messages from history
+    while (messageHistory.length > 0 && now - messageHistory[0] > 60000) {
+        messageHistory.shift();
+    }
+    
+    if (messageHistory.length >= MAX_MESSAGES) {
+        const timeSpan = now - messageHistory[0];
+        const messagesPerMinute = (messageHistory.length / timeSpan) * 60000;
+        
+        if (messagesPerMinute > 10) { // If more than 10 messages per minute
+            spamStrikes++;
+            if (spamStrikes > MAX_SPAM_STRIKES) {
+                // Exponential increase for obvious spam
+                currentCooldown = Math.min(currentCooldown * 4, MAX_COOLDOWN);
+            } else {
+                // Normal increase
+                currentCooldown = Math.min(currentCooldown * 2, MAX_COOLDOWN);
+            }
+        } else {
+            spamStrikes = Math.max(0, spamStrikes - 1); // Decrease spam strikes
+            currentCooldown = Math.max(currentCooldown / 2, BASE_COOLDOWN);
+        }
+    }
+    
+    return currentCooldown;
 }
 
 // Function to submit answers to questions
@@ -126,9 +162,18 @@ window.displayMessage = function(username, message, timestamp) {
     messagesContainer.scrollTop = 0;
 };
 
-// Override the existing submitMessage function to include Firebase submission and character limit
 window.submitMessage = function() {
-    console.log('submitMessage called with Firebase'); // Log submitMessage calls with Firebase
+    console.log('submitMessage called with Firebase');
+    const now = Date.now();
+    const cooldown = calculateCooldown();
+    
+    if (messageHistory.length > 0 && now - messageHistory[messageHistory.length - 1] < cooldown) {
+        console.log('Rate limit exceeded');
+        const waitTime = Math.ceil((cooldown - (now - messageHistory[messageHistory.length - 1])) / 1000);
+        openErrorWindow(`Please wait ${waitTime} seconds before sending another message.`);
+        return;
+    }
+
     const username = document.getElementById('username').value || 'Anonymous';
     const message = document.getElementById('message').value;
     const characterLimit = 280;
@@ -140,18 +185,22 @@ window.submitMessage = function() {
     }
 
     if (message) {
-        console.log('Submitting message to Firebase:', { username, message }); // Log the message being submitted
+        console.log('Submitting message to Firebase:', { username, message });
         push(messagesRef, {
             username: username,
             message: message,
             timestamp: serverTimestamp()
         }).then(() => {
-            console.log('Message submitted to Firebase:', { username, message }); // Log Firebase submission success
+            console.log('Message submitted to Firebase:', { username, message });
+            messageHistory.push(now);
+            if (messageHistory.length > MAX_MESSAGES) {
+                messageHistory.shift();
+            }
+            document.getElementById('message').value = ''; // Clear the textarea
         }).catch((error) => {
-            console.error('Error submitting message to Firebase:', error); // Log Firebase submission error
+            console.error('Error submitting message to Firebase:', error);
             openErrorWindow('There was an error submitting your message. Please try again.');
         });
-        document.getElementById('message').value = ''; // Clear the textarea
     } else {
         console.log('Validation failed: Message is required');
         openErrorWindow("Please enter a message.");
