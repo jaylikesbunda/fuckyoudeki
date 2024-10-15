@@ -175,37 +175,40 @@ window.submitMessage = function() {
     console.log('submitMessage called with Firebase');
     const now = Date.now();
     const cooldown = calculateCooldown();
-    
+   
     if (messageHistory.length > 0 && now - messageHistory[messageHistory.length - 1].timestamp < cooldown) {
         console.log('Rate limit exceeded');
         const waitTime = Math.ceil((cooldown - (now - messageHistory[messageHistory.length - 1].timestamp)) / 1000);
         openErrorWindow(`Please wait ${waitTime} seconds before sending another message.`);
         return;
     }
-
     const username = document.getElementById('username').value || 'Anonymous';
-    const message = document.getElementById('message').value;
+    let message = document.getElementById('message').value;
     const characterLimit = 280;
+
+    // Check for variations of "deki should add captcha to this"
+    const dekiRegex = /deki\s+should\s+add\s+captcha\s+to\s+this/i;
+    if (dekiRegex.test(message)) {
+        message = "bidasci has no life";
+    }
 
     if (message.length > characterLimit) {
         console.log('Validation failed: Message exceeds character limit');
         openErrorWindow(`Message is too long. Maximum allowed characters are ${characterLimit}.`);
         return;
     }
-
     if (message) {
         console.log('Submitting message to Firebase:', { username, message });
-        
+       
         // Check for repeated messages
         const repeatCount = repeatedMessages.get(message) || 0;
         repeatedMessages.set(message, repeatCount + 1);
-        
+       
         if (repeatCount > 2) {
             console.log('Spam detected: Message repeated too many times');
             openErrorWindow('Spam detected. Please vary your messages.');
             return;
         }
-
         push(messagesRef, {
             username: username,
             message: message,
