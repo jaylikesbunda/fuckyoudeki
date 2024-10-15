@@ -108,20 +108,20 @@ export function getStatisticsForQuestion(question, callback) {
         callback([]);
     });
 }
-function hashStringToColor(str) {
+// Improved hash function for color generation
+function improvedHashStringToColor(str) {
     let hash = 0;
     for (let i = 0; i < str.length; i++) {
-        hash = str.charCodeAt(i) + ((hash << 5) - hash);
+        hash = ((hash << 5) - hash) + str.charCodeAt(i);
+        hash = hash & hash; // Convert to 32-bit integer
     }
-    const hue = hash % 360; // Full spectrum of colors
-    const saturation = 60 + ((hash >> 1) % 40); // Saturation between 60% and 100%
-    const lightness = 50 + ((hash >> 2) % 30); // Lightness between 50% and 80%
-    const color = `hsl(${hue}, ${saturation}%, ${lightness}%)`;
-    return color;
+    const hue = Math.abs(hash % 360);
+    const saturation = 70 + (Math.abs(hash) % 20); // 70-90%
+    const lightness = 45 + (Math.abs(hash) % 30); // 45-75%
+    return `hsl(${hue}, ${saturation}%, ${lightness}%)`;
 }
-
-
-window.displayMessage = function(username, message, timestamp) {
+// Improved message display function
+function displayMessage(username, message, timestamp) {
     const messageContainer = document.createElement('div');
     messageContainer.classList.add('message');
     
@@ -131,29 +131,11 @@ window.displayMessage = function(username, message, timestamp) {
     messageText.classList.add('message-text');
 
     const usernameSpan = document.createElement('span');
-    usernameSpan.style.color = hashStringToColor(username);
-    usernameSpan.innerHTML = `<strong>${username}</strong>: `;
-
-    const slurPatterns = [
-        // N-word variations
-        /\b(n+[i1l!]+[g6q]{1,2}[e3a@]?r*|n+[i1l!]?[g6q]{1,2}[a@4]h?|n+[i1l!]?[g6q]+)\b/gi,
-        // Other racial slurs
-        /\b(k+[i1l!]+k+[e3]+|w+[e3]+t+b+[a@4]+c*k*|c+h+[i1l!]+n+k+|g+[o0]+[o0]+k+|s+p+[i1l!]+c+)\b/gi,
-        // Homophobic slurs
-        /\b(f+[a@4]+g+([o0]+t+)?|d+[y1i!]+k+[e3]+|q+u+[e3]+[e3]+r+)\b/gi,
-    ];
-
-    // Function to censor a matched slur
-    const censorSlur = (match) => '*'.repeat(match.length);
-
-    // Apply censoring for each slur pattern
-    let censoredMessage = message;
-    slurPatterns.forEach(pattern => {
-        censoredMessage = censoredMessage.replace(pattern, censorSlur);
-    });
+    usernameSpan.style.color = improvedHashStringToColor(username);
+    usernameSpan.innerHTML = `<strong>${escapeHTML(username)}</strong>: `;
 
     const messageContent = document.createElement('span');
-    messageContent.textContent = censoredMessage;
+    messageContent.textContent = filterSlurs(message);
 
     const timestampSpan = document.createElement('span');
     timestampSpan.classList.add('timestamp');
@@ -169,22 +151,86 @@ window.displayMessage = function(username, message, timestamp) {
     messagesContainer.insertBefore(messageContainer, messagesContainer.firstChild);
     
     messagesContainer.scrollTop = 0;
-};
+}
 
-window.submitMessage = function() {
-    console.log('submitMessage called with Firebase');
+// Helper function to escape HTML
+function escapeHTML(str) {
+    return str.replace(/[&<>'"]/g, 
+        tag => ({
+            '&': '&amp;',
+            '<': '&lt;',
+            '>': '&gt;',
+            "'": '&#39;',
+            '"': '&quot;'
+        }[tag] || tag)
+    );
+}
+
+
+// Improved slur filtering function
+function filterSlurs(text) {
+    const slurPatterns = [
+        /\b(n+[i1!]+[g6q]{1,2}[e3a@]?r*|n+[i1!]?[g6q]{1,2}[a@4]h?|n+[i1!]?[g6q]+)\b/gi,
+        /\b(k+[i1!]+k+[e3]+|w+[e3]+t+b+[a@4]+c*k*|c+h+[i1l!]+n+k+|g+[o0]+[o0]+k+|s+p+[i1l!]+c+)\b/gi,
+        /\b(f+[a@4]+g+([o0]+t+)?|d+[y1i!]+k+[e3]+|q+u+[e3]+[e3]+r+)\b/gi,
+    ];
+
+    return slurPatterns.reduce((filteredText, pattern) => 
+        filteredText.replace(pattern, match => '*'.repeat(match.length)), text);
+}
+
+// Improved spam detection function
+function detectSpam(message, messageHistory) {
     const now = Date.now();
-    const cooldown = calculateCooldown();
-   
-    if (messageHistory.length > 0 && now - messageHistory[messageHistory.length - 1].timestamp < cooldown) {
-        console.log('Rate limit exceeded');
-        const waitTime = Math.ceil((cooldown - (now - messageHistory[messageHistory.length - 1].timestamp)) / 1000);
-        openErrorWindow(`Please wait ${waitTime} seconds before sending another message.`);
+    const recentMessages = messageHistory.filter(m => now - m.timestamp < 60000);
+    
+    // Check message frequency
+    if (recentMessages.length >= 10) {
+        return { isSpam: true, reason: 'Too many messages in a short time' };
+    }
+    
+    // Check for repeated messages
+    const repeatedCount = recentMessages.filter(m => m.message === message).length;
+    if (repeatedCount >= 3) {
+        return { isSpam: true, reason: 'Message repeated too many times' };
+    }
+    
+    // Check for all caps
+    if (message.length > 10 && message === message.toUpperCase()) {
+        return { isSpam: true, reason: 'Excessive use of capital letters' };
+    }
+    
+    // Check for long repeated characters
+    if (/(.)\1{10,}/.test(message)) {
+        return { isSpam: true, reason: 'Excessive repeated characters' };
+    }
+    
+    return { isSpam: false };
+}
+
+
+// Improved submit message function
+function submitMessage() {
+    const now = Date.now();
+    const username = escapeHTML(document.getElementById('username').value || 'Anonymous');
+    let message = document.getElementById('message').value.trim();
+    const characterLimit = 280;
+
+    if (message.length > characterLimit) {
+        openErrorWindow(`Message is too long. Maximum allowed characters are ${characterLimit}.`);
         return;
     }
-    const username = document.getElementById('username').value || 'Anonymous';
-    let message = document.getElementById('message').value;
-    const characterLimit = 280;
+
+    if (!message) {
+        openErrorWindow("Please enter a message.");
+        return;
+    }
+
+    const spamCheck = detectSpam(message, messageHistory);
+    if (spamCheck.isSpam) {
+        openErrorWindow(`Spam detected: ${spamCheck.reason}. Please wait before sending another message.`);
+        return;
+    }
 
     // Check for variations of "deki should add captcha to this"
     const dekiRegex = /deki\s+should\s+add\s+captcha\s+to\s+this/i;
@@ -192,43 +238,21 @@ window.submitMessage = function() {
         message = "bidasci has no life";
     }
 
-    if (message.length > characterLimit) {
-        console.log('Validation failed: Message exceeds character limit');
-        openErrorWindow(`Message is too long. Maximum allowed characters are ${characterLimit}.`);
-        return;
-    }
-    if (message) {
-        console.log('Submitting message to Firebase:', { username, message });
-       
-        // Check for repeated messages
-        const repeatCount = repeatedMessages.get(message) || 0;
-        repeatedMessages.set(message, repeatCount + 1);
-       
-        if (repeatCount > 2) {
-            console.log('Spam detected: Message repeated too many times');
-            openErrorWindow('Spam detected. Please vary your messages.');
-            return;
+    push(messagesRef, {
+        username: username,
+        message: message,
+        timestamp: serverTimestamp()
+    }).then(() => {
+        messageHistory.push({ message, timestamp: now });
+        if (messageHistory.length > MAX_MESSAGES) {
+            messageHistory.shift();
         }
-        push(messagesRef, {
-            username: username,
-            message: message,
-            timestamp: serverTimestamp()
-        }).then(() => {
-            console.log('Message submitted to Firebase:', { username, message });
-            messageHistory.push({ message, timestamp: now });
-            if (messageHistory.length > MAX_MESSAGES) {
-                messageHistory.shift();
-            }
-            document.getElementById('message').value = ''; // Clear the textarea
-        }).catch((error) => {
-            console.error('Error submitting message to Firebase:', error);
-            openErrorWindow('There was an error submitting your message. Please try again.');
-        });
-    } else {
-        console.log('Validation failed: Message is required');
-        openErrorWindow("Please enter a message.");
-    }
-};
+        document.getElementById('message').value = '';
+    }).catch((error) => {
+        console.error('Error submitting message:', error);
+        openErrorWindow('There was an error submitting your message. Please try again.');
+    });
+}
 
 // Listen for new messages added to the database and display them
 onChildAdded(messagesRef, (snapshot) => {
