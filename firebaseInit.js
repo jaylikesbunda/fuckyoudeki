@@ -46,7 +46,7 @@ export function onNewDeathPrediction(callback) {
     });
 }
 
-function calculateCooldown() {
+export function calculateCooldown() {
     const now = Date.now();
     // Remove old messages from history
     while (messageHistory.length > 0 && now - messageHistory[0].timestamp > 60000) {
@@ -108,8 +108,9 @@ export function getStatisticsForQuestion(question, callback) {
         callback([]);
     });
 }
+
 // Improved hash function for color generation
-function improvedHashStringToColor(str) {
+export function improvedHashStringToColor(str) {
     let hash = 0;
     for (let i = 0; i < str.length; i++) {
         hash = ((hash << 5) - hash) + str.charCodeAt(i);
@@ -120,8 +121,9 @@ function improvedHashStringToColor(str) {
     const lightness = 45 + (Math.abs(hash) % 30); // 45-75%
     return `hsl(${hue}, ${saturation}%, ${lightness}%)`;
 }
+
 // Improved message display function
-function displayMessage(username, message, timestamp) {
+export function displayMessage(username, message, timestamp) {
     const messageContainer = document.createElement('div');
     messageContainer.classList.add('message');
     
@@ -154,7 +156,7 @@ function displayMessage(username, message, timestamp) {
 }
 
 // Helper function to escape HTML
-function escapeHTML(str) {
+export function escapeHTML(str) {
     return str.replace(/[&<>'"]/g, 
         tag => ({
             '&': '&amp;',
@@ -166,9 +168,8 @@ function escapeHTML(str) {
     );
 }
 
-
 // Improved slur filtering function
-function filterSlurs(text) {
+export function filterSlurs(text) {
     const slurPatterns = [
         /\b(n+[i1!]+[g6q]{1,2}[e3a@]?r*|n+[i1!]?[g6q]{1,2}[a@4]h?|n+[i1!]?[g6q]+)\b/gi,
         /\b(k+[i1!]+k+[e3]+|w+[e3]+t+b+[a@4]+c*k*|c+h+[i1l!]+n+k+|g+[o0]+[o0]+k+|s+p+[i1l!]+c+)\b/gi,
@@ -180,7 +181,7 @@ function filterSlurs(text) {
 }
 
 // Improved spam detection function
-function detectSpam(message, messageHistory) {
+export function detectSpam(message, messageHistory) {
     const now = Date.now();
     const recentMessages = messageHistory.filter(m => now - m.timestamp < 60000);
     
@@ -208,9 +209,8 @@ function detectSpam(message, messageHistory) {
     return { isSpam: false };
 }
 
-
 // Improved submit message function
-function submitMessage() {
+export function submitMessage() {
     const now = Date.now();
     const username = escapeHTML(document.getElementById('username').value || 'Anonymous');
     let message = document.getElementById('message').value.trim();
@@ -258,7 +258,7 @@ function submitMessage() {
 onChildAdded(messagesRef, (snapshot) => {
     const messageData = snapshot.val();
     console.log('New message added:', messageData); // Log new messages
-    window.displayMessage(messageData.username, messageData.message, messageData.timestamp);
+    displayMessage(messageData.username, messageData.message, messageData.timestamp);
 });
 
 console.log('Firebase submission integrated with submitMessage');
