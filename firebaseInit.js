@@ -1,52 +1,42 @@
-// Import the functions you need from the SDKs you need
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-import { getDatabase, ref, push, onChildAdded, serverTimestamp, get, child } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+// Initialize Firebase references and functions
+let db, ref, push, onChildAdded, serverTimestamp, get, child;
+let messagesRef, deathPredictionsRef, answersRef;
 
-// Your web app's Firebase configuration
-const firebaseConfig = {
-    apiKey: "AIzaSyB9q5EYU1TM4ujo8fN9f3f5pikop_JPpV4",
-    authDomain: "fuckyoudeki-im.firebaseapp.com",
-    databaseURL: "https://fuckyoudeki-im-default-rtdb.firebaseio.com",
-    projectId: "fuckyoudeki-im",
-    storageBucket: "fuckyoudeki-im.appspot.com",
-    messagingSenderId: "934074641567",
-    appId: "1:934074641567:web:aeaf5ef007ee5c513106aa",
-    measurementId: "G-9PC7WJFKB7"
-};
+// Wait for Firebase to be initialized from the main script
+window.addEventListener('load', () => {
+    // Get Firebase functions from window object after initialization
+    db = window.db;
+    ref = window.ref;
+    push = window.push;
+    onChildAdded = window.onChildAdded;
+    serverTimestamp = window.serverTimestamp;
+    get = window.get;
+    child = window.child;
 
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
-const db = getDatabase(app);
-const messagesRef = ref(db, 'messages');
-const deathPredictionsRef = ref(db, 'deathPredictions');
-const answersRef = ref(db, 'deathPredictionAnswers');
+    // Initialize refs after Firebase is ready
+    messagesRef = ref(db, 'messages');
+    deathPredictionsRef = ref(db, 'deathPredictions');
+    answersRef = ref(db, 'deathPredictionAnswers');
+
+    // Set up message listener only once Firebase is initialized
+    onChildAdded(messagesRef, (snapshot) => {
+        const messageData = snapshot.val();
+        console.log('New message added:', messageData);
+        displayMessage(messageData.username, messageData.message, messageData.timestamp);
+    });
+});
+
 const messageHistory = [];
-const MAX_MESSAGES = 5; // Number of messages to track
-const BASE_COOLDOWN = 1000; // 1 second
-const MAX_COOLDOWN = 300000; // 5 minutes
+const MAX_MESSAGES = 5;
+const BASE_COOLDOWN = 1000;
+const MAX_COOLDOWN = 300000;
 let currentCooldown = BASE_COOLDOWN;
 let spamStrikes = 0;
 const MAX_SPAM_STRIKES = 3;
 const repeatedMessages = new Map();
 
-// Function to submit a death prediction
-export function submitDeathPrediction(username, prediction) {
-    return push(deathPredictionsRef, {
-        username: username,
-        prediction: prediction,
-        timestamp: serverTimestamp()
-    });
-}
-
-// Function to listen for new death predictions
-export function onNewDeathPrediction(callback) {
-    onChildAdded(deathPredictionsRef, (snapshot) => {
-        const predictionData = snapshot.val();
-        callback(predictionData);
-    });
-}
-
-export function calculateCooldown() {
+// Convert export functions to window functions
+function calculateCooldown() {
     const now = Date.now();
     // Remove old messages from history
     while (messageHistory.length > 0 && now - messageHistory[0].timestamp > 60000) {
@@ -83,8 +73,8 @@ export function calculateCooldown() {
     return currentCooldown;
 }
 
-// Function to submit answers to questions
-export function submitAnswer(username, question, answer) {
+function submitAnswer(username, question, answer) {
+    const answersRef = ref(db, 'deathPredictionAnswers');
     return push(answersRef, {
         username: username,
         question: question,
@@ -93,8 +83,8 @@ export function submitAnswer(username, question, answer) {
     });
 }
 
-// Function to get statistics for a specific question
-export function getStatisticsForQuestion(question, callback) {
+function getStatisticsForQuestion(question, callback) {
+    const answersRef = ref(db, 'deathPredictionAnswers');
     get(answersRef).then((snapshot) => {
         if (snapshot.exists()) {
             const answers = snapshot.val();
@@ -109,8 +99,7 @@ export function getStatisticsForQuestion(question, callback) {
     });
 }
 
-// Improved hash function for color generation
-export function improvedHashStringToColor(str) {
+function improvedHashStringToColor(str) {
     let hash = 0;
     for (let i = 0; i < str.length; i++) {
         hash = ((hash << 5) - hash) + str.charCodeAt(i);
@@ -122,8 +111,7 @@ export function improvedHashStringToColor(str) {
     return `hsl(${hue}, ${saturation}%, ${lightness}%)`;
 }
 
-// Improved message display function
-export function displayMessage(username, message, timestamp) {
+function displayMessage(username, message, timestamp) {
     const messageContainer = document.createElement('div');
     messageContainer.classList.add('message');
     
@@ -155,8 +143,7 @@ export function displayMessage(username, message, timestamp) {
     messagesContainer.scrollTop = 0;
 }
 
-// Helper function to escape HTML
-export function escapeHTML(str) {
+function escapeHTML(str) {
     return str.replace(/[&<>'"]/g, 
         tag => ({
             '&': '&amp;',
@@ -168,8 +155,7 @@ export function escapeHTML(str) {
     );
 }
 
-// Improved slur filtering function
-export function filterSlurs(text) {
+function filterSlurs(text) {
     const slurPatterns = [
         /\b(n+[i1!]+[g6q]{1,2}[e3a@]?r*|n+[i1!]?[g6q]{1,2}[a@4]h?|n+[i1!]?[g6q]+)\b/gi,
         /\b(k+[i1!]+k+[e3]+|w+[e3]+t+b+[a@4]+c*k*|c+h+[i1l!]+n+k+|g+[o0]+[o0]+k+|s+p+[i1l!]+c+)\b/gi,
@@ -180,8 +166,7 @@ export function filterSlurs(text) {
         filteredText.replace(pattern, match => '*'.repeat(match.length)), text);
 }
 
-// Improved spam detection function
-export function detectSpam(message, messageHistory) {
+function detectSpam(message, messageHistory) {
     const now = Date.now();
     const recentMessages = messageHistory.filter(m => now - m.timestamp < 60000);
     
@@ -209,8 +194,12 @@ export function detectSpam(message, messageHistory) {
     return { isSpam: false };
 }
 
-// Improved submit message function
-export function submitMessage() {
+function submitMessage() {
+    if (!messagesRef) {
+        console.error('Firebase not yet initialized');
+        return;
+    }
+
     const now = Date.now();
     const username = escapeHTML(document.getElementById('username').value || 'Anonymous');
     let message = document.getElementById('message').value.trim();
@@ -254,11 +243,14 @@ export function submitMessage() {
     });
 }
 
-// Listen for new messages added to the database and display them
-onChildAdded(messagesRef, (snapshot) => {
-    const messageData = snapshot.val();
-    console.log('New message added:', messageData); // Log new messages
-    displayMessage(messageData.username, messageData.message, messageData.timestamp);
-});
+// Make functions available globally
+window.submitAnswer = submitAnswer;
+window.getStatisticsForQuestion = getStatisticsForQuestion;
+window.improvedHashStringToColor = improvedHashStringToColor;
+window.displayMessage = displayMessage;
+window.escapeHTML = escapeHTML;
+window.filterSlurs = filterSlurs;
+window.detectSpam = detectSpam;
+window.submitMessage = submitMessage;
 
-console.log('Firebase submission integrated with submitMessage');
+console.log('Firebase initialization complete');

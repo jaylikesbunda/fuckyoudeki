@@ -150,7 +150,7 @@
     <script defer src="browserApp.js"></script>
     <script defer src="settingsApp.js"></script>
     <script defer src="minesweeper.js"></script>
-    <script type="module" defer src="firebaseInit.js"></script>
+    <script defer src="firebaseInit.js"></script>
     <script type="module" defer src="deathPrediction.js"></script>
     
 
@@ -158,9 +158,36 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 
     <!-- Firebase App (the core Firebase SDK) -->
-    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js"></script>
-    <!-- Firebase Database -->
-    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js"></script>
+    <script type="module">
+        // Import the functions you need from the SDKs you need
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+        import { getDatabase, ref, push, onChildAdded, serverTimestamp, get, child } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+        
+        // Initialize Firebase with your config
+        const firebaseConfig = {
+            apiKey: "AIzaSyB9q5EYU1TM4ujo8fN9f3f5pikop_JPpV4",
+            authDomain: "fuckyoudeki-im.firebaseapp.com",
+            databaseURL: "https://fuckyoudeki-im-default-rtdb.firebaseio.com",
+            projectId: "fuckyoudeki-im",
+            storageBucket: "fuckyoudeki-im.appspot.com",
+            messagingSenderId: "934074641567",
+            appId: "1:934074641567:web:aeaf5ef007ee5c513106aa",
+            measurementId: "G-9PC7WJFKB7"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const db = getDatabase(app);
+        
+        // Make these available globally
+        window.db = db;
+        window.ref = ref;
+        window.push = push;
+        window.onChildAdded = onChildAdded;
+        window.serverTimestamp = serverTimestamp;
+        window.get = get;
+        window.child = child;
+    </script>
 
     <script>
       document.addEventListener('DOMContentLoaded', function() {
@@ -283,7 +310,7 @@
             <div class="title-bar-text">Windows Explorer</div>
             <div class="title-bar-controls">
                 <button aria-label="Minimize" onclick="minimizeWindow('mainWindow')">_</button>
-                <button aria-label="Maximize" onclick="maximizeWindow('mainWindow')">🗖</button>
+                <button aria-label="Maximize" onclick="maximizeWindow('mainWindow')">��</button>
                 <button aria-label="Close" onclick="minimizeWindow('mainWindow')">×</button>
             </div>
         </div>
@@ -292,6 +319,7 @@
                 <ul>
                     <li><a href="#home">Home</a></li>
                     <li><a href="#projects">Projects</a></li>
+                    <li><a href="#custom-sites">Custom Sites</a></li>
                     <li><a href="#about">About</a></li>
                     <li><a href="#contact">Contact</a></li>
                 </ul>
@@ -299,7 +327,6 @@
             <main>
                 <section id="home">
                     <h2>Welcome.</h2>
-                    <!-- <p>This is the homepage for all my projects.</p> -->
                 </section>
                 <section id="projects">
                     <h2>Projects</h2>
@@ -318,10 +345,30 @@
                         </div>
                     </div>
                 </section>
-                <!-- <section id="about">
-                    <h2>About</h2>
-                    <p>Information about me and my projects.</p>
-                </section> -->
+                <section id="custom-sites">
+                    <h2>Custom Website Development</h2>
+                    <p>Need a custom website? Reach out for a quote.</p>
+                    <div class="contact-methods">
+                        <h3>Get in Touch:</h3>
+                        <ul>
+                            <li>Instagram: <a href="https://www.instagram.com/fuckyoudeki" target="_blank">@fuckyoudeki</a></li>
+                            <li>Discord: @fuckyoudeki</li>
+                        </ul>
+                    </div>
+                    <div class="portfolio">
+                        <h3>Previous Work:</h3>
+                        <ul>
+                            <li><a href="https://collectflix.net" target="_blank">collectflix.net</a> - DVD / Blu-ray Database</li>
+                            <li><a href="https://fuckyoufm.net" target="_blank">fuckyoufm.net</a> - Internet Radio Station</li>
+                            <li><a href="https://fuckyoudeki.net" target="_blank">fuckyoudeki.net</a> - This Website</li>
+                            <li><a href="https://vapefacts.com.au" target="_blank">vapefacts.com.au</a> - Vaping Information</li>
+                            <li><a href="https://ghostesp.net" target="_blank">ghostesp.net</a> - ESP32 Pentesting Firmware</li>
+                            <li><a href="https://hackersnightlight.com" target="_blank">hackersnightlight.com</a> - 3D Model Functionality</li>
+                            <li><a href="https://flippertools.net" target="_blank">flippertools.net</a> - Flipper Zero Tools</li>
+                            <li>[REDACTED]</li>
+                        </ul>
+                    </div>
+                </section>
                 <section id="contact">
                     <h2>Contact</h2>
                     <p>Email: no-reply@fuckyoudeki.net</p>
@@ -387,16 +434,16 @@
         <div class="title-bar">
             <div class="title-bar-text">FYC Messenger</div>
             <div class="title-bar-controls">
-                <button aria-label="Minimize" onclick="console.log('Minimize button clicked'); minimizeWindow('messagingWindow')">_</button>
-                <button aria-label="Maximize" onclick="console.log('Maximize button clicked'); maximizeWindow('messagingWindow')">🗖</button>
-                <button aria-label="Close" onclick="console.log('Close button clicked'); minimizeWindow('messagingWindow')">×</button>
+                <button aria-label="Minimize" onclick="minimizeWindow('messagingWindow')">_</button>
+                <button aria-label="Maximize" onclick="maximizeWindow('messagingWindow')">🗖</button>
+                <button aria-label="Close" onclick="minimizeWindow('messagingWindow')">×</button>
             </div>
         </div>
         <div class="window-body messaging-window-body">
             <div class="messaging-toolbar">
                 <input type="text" id="username" placeholder="Enter your name">
                 <textarea id="message" placeholder="Enter your message"></textarea>
-                <button onclick="console.log('Post button clicked'); submitMessage()">Post</button>
+                <button onclick="window.submitMessage()">Post</button>
             </div>
             <div id="messages" class="messages"></div>
         </div>

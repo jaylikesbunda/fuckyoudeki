@@ -51,7 +51,7 @@ document.addEventListener('DOMContentLoaded', function() {
     var loadingScreen = document.getElementById('loadingScreen');
     var bootupSequence = document.getElementById('bootupSequence');
     var bootupText = `
-FuckYouOS v1.1.6
+FuckYouOS v1.1.9
 
 Booting...
 Kernel panic... OK
